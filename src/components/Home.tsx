@@ -1,6 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import heroImg from '../assets/hero-banner.webp';
 import service1 from '../assets/service1.jpg';
@@ -13,8 +11,8 @@ const Home: React.FC = () => {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="relative flex items-center h-[500px] bg-cover bg-center" style={{ backgroundImage: `url(${heroImg})` }}>
-        
+      <section className="relative flex items-center h-[500px] bg-cover bg-center">
+        <img src={heroImg} alt="Hero Banner" className="w-full h-full object-cover" />
       </section>
 
       {/* Services Section */}
