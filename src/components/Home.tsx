@@ -14,14 +14,7 @@ const Home: React.FC = () => {
     <main className="flex-1">
       {/* Hero Section */}
       <section className="relative flex items-center h-[500px] bg-cover bg-center" style={{ backgroundImage: `url(${heroImg})` }}>
-        <div className="absolute inset-0 bg-[#003366]/60"></div>
-        <div className="container relative z-10 mx-auto px-4">
-          <div className="max-w-[600px] text-white">
-            <h2 className="text-4xl font-bold mb-2.5">DELTA TRANSPORT</h2>
-            <h3 className="text-3xl font-normal mb-5">Dịch vụ vận chuyển quốc tế</h3>
-            <p className="text-xl text-[#ff5722] font-medium">An toàn - Nhanh chóng - Uy tín</p>
-          </div>
-        </div>
+        
       </section>
 
       {/* Services Section */}
