@@ -2,7 +2,9 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import VideoModal from '../components/VideoModal';
+import TestimonialSlider from '../components/TestimonialSlider';
 import { useVideoModal } from '../controllers/VideoController';
+import { testimonials } from '../models/TestimonialTypes';
 
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
@@ -98,7 +100,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Sứ mệnh vận chuyển Section */}
+      {/* About Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-8">
@@ -189,64 +191,74 @@ const Home: React.FC = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="contact-form-overlay relative">
-        {/* Background Image */}
+      <section className="relative flex items-center min-h-[500px] w-full">
         <img 
           src={bgBannerForm} 
           alt="Dịch vụ vận chuyển" 
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-full object-cover absolute inset-0"
         />
         
-        <div className="container mx-auto px-4 contact-form-container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Form Container */}
-            <div className="contact-form-box p-8 md:p-12">
-              <p className="text-[#ff5722] uppercase font-medium mb-2">GỬI CÂU HỎI</p>
-              <h2 className="text-4xl text-white font-light mb-8">Miễn phí</h2>
-              
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="relative w-full z-10 py-16" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%)' }}>
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Form Container */}
+              <div className="bg-[#333333] px-4 md:p-8 rounded-lg shadow-lg">
+                <p className="text-[#ff5722] uppercase font-medium mb-2">GỬI CÂU HỎI</p>
+                <h2 className="text-4xl text-white font-light mb-8">Miễn phí</h2>
+                
+                <form className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input 
+                      type="text" 
+                      placeholder="Họ và tên" 
+                      className="contact-form-input"
+                    />
+                    
+                    <input 
+                      type="tel" 
+                      placeholder="Số điện thoại" 
+                      className="contact-form-input"
+                    />
+                  </div>
+                  
                   <input 
-                    type="text" 
-                    placeholder="Họ và tên" 
+                    type="email" 
+                    placeholder="Email" 
                     className="contact-form-input"
                   />
                   
-                  <input 
-                    type="tel" 
-                    placeholder="Số điện thoại" 
-                    className="contact-form-input"
-                  />
-                </div>
-                
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  className="contact-form-input"
-                />
-                
-                <textarea 
-                  placeholder="Nội dung" 
-                  rows={4}
-                  className="contact-form-input resize-none"
-                ></textarea>
-                
-                <button 
-                  type="submit"
-                  className="w-full bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-4 rounded transition-colors uppercase"
-                >
-                  GỬI NGAY
-                </button>
-              </form>
+                  <textarea 
+                    placeholder="Nội dung" 
+                    rows={4}
+                    className="contact-form-input resize-none"
+                  ></textarea>
+                  
+                  <button 
+                    type="submit"
+                    className="w-full bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-4 rounded transition-colors uppercase"
+                  >
+                    GỬI NGAY
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Company Section */}
-      <section className="py-8 text-center">
+      {/* Rate Section */}
+      <section className="py-16 mt-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl text-[#003366] m-0">DELTA TRANSPORT</h2>
+          <div className="text-center mb-12 relative">
+            <div className="relative z-10">
+              <h2 className="text-5xl font-medium text-gray-800 mb-2">TỪ KHÁCH HÀNG</h2>
+              <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
+            </div>
+            <div className="absolute -top-15 left-0 right-0 text-[100px] font-bold text-black opacity-5 -z-10 text-center select-none">ĐÁNH GIÁ</div>
+          </div>
+          
+          {/* Testimonial Slider */}
+          <TestimonialSlider testimonials={testimonials} />
         </div>
       </section>
 
