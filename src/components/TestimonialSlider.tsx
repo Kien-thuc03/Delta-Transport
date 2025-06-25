@@ -15,7 +15,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   useEffect(() => {
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000000);
+    }, 5000);
     
     return () => clearInterval(timer);
   }, [currentIndex]);

@@ -3,8 +3,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import VideoModal from '../components/VideoModal';
 import TestimonialSlider from '../components/TestimonialSlider';
+import NewsSlider from '../components/NewsSlider';
 import { useVideoModal } from '../controllers/VideoController';
 import { testimonials } from '../models/TestimonialTypes';
+import { newsItems } from '../models/NewsTypes';
 
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
@@ -259,6 +261,29 @@ const Home: React.FC = () => {
           
           {/* Testimonial Slider */}
           <TestimonialSlider testimonials={testimonials} />
+        </div>
+      </section>
+
+      {/* News Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 relative">
+            <div className="relative z-10">
+              <h2 className="text-5xl font-medium text-gray-800 mb-2">THỊ TRƯỜNG</h2>
+              <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
+            </div>
+            <div className="absolute -top-15 left-0 right-0 text-[100px] font-bold text-black opacity-5 -z-10 text-center select-none">TIN TỨC</div>
+          </div>
+
+          {/* News Slider */}
+          <NewsSlider newsItems={newsItems} />
+        </div>
+      </section>
+
+      {/* Support Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          
         </div>
       </section>
 
