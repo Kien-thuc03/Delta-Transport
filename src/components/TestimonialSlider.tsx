@@ -11,11 +11,11 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   
-  // Tự động chuyển slide sau 5 giây
+  // Tự động chuyển slide sau 5 giây (5000ms)
   useEffect(() => {
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 5000000);
     
     return () => clearInterval(timer);
   }, [currentIndex]);
@@ -61,12 +61,14 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   
   // Xử lý sự kiện chuột
   const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     setStartX(e.clientX);
     setIsDragging(true);
   };
   
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
+    e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     const currentX = e.clientX;
     const diff = startX - currentX;
     
@@ -80,7 +82,8 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
     }
   };
   
-  const handleMouseUp = () => {
+  const handleMouseUp = (e: React.MouseEvent) => {
+    e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     setIsDragging(false);
   };
   
@@ -97,12 +100,27 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
         testimonials[(currentIndex + 1) % testimonials.length]
       ]
     : [testimonials[currentIndex]];
+
+  // Ngăn chặn việc chọn text khi kéo
+  useEffect(() => {
+    const handleSelectStart = (e: Event) => {
+      if (isDragging) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('selectstart', handleSelectStart);
+
+    return () => {
+      document.removeEventListener('selectstart', handleSelectStart);
+    };
+  }, [isDragging]);
     
   return (
     <div className="relative w-full overflow-hidden">
       <div 
         ref={sliderRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 select-none"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -110,23 +128,30 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
-        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+        style={{ 
+          cursor: isDragging ? 'grabbing' : 'grab',
+          userSelect: 'none', 
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          msUserSelect: 'none'
+        }}
       >
         {visibleTestimonials.map((testimonial) => (
           <div 
             key={testimonial.id} 
             className="bg-white p-8 rounded-lg shadow-md relative transition-all duration-300"
           >
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 h-full">
               <div className="flex-shrink-0">
                 <img 
                   src={testimonial.avatar} 
                   alt={testimonial.name} 
                   className="w-auto h-full rounded-full object-cover border-2 border-[#ff5722]"
+                  draggable="false" // Ngăn chặn việc kéo thả ảnh
                 />
               </div>
-              <div>
-                <p className="text-gray-600 mb-4">{testimonial.content}</p>
+              <div className='h-full flex flex-col justify-between'>
+                <p className="text-gray-600">{testimonial.content}</p>
                 <h4 className="font-medium text-[#ff5722]">{testimonial.name}</h4>
               </div>
             </div>
