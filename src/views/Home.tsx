@@ -94,28 +94,76 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Service Cards Section */}
+      {/* Sứ mệnh vận chuyển Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="rounded-lg overflow-hidden shadow-lg transition-transform hover:-translate-y-2.5">
-              <img src={truckImg} alt="Lấy hàng Quảng Châu" className="w-full h-[200px] object-cover" />
-              <h3 className="p-4 m-0 text-base font-semibold text-center text-gray-800 h-20 flex items-center justify-center">
-                LẤY HÀNG QUẦN ÁO QUẢNG CHÂU CHO NỮ ĐẸP GIÁ SỈ TỐT NHẤT CHO CHỊ EM
-              </h3>
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/2">
+              <div className="overflow-hidden rounded-lg">
+                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[75%] h-auto" />
+              </div>
             </div>
-            <div className="rounded-lg overflow-hidden shadow-lg transition-transform hover:-translate-y-2.5">
-              <img src={truckImg} alt="Đặt hàng Quảng Châu" className="w-full h-[200px] object-cover" />
-              <h3 className="p-4 m-0 text-base font-semibold text-center text-gray-800 h-20 flex items-center justify-center">
-                ĐẶT HÀNG QUẢNG CHÂU VỀ KINH DOANH CÓ LỢI ÍCH GÌ?
-              </h3>
-            </div>
-            <div className="rounded-lg overflow-hidden shadow-lg transition-transform hover:-translate-y-2.5">
-              <img src={truckImg} alt="Thuê xe tải" className="w-full h-[200px] object-cover" />
-              <h3 className="p-4 m-0 text-base font-semibold text-center text-gray-800 h-20 flex items-center justify-center">
-                CẦN THUÊ XE TẢI CHỞ HÀNG CỦA NHÀ XE Á CHÂU PHẢI LÀM THẾ NÀO?
-              </h3>
-            </div>
+            
+            <div className="md:w-1/2 flex flex-col gap-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800">CHÚNG TÔI Ở ĐÂY ĐỂ HOÀN THÀNH SỨ MỆNH VẬN CHUYỂN</h2>
+              <p className="text-gray-600">Được thành lập từ năm 2010 chúng tôi đã có trên 9 năm kinh nghiệm về vận chuyển hàng hóa, đáp ứng yêu cầu của hàng nghìn khách hàng.</p>
+              
+              <div className="flex flex-col gap-4 mt-2">
+                <div className="flex items-center gap-3">
+                  <div className="text-white bg-[#ff5722] rounded-full p-1 w-6 h-6 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-800 font-medium">PHƯƠNG THỨC ĐẶT HÀNG VÀ THANH TOÁN DỄ DÀNG</span>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="text-white bg-[#ff5722] rounded-full p-1 w-6 h-6 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-800 font-medium">SẢN PHẨM ĐƯỢC ĐẢM BẢO CHÍNH HÃNG VÀ CÓ TEM KIỂM ĐỊNH.</span>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="text-white bg-[#ff5722] rounded-full p-1 w-6 h-6 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-800 font-medium">MỌI SẢN PHẨM ĐỀU ĐƯỢC BẢO HIỂM TRONG QUÁ TRÌNH VẬN CHUYỂN.</span>
+                </div>
+              </div>
+              
+              <div className="mt-4">
+                <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
+                  ĐỌC TIẾP
+                </button>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-16">
+                <div className="bg-white p-6 rounded-lg text-center">
+                  <div className="text-[#ff5722] text-4xl font-bold">84220+</div>
+                  <div className="text-gray-700 font-medium">Đơn hàng/năm</div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg text-center">
+                  <div className="text-[#ff5722] text-4xl font-bold">24</div>
+                  <div className="text-gray-700 font-medium">Chi nhánh</div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg text-center">
+                  <div className="text-[#ff5722] text-4xl font-bold">26990+</div>
+                  <div className="text-gray-700 font-medium">Khách hàng</div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg text-center">
+                  <div className="text-[#ff5722] text-4xl font-bold">6</div>
+                  <div className="text-gray-700 font-medium">Giải thưởng</div>
+                </div>
+              </div>
+            </div> 
           </div>
         </div>
       </section>
