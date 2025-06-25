@@ -6,12 +6,12 @@ import { useVideoModal } from '../controllers/VideoController';
 
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
-import supportIcon from '../assets/icon-telemarketer.webp';
 import iconTruck from '../assets/icon_wl_1.webp';
 import iconPlane from '../assets/icon_wl_2.webp';
 import iconShip from '../assets/icon_wl_3.webp';
 import iconWarehouse from '../assets/icon_wl_4.png';
 import banner1 from '../assets/bg12.webp';
+import bgBannerForm from '../assets/banner2.png';
 
 const Home: React.FC = () => {
   const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
@@ -63,9 +63,9 @@ const Home: React.FC = () => {
               </div>
             </div>
             
-            {/* Cột 2 - Hình ảnh xe tải */}
+            {/* Cột 2 - Hình ảnh xe tải phần ảnh này sẽ mất đi với màn hình nhỏ hơn 768px*/}
             <div className="flex justify-center items-center">
-              <img src={truckImg} alt="Transport Truck" className="w-full max-w-md" />
+              <img src={truckImg} alt="Transport Truck" className="w-full max-w-md hidden md:block" />
             </div>
             
             {/* Cột 3 */}
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
           <div className="flex flex-col md:flex-row gap-8">
             <div className="md:w-1/2">
               <div className="overflow-hidden rounded-lg relative">
-                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[85%] h-auto mx-auto" />
+                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[85%] h-auto" />
                 <a 
                   href="javascript:;" 
                   className="video_play play-now" 
@@ -188,40 +188,56 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact Info Section */}
-      <section className="bg-gray-100 py-12">
-        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="flex items-center gap-5 bg-white rounded-lg p-5 shadow-sm">
-            <div>
-              <img src={supportIcon} alt="Support" className="w-[50px] h-[50px]" />
-            </div>
-            <div>
-              <h3 className="mt-0 mb-2.5 text-base text-gray-800">Tổng đài hỗ trợ (8h00 - 22h00)</h3>
-              <h2 className="m-0 mb-1.5 text-2xl text-[#ff5722]">1900 6750</h2>
-              <p className="m-0 text-gray-600">Email: deltawebltd@gmail.com</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-5 bg-white rounded-lg p-5 shadow-sm">
-            <div>
-              <img src={truckImg} alt="Newsletter" className="w-[50px] h-[50px]" />
-            </div>
-            <div className="flex-1">
-              <h3 className="mt-0 mb-2.5 text-base text-gray-800">Nhận tin ưu đãi mới nhất!</h3>
-              <div className="flex mt-4">
+      {/* Contact Form Section */}
+      <section className="contact-form-overlay relative">
+        {/* Background Image */}
+        <img 
+          src={bgBannerForm} 
+          alt="Dịch vụ vận chuyển" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        
+        <div className="container mx-auto px-4 contact-form-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Form Container */}
+            <div className="contact-form-box p-8 md:p-12">
+              <p className="text-[#ff5722] uppercase font-medium mb-2">GỬI CÂU HỎI</p>
+              <h2 className="text-4xl text-white font-light mb-8">Miễn phí</h2>
+              
+              <form className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <input 
+                    type="text" 
+                    placeholder="Họ và tên" 
+                    className="contact-form-input"
+                  />
+                  
+                  <input 
+                    type="tel" 
+                    placeholder="Số điện thoại" 
+                    className="contact-form-input"
+                  />
+                </div>
+                
                 <input 
                   type="email" 
-                  placeholder="Nhập email" 
-                  className="flex-1 p-2.5 border border-gray-300 border-r-0 rounded-l"
+                  placeholder="Email" 
+                  className="contact-form-input"
                 />
+                
+                <textarea 
+                  placeholder="Nội dung" 
+                  rows={4}
+                  className="contact-form-input resize-none"
+                ></textarea>
+                
                 <button 
-                  type="button" 
-                  aria-label="Đăng ký"
-                  className="bg-[#ff5722] text-white border-0 px-5 py-2.5 rounded-r font-medium"
+                  type="submit"
+                  className="w-full bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-4 rounded transition-colors uppercase"
                 >
-                  ĐĂNG KÝ
+                  GỬI NGAY
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>

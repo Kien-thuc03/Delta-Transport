@@ -6,7 +6,7 @@ import supportIcon from '../assets/icon-telemarketer.webp';
 const Footer: React.FC = () => {
   return (
     <footer>
-      <div className="bg-gray-100 py-12">
+      <div className="bg-white py-12">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           <div className="">
@@ -70,9 +70,9 @@ const Footer: React.FC = () => {
         </div>
       </div>
       
-      <div className="bg-gray-200 py-4">
+      <div className="bg-[#010e2a] py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <p className="text-gray-600 m-0">© Bản quyền thuộc về Delta Web | Cung cấp bởi Sapo</p>
+          <p className="text-white m-0">&copy; Bản quyền thuộc về <span className="text-[#ff5722]">Delta Web</span> | Cung cấp bởi <span className="text-[#ff5722]">Sapo</span></p>
           <a href="#top" className="flex items-center gap-1.5 text-[#ff5722]">
             Lên đầu trang <FontAwesomeIcon icon={faArrowUp} className="text-sm" />
           </a>
