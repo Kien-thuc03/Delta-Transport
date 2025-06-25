@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import VideoModal from '../components/VideoModal';
+import { useVideoModal } from '../controllers/VideoController';
 
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
@@ -12,6 +14,8 @@ import iconWarehouse from '../assets/icon_wl_4.png';
 import banner1 from '../assets/bg12.webp';
 
 const Home: React.FC = () => {
+  const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
+
   return (
     <main className="flex-1">
       <Header />
@@ -99,11 +103,27 @@ const Home: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-8">
             <div className="md:w-1/2">
-              <div className="overflow-hidden rounded-lg">
-                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[75%] h-auto" />
+              <div className="overflow-hidden rounded-lg relative">
+                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[75%] h-auto mx-auto" />
+                <a 
+                  href="javascript:;" 
+                  className="video_play play-now" 
+                  onClick={(e) => { 
+                    e.preventDefault(); 
+                    openVideoModal("https://www.youtube.com/embed/TxlOqKwWcT4"); 
+                  }}
+                  aria-label="Xem video"
+                  title="Xem video"
+                >
+                  <i className="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                    </svg>
+                  </i>
+                  <span className="ripple"></span>
+                </a>
               </div>
             </div>
-            
             <div className="md:w-1/2 flex flex-col gap-6">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800">CHÚNG TÔI Ở ĐÂY ĐỂ HOÀN THÀNH SỨ MỆNH VẬN CHUYỂN</h2>
               <p className="text-gray-600">Được thành lập từ năm 2010 chúng tôi đã có trên 9 năm kinh nghiệm về vận chuyển hàng hóa, đáp ứng yêu cầu của hàng nghìn khách hàng.</p>
@@ -141,29 +161,29 @@ const Home: React.FC = () => {
                 <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
                   ĐỌC TIẾP
                 </button>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-16">
-                <div className="bg-white p-6 rounded-lg text-center">
-                  <div className="text-[#ff5722] text-4xl font-bold">84220+</div>
-                  <div className="text-gray-700 font-medium">Đơn hàng/năm</div>
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-16">
+                  <div className="bg-white p-6 rounded-lg text-center">
+                    <div className="text-[#ff5722] text-4xl font-bold">84220+</div>
+                    <div className="text-gray-700 font-medium">Đơn hàng/năm</div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-lg text-center">
+                    <div className="text-[#ff5722] text-4xl font-bold">24</div>
+                    <div className="text-gray-700 font-medium">Chi nhánh</div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-lg text-center">
+                    <div className="text-[#ff5722] text-4xl font-bold">26990+</div>
+                    <div className="text-gray-700 font-medium">Khách hàng</div>
+                  </div>
+                  
+                  <div className="bg-white p-6 rounded-lg text-center">
+                    <div className="text-[#ff5722] text-4xl font-bold">6</div>
+                    <div className="text-gray-700 font-medium">Giải thưởng</div>
+                  </div>
                 </div>
-                
-                <div className="bg-white p-6 rounded-lg text-center">
-                  <div className="text-[#ff5722] text-4xl font-bold">24</div>
-                  <div className="text-gray-700 font-medium">Chi nhánh</div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg text-center">
-                  <div className="text-[#ff5722] text-4xl font-bold">26990+</div>
-                  <div className="text-gray-700 font-medium">Khách hàng</div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg text-center">
-                  <div className="text-[#ff5722] text-4xl font-bold">6</div>
-                  <div className="text-gray-700 font-medium">Giải thưởng</div>
-                </div>
-              </div>
-            </div> 
+              </div> 
+            </div>
           </div>
         </div>
       </section>
@@ -213,6 +233,14 @@ const Home: React.FC = () => {
           <h2 className="text-3xl text-[#003366] m-0">DELTA TRANSPORT</h2>
         </div>
       </section>
+
+      {/* Video Modal Component */}
+      <VideoModal 
+        isOpen={modalState.isOpen} 
+        videoUrl={modalState.videoUrl} 
+        onClose={closeVideoModal}
+      />
+
       <Footer />
     </main>
   );
