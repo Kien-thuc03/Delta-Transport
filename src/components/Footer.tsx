@@ -1,14 +1,15 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faMapMarkerAlt, faEnvelope, faPhone, faHeadset, faArrowUp } from '@fortawesome/free-solid-svg-icons';
-
+import { faMapMarkerAlt, faEnvelope, faPhone, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import supportIcon from '../assets/icon-telemarketer.webp';
 const Footer: React.FC = () => {
   return (
     <footer>
       <div className="bg-gray-100 py-12">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="footer-section">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div className="">
             <h3 className="text-base font-semibold text-gray-800 mb-5">TỔNG CÔNG TY CỔ PHẦN DELTA TRANSPORT</h3>
             <p className="text-gray-600 mb-5 leading-relaxed">
               Delta Transport là doanh nghiệp hàng đầu cung cấp dịch vụ chuyển phát nhanh hàng hoá, bưu kiện trong nước, quốc tế tại Việt Nam.
@@ -25,8 +26,7 @@ const Footer: React.FC = () => {
               </p>
             </div>
           </div>
-          
-          <div className="footer-section">
+          <div className="">
             <h3 className="text-base font-semibold text-gray-800 mb-5">GIỚI THIỆU</h3>
             <ul className="space-y-2.5">
               <li><a href="/" className="text-gray-600 hover:text-[#ff5722]">Trang chủ</a></li>
@@ -38,31 +38,33 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           
-          <div className="footer-section">
-            <h3 className="text-base font-semibold text-gray-800 mb-5">HỖ TRỢ SIÊU TỐC</h3>
-            <div className="flex items-center gap-4">
-              <div className="hotline-icon">
-                <FontAwesomeIcon icon={faHeadset} className="text-[#ff5722] text-4xl" />
-              </div>
-              <div>
-                <p className="text-gray-600 m-0">Liên hệ Hotline: 7:00 – 20:00</p>
-                <h4 className="text-2xl text-[#ff5722] font-semibold mt-1.5">1900 6750</h4>
+          <div>
+            <div className="">
+              <h3 className="text-base font-semibold text-gray-800 mb-5">HỖ TRỢ SIÊU TỐC</h3>
+              <div className="flex items-center gap-4">
+                <div className="hotline-icon">
+                  <img src={supportIcon} alt="Support Icon" className="object-cover" />
+                </div>
+                <div>
+                  <p className="text-gray-600 m-0">Liên hệ Hotline: 7:00 – 20:00</p>
+                  <h4 className="text-2xl text-[#ff5722] font-semibold mt-1.5">1900 6750</h4>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="footer-section">
-            <h3 className="text-base font-semibold text-gray-800 mb-5">KẾT NỐI</h3>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
-                <FontAwesomeIcon icon={faFacebook} />
-              </a>
-              <a href="#" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
-                <FontAwesomeIcon icon={faYoutube} />
-              </a>
-              <a href="#" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
+            
+            <div className="">
+              <h3 className="text-base font-semibold text-gray-800 mb-5">KẾT NỐI</h3>
+              <div className="flex gap-4">
+                <a href="#" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                  <FontAwesomeIcon icon={faFacebook} />
+                </a>
+                <a href="#" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                  <FontAwesomeIcon icon={faYoutube} />
+                </a>
+                <a href="#" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                  <FontAwesomeIcon icon={faInstagram} />
+                </a>
+              </div>
             </div>
           </div>
         </div>

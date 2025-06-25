@@ -10,8 +10,8 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <div className="container mx-auto px-4 bg-gray-100 py-1.5 border-b border-gray-200">
-        <div className="flex justify-between items-center">
+      <div className="bg-gray-100 py-1.5 border-b border-gray-200">
+        <div className="flex justify-between items-center container">
           <p>Chào mừng bạn đến với dịch vụ vận chuyển của chúng tôi</p>
           <div className="flex gap-4">
             <a href="#"><FontAwesomeIcon icon={faInstagram} className="text-gray-600 hover:text-[#ff5722] text-lg" /></a>
@@ -21,8 +21,8 @@ const Header: React.FC = () => {
         </div>
       </div>
       
-      <div className="bg-[#010e2a] py-5 container mx-auto px-4">
-        <div className="flex justify-between items-center">
+      <div className="bg-[#010e2a] py-5">
+        <div className="flex justify-between items-center container">
           <div className="logo">
             <a href="/">
               <img src={logo} alt="Delta Transport" className="h-12" />
