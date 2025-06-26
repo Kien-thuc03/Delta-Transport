@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faYoutube, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faSearch, faChevronDown, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,30 +9,70 @@ import logo from '../assets/logo.png';
 const Header: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [newsDropdownOpen, setNewsDropdownOpen] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
+
+  // Helper function để handle hover với delay
+  const handleDropdownLeave = () => {
+    const timeout = setTimeout(() => {
+      setDropdownOpen(false);
+      setNewsDropdownOpen(false);
+    }, 150); // 150ms delay
+    setHoverTimeout(timeout);
+  };
+
+  const handleDropdownEnter = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+      setHoverTimeout(null);
+    }
+    setDropdownOpen(true);
+  };
+
+  // Helper function để đóng mobile menu và reset states
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setDropdownOpen(false);
+    setNewsDropdownOpen(false);
+  };
 
   // Đóng mobile menu khi resize về desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setMobileMenuOpen(false);
+        setDropdownOpen(false);
+        setNewsDropdownOpen(false);
       }
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (hoverTimeout) clearTimeout(hoverTimeout);
+    };
+  }, [hoverTimeout]);
 
-  // Đóng dropdown khi click outside
+  // Đóng dropdown khi click outside (chỉ cho desktop)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownOpen && !(event.target as Element).closest('.dropdown-container')) {
+      // Chỉ áp dụng cho desktop (khi mobile menu không mở)
+      if (!mobileMenuOpen && dropdownOpen && !(event.target as Element).closest('.dropdown-container')) {
         setDropdownOpen(false);
+        setNewsDropdownOpen(false);
+        if (hoverTimeout) {
+          clearTimeout(hoverTimeout);
+          setHoverTimeout(null);
+        }
       }
     };
 
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [dropdownOpen]);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      if (hoverTimeout) clearTimeout(hoverTimeout);
+    };
+  }, [dropdownOpen, hoverTimeout, mobileMenuOpen]);
 
   return (
     <header>
@@ -141,23 +182,23 @@ const Header: React.FC = () => {
         <div className="container mx-auto px-4">
           <ul className="hidden lg:flex">
             <li>
-              <a href="/" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link to="/" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
                 Trang chủ
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/gioi-thieu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link to="/gioi-thieu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
                 Giới thiệu
-              </a>
+              </Link>
             </li>
-            <li className="relative dropdown-container">
+            <li 
+              className="relative dropdown-container"
+              onMouseEnter={handleDropdownEnter}
+              onMouseLeave={handleDropdownLeave}
+            >
               <a 
                 href="#" 
                 className="text-white py-4 px-5 font-medium hover:bg-white/10 flex items-center transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setDropdownOpen(!dropdownOpen);
-                }}
               >
                 Thị trường
                 <FontAwesomeIcon 
@@ -165,18 +206,43 @@ const Header: React.FC = () => {
                   className={`ml-1.5 text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
                 />
               </a>
-              <div className={`absolute left-0 bg-white shadow-lg min-w-[200px] z-50 transition-all duration-200 ${
-                dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-              }`}>
+              <div 
+                className={`absolute left-0 bg-white shadow-lg min-w-[200px] z-50 transition-all duration-200 ${
+                  dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                }`}
+              >
                 <ul>
-                  <li>
-                    <a href="/tin-tuc" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 border-b border-gray-100 transition-colors">
-                      <span className="mr-1.5 text-[#ff5722]">›</span>Tin tức
+                  <li 
+                    className="relative group"
+                    onMouseEnter={() => setNewsDropdownOpen(true)}
+                    onMouseLeave={() => setNewsDropdownOpen(false)}
+                  >
+                    <a 
+                      href="/tin-tuc" 
+                      className="flex items-center justify-between text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 border-b border-gray-100 transition-colors"
+                    >
+                      <span className="flex items-center">Tin tức</span>
+                      <FontAwesomeIcon icon={faChevronDown} className="text-xs rotate-[-90deg]" />
                     </a>
+                    
+                    {/* Sub-dropdown cho Tin tức */}
+                    <div 
+                      className={`absolute left-full top-0 bg-white shadow-lg min-w-[180px] z-60 transition-all duration-200 ${
+                        newsDropdownOpen ? 'opacity-100 visible translate-x-0' : 'opacity-0 invisible -translate-x-2'
+                      }`}
+                    >
+                      <ul>
+                        <li>
+                          <a href="/tin-tuyen-dung" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
+                            Tin tuyển dụng
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
                   <li>
                     <a href="/ky-nang-dat-hang" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
-                      <span className="mr-1.5 text-[#ff5722]">›</span>Kỹ năng đặt hàng
+                      Kỹ năng đặt hàng
                     </a>
                   </li>
                 </ul>
@@ -202,33 +268,38 @@ const Header: React.FC = () => {
 
         {/* Mobile Navigation */}
         <div className={`lg:hidden absolute top-full left-0 right-0 bg-[#ff5722] shadow-lg z-40 transition-all duration-300 transform ${
-          mobileMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'
+          mobileMenuOpen ? 'opacity-100 visible translate-y-0 pointer-events-auto' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
         }`}>
           <div className="container mx-auto px-4">
             <ul className="py-2">
               <li>
-                <a 
-                  href="/" 
+                <Link 
+                  to="/" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Trang chủ
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
-                  href="/gioi-thieu" 
+                <Link 
+                  to="/gioi-thieu" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Giới thiệu
-                </a>
+                </Link>
               </li>
               <li>
                 <div>
                   <button
-                    className="w-full text-left text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10 flex items-center justify-between"
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    type="button"
+                    className="w-full text-left text-white py-3 px-4 font-medium hover:bg-white/10 active:bg-white/20 transition-colors border-b border-white/10 flex items-center justify-between touch-manipulation"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setDropdownOpen(!dropdownOpen);
+                    }}
                   >
                     Thị trường
                     <FontAwesomeIcon 
@@ -237,21 +308,45 @@ const Header: React.FC = () => {
                     />
                   </button>
                   <div className={`bg-white/10 transition-all duration-200 ${
-                    dropdownOpen ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                    dropdownOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                   }`}>
-                    <a 
-                      href="/tin-tuc" 
-                      className="block text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      › Tin tức
-                    </a>
+                    {/* Tin tức với sub-menu */}
+                    <div>
+                      <button
+                        type="button"
+                        className="w-full text-left text-white py-2 px-8 hover:bg-white/10 active:bg-white/20 transition-colors text-sm flex items-center justify-between touch-manipulation"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setNewsDropdownOpen(!newsDropdownOpen);
+                        }}
+                      >
+                        Tin tức
+                        <FontAwesomeIcon 
+                          icon={faChevronDown} 
+                          className={`text-xs transition-transform ${newsDropdownOpen ? 'rotate-180' : ''}`} 
+                        />
+                      </button>
+                      <div className={`bg-white/20 transition-all duration-200 ${
+                        newsDropdownOpen ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                      }`}>
+                        <a 
+                          href="/tin-tuyen-dung" 
+                          className="block text-white py-2 px-12 hover:bg-white/10 transition-colors text-xs"
+                          onClick={closeMobileMenu}
+                        >
+                          Tin tuyển dụng
+                        </a>
+                      </div>
+                    </div>
+                    
+                    {/* Kỹ năng đặt hàng - không có sub-menu */}
                     <a 
                       href="/ky-nang-dat-hang" 
                       className="block text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={closeMobileMenu}
                     >
-                      › Kỹ năng đặt hàng
+                      Kỹ năng đặt hàng
                     </a>
                   </div>
                 </div>
@@ -260,7 +355,7 @@ const Header: React.FC = () => {
                 <a 
                   href="/dich-vu" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Dịch vụ
                 </a>
@@ -269,7 +364,7 @@ const Header: React.FC = () => {
                 <a 
                   href="/lien-he" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Liên hệ
                 </a>
@@ -278,7 +373,7 @@ const Header: React.FC = () => {
                 <a 
                   href="/hoi-dap" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Hỏi đáp
                 </a>
@@ -306,7 +401,7 @@ const Header: React.FC = () => {
       {mobileMenuOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={closeMobileMenu}
         />
       )}
     </header>

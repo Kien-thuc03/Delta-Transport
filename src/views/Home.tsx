@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import VideoModal from '../components/VideoModal';
 import TestimonialSlider from '../components/TestimonialSlider';
@@ -7,7 +8,7 @@ import NewsSlider from '../components/NewsSlider';
 import { useVideoModal } from '../controllers/VideoController';
 import { testimonials } from '../models/TestimonialTypes';
 import { newsItems } from '../models/NewsTypes';
-
+import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
 import iconTruck from '../assets/icon_wl_1.webp';
@@ -19,7 +20,7 @@ import bgBannerForm from '../assets/banner2.png';
 
 const Home: React.FC = () => {
   const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
-
+  const navigate = useNavigate();
   return (
     <main className="flex-1">
       <Header />
@@ -167,7 +168,7 @@ const Home: React.FC = () => {
               </div>
               
               <div className="mt-4">
-                <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
+                <button onClick={() => navigate('/gioi-thieu')} className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
                   ĐỌC TIẾP
                 </button>
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-10">
@@ -299,7 +300,10 @@ const Home: React.FC = () => {
         videoUrl={modalState.videoUrl} 
         onClose={closeVideoModal}
       />
+      {/* Contact Component */}
+      <Contact />
 
+      {/* Footer Component */}
       <Footer />
     </main>
   );
