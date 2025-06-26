@@ -197,7 +197,7 @@ const Header: React.FC = () => {
               onMouseLeave={handleDropdownLeave}
             >
               <a 
-                href="#" 
+                href="/thi-truong" 
                 className="text-white py-4 px-5 font-medium hover:bg-white/10 flex items-center transition-colors"
               >
                 Thị trường

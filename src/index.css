@@ -145,3 +145,11 @@ body.modal-open {
     background-color: #ff5722;
     color: white;
 }
+
+
+/* Clip path cho tiêu đề */
+
+.clip-title {
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    padding-right: 40px;
+}

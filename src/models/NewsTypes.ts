@@ -1,6 +1,5 @@
-import news1 from '../assets/new2.webp';
-
-
+import news2 from '../assets/new2.webp';
+import news1 from '../assets/new1.webp';
 
 export interface News {
   id: number;
@@ -13,8 +12,9 @@ export const newsItems: News[] = [
   {
     id: 1,
     title: 'LẤY HÀNG QUẦN ÁO QUẢNG CHÂU CHO NỮ ĐẸP GIÁ SỈ TỐT NHẤT CHO CHỊ EM',
-    image: 'https://randomuser.me/api/portraits/women/32.jpg',
+    image: news1,
     date: '26/05/2019',
+
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ export const newsItems: News[] = [
   {
     id: 4,
     title: 'VẬN CHUYỂN HÀNG HÓA XUYÊN QUỐC GIA: CƠ HỘI VÀ THÁCH THỨC',
-    image: news1,
+    image: news2,
     date: '15/06/2019',
   },
   {
