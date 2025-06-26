@@ -33,11 +33,15 @@ const Home: React.FC = () => {
         {/* Header section */}
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 relative">
-            <div className="relative z-10">
-              <h2 className="text-5xl font-medium text-gray-800 mb-2">DELTA TRANSPORT</h2>
-              <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
+            <div className="relative mb-8">
+              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-5xl md:text-6xl lg:text-8xl font-bold text-black opacity-5 -z-10 text-center select-none">CHÀO MỪNG</div> 
+              </div>
+              <div className="relative z-10">
+                <h2 className="relative z-10 text-2xl font-medium md:text-4xl lg:text-5xl text-gray-800 mb-2">DELTA TRANSPORT</h2>
+              </div>
             </div>
-            <div className="absolute -top-15 left-0 right-0 text-[100px] font-bold text-black opacity-5 -z-10 text-center select-none">CHÀO MỪNG</div>
+            <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
@@ -253,11 +257,15 @@ const Home: React.FC = () => {
       <section className="py-16 mt-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 relative">
-            <div className="relative z-10">
-              <h2 className="text-5xl font-medium text-gray-800 mb-2">TỪ KHÁCH HÀNG</h2>
-              <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
+            <div className="relative mb-8">
+              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-5xl md:text-6xl lg:text-8xl font-bold text-black opacity-5 -z-10 text-center select-none">ĐÁNH GIÁ</div> 
+              </div>
+              <div className="relative z-10">
+                <h2 className="relative z-10 text-2xl font-medium md:text-4xl lg:text-5xl text-gray-800 mb-2">TỪ KHÁCH HÀNG</h2>
+              </div>
             </div>
-            <div className="absolute -top-15 left-0 right-0 text-[100px] font-bold text-black opacity-5 -z-10 text-center select-none">ĐÁNH GIÁ</div>
+            <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
           </div>
           
           {/* Testimonial Slider */}
@@ -269,11 +277,15 @@ const Home: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 relative">
-            <div className="relative z-10">
-              <h2 className="text-5xl font-medium text-gray-800 mb-2">THỊ TRƯỜNG</h2>
-              <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
+            <div className="relative mb-8">
+              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-5xl md:text-6xl lg:text-8xl font-bold text-black opacity-5 -z-10 text-center select-none">TIN TỨC</div> 
+              </div>
+              <div className="relative z-10">
+                <h2 className="relative z-10 text-2xl font-medium md:text-4xl lg:text-5xl text-gray-800 mb-2">THỊ TRƯỜNG</h2>
+              </div>
             </div>
-            <div className="absolute -top-15 left-0 right-0 text-[100px] font-bold text-black opacity-5 -z-10 text-center select-none">TIN TỨC</div>
+            <div className="w-24 h-1 bg-[#ff5722] mx-auto mt-4 mb-6"></div>
           </div>
 
           {/* News Slider */}

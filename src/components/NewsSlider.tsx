@@ -191,7 +191,7 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
               <img 
                 src={news.image}
                 alt={news.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-60 object-cover"
                 draggable="false"
               />
               <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
