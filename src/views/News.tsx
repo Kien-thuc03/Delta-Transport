@@ -12,36 +12,40 @@ const News: React.FC = () => {
 
   return (
     <Layout>
-      <div className="bg-white">
-        {/* Breadcrumb */}
-        <Breadcrumb items={breadcrumbItems} />
-
-        {/* Main Content */}
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Tin tức</h1>
+      <Breadcrumb items={breadcrumbItems} />
+      
+      <div className="bg-gray-50 py-8">
+        <div className="container mx-auto px-4">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8">Tin tức</h1>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {newsItems.map((item) => (
-              <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
-                <div className="relative">
-                  <Link to={`/tin-tuc/${item.id}`} className="block">
-                    <img src={item.image} alt={item.title} className="w-full h-60 object-cover" />
-                    <div className="absolute w-[20%] top-0 left-0">
-                      <div className="bg-[#ff5722] text-white text-3xl font-bold text-center p-2">
-                        {item.date.split('/')[0]}
-                      </div>
-                      <div className="bg-[#010e2a] text-white text-sm text-center p-2">
-                        {item.date.split('/')[1] + '/' + item.date.split('/')[2]}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-bold mb-3">
-                    <Link to={`/tin-tuc/${item.id}`} className="text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
+            {newsItems.map(item => (
+              <div key={item.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 hover:text-[#ff5722] transition-colors">
+                    <Link to={`/tin-tuc/${item.slug}`}>
                       {item.title}
                     </Link>
                   </h3>
+                  {item.excerpt && (
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {item.excerpt}
+                    </p>
+                  )}
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">{item.date}</span>
+                    <Link 
+                      to={`/tin-tuc/${item.slug}`}
+                      className="text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-colors"
+                    >
+                      Đọc thêm →
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
