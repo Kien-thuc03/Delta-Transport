@@ -24,12 +24,13 @@ const Home: React.FC = () => {
     <main className="flex-1">
       <Header />
       {/* Hero Section */}
-      <section className="relative flex items-center h-[500px] bg-cover bg-center">
+      <section className="relative flex items-center bg-cover bg-center">
         <img src={heroImg} alt="Hero Banner" className="w-full h-full object-cover" />
       </section>
 
       {/* Welcome Section */}
       <section className="py-16">
+        {/* Header section */}
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 relative">
             <div className="relative z-10">
@@ -204,7 +205,7 @@ const Home: React.FC = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Form Container */}
-              <div className="bg-[#333333] px-4 md:p-8 rounded-lg shadow-lg">
+              <div className="bg-[#333333] p-4 md:p-8 rounded-lg shadow-lg">
                 <p className="text-[#ff5722] uppercase font-medium mb-2">GỬI CÂU HỎI</p>
                 <h2 className="text-4xl text-white font-light mb-8">Miễn phí</h2>
                 
