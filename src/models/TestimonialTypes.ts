@@ -35,5 +35,13 @@ export const testimonials: Testimonial[] = [
     name: 'Quang Minh',
     avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
     content: 'Vận chuyển đúng hẹn, đóng gói cẩn thận, giá cả phải chăng. Đây là đơn vị vận chuyển tin cậy mà tôi sẽ tiếp tục sử dụng trong tương lai.'
-  }
+  },
+  {
+    id: 6,
+    name: 'Quang Nhựt',
+    avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
+    content: 'Vận chuyển đúng hẹn, đóng gói cẩn thận, giá cả phải chăng. Đây là đơn vị vận chuyển tin cậy mà tôi sẽ tiếp tục sử dụng trong tương lai.'
+  },
+  
+
 ]; 

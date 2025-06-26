@@ -9,16 +9,18 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   
   // Xử lý sự kiện vuốt trên mobile
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (isTransitioning) return;
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     const currentX = e.touches[0].clientX;
     const diff = startX - currentX;
     
@@ -40,13 +42,14 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
   
   // Xử lý sự kiện chuột
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (isTransitioning) return;
     e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     setStartX(e.clientX);
     setIsDragging(true);
   };
   
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     const currentX = e.clientX;
     const diff = startX - currentX;
@@ -82,18 +85,28 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
 
   const itemsPerView = getItemsPerView();
   
+  const handleSlideChange = (newIndex: number) => {
+    setIsTransitioning(true);
+    
+    // Tính toán index mới
+    let nextIndex = newIndex;
+    if (nextIndex < 0) nextIndex = newsItems.length - 1;
+    if (nextIndex >= newsItems.length) nextIndex = 0;
+    
+    setCurrentIndex(nextIndex);
+    
+    // Kết thúc hiệu ứng transition sau 300ms
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
+  };
+  
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => {
-      const nextIndex = prevIndex + 1;
-      return nextIndex >= newsItems.length ? 0 : nextIndex;
-    });
+    handleSlideChange(currentIndex + 1);
   };
   
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => {
-      const nextIndex = prevIndex - 1;
-      return nextIndex < 0 ? newsItems.length - 1 : nextIndex;
-    });
+    handleSlideChange(currentIndex - 1);
   };
 
   // Hiển thị các tin tức dựa trên kích thước màn hình
@@ -137,6 +150,15 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, [currentIndex, itemsPerView]);
+  
+  // Tự động chuyển slide sau 6 giây
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleSlideChange(currentIndex + 1);
+    }, 6000);
+    
+    return () => clearInterval(timer);
+  }, [currentIndex]);
     
   return (
     <div className="relative w-full overflow-hidden">
@@ -161,7 +183,9 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
         {getVisibleNews().map((news) => (
           <div 
             key={news.id} 
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg"
+            className={`bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${
+              isTransitioning ? 'opacity-0 transform translate-x-4' : 'opacity-100 transform translate-x-0'
+            }`}
           >
             <div className="relative">
               <img 
@@ -170,47 +194,35 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
                 className="w-full h-48 object-cover"
                 draggable="false"
               />
-              <div className="absolute top-0 left-0 bg-[#ff5722] text-white p-2 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold">{news.date.split('/')[0]}</span>
-                <span className="text-sm">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
+              <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
+                <span className="text-3xl font-bold text-center p-2">{news.date.split('/')[0]}</span>
+                <span className="text-sm bg-[#010e2a] w-full text-center p-2">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
               </div>
             </div>
             <div className="p-5">
               <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
-                <a href={news.link}>{news.title}</a>
+                <a href={`/tin-tuc/${news.id}`}>{news.title}</a>
               </h3>
-              <p className="text-gray-600 line-clamp-3">{news.summary}</p>
-              <a 
-                href={news.link} 
-                className="inline-block mt-4 text-[#ff5722] font-medium hover:underline"
-              >
-                Đọc thêm
-              </a>
             </div>
           </div>
         ))}
       </div>
       
-      {/* Nút điều hướng */}
-      <div className="flex justify-center mt-8 gap-4">
-        <button 
-          onClick={prevSlide}
-          className="bg-gray-200 hover:bg-[#ff5722] w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:text-white"
-          aria-label="Previous slide"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </button>
-        <button 
-          onClick={nextSlide}
-          className="bg-gray-200 hover:bg-[#ff5722] w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:text-white"
-          aria-label="Next slide"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </button>
+      {/* Nút điều hướng và indicators */}
+      <div className="flex justify-center mt-8">
+        {/* Indicator dots */}
+        <div className="flex items-center gap-2">
+          {newsItems.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleSlideChange(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-[#ff5722] w-6' : 'bg-gray-300'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

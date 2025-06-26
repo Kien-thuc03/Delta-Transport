@@ -3,13 +3,53 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt, faEnvelope, faPhone, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import supportIcon from '../assets/icon-telemarketer.webp';
+import contactIcon from '../assets/icon_contact.png';
+import mailIcon from '../assets/icon_mail.webp';
+
 const Footer: React.FC = () => {
   return (
     <footer>
+      <div className="bg-gray-200 py-8">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Tổng đài hỗ trợ */}
+          <div className="bg-white p-6 rounded flex items-center gap-4">
+            <div className="w-16">
+              <img src={contactIcon} alt="Contact Icon" className="w-full" />
+            </div>
+            <div>
+              <p className="text-gray-700 mb-1">Tổng đài hỗ trợ (8h00 - 22h00)</p>
+              <h3 className="text-2xl font-bold text-gray-900">1900 6750</h3>
+              <p className="text-gray-700">Email: deltawebltd@gmail.com</p>
+            </div>
+          </div>
+          
+          {/* Nhận tin ưu đãi */}
+          <div className="bg-white p-6 rounded flex items-center gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-16">
+                <img src={mailIcon} alt="Mail Icon" className="w-full" />
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 w-full">
+              <h3 className="text-xl font-medium text-gray-900">Nhận tin ưu đãi mới nhất !</h3>
+              <div className="flex">
+                <input 
+                  type="email" 
+                  placeholder="Nhập email" 
+                  className="flex-1 border border-gray-300 px-4 py-3 focus:outline-none"
+                />
+                <button className="bg-[#ff5722] text-white px-5 py-3 font-medium">
+                  ĐĂNG KÝ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="bg-white py-12">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          <div className="">
+          <div>
             <h3 className="text-base font-semibold text-gray-800 mb-5">TỔNG CÔNG TY CỔ PHẦN DELTA TRANSPORT</h3>
             <p className="text-gray-600 mb-5 leading-relaxed">
               Delta Transport là doanh nghiệp hàng đầu cung cấp dịch vụ chuyển phát nhanh hàng hoá, bưu kiện trong nước, quốc tế tại Việt Nam.
@@ -26,7 +66,7 @@ const Footer: React.FC = () => {
               </p>
             </div>
           </div>
-          <div className="">
+          <div>
             <h3 className="text-base font-semibold text-gray-800 mb-5">GIỚI THIỆU</h3>
             <ul className="space-y-2.5">
               <li><a href="/" className="text-gray-600 hover:text-[#ff5722]">Trang chủ</a></li>
@@ -52,7 +92,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             
-            <div className="">
+            <div>
               <h3 className="text-base font-semibold text-gray-800 mb-5">KẾT NỐI</h3>
               <div className="flex gap-4">
                 <a href="#" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">

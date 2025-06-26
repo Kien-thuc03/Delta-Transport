@@ -280,13 +280,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Support Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          
-        </div>
-      </section>
-
       {/* Video Modal Component */}
       <VideoModal 
         isOpen={modalState.isOpen} 

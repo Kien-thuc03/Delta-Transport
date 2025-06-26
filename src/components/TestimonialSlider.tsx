@@ -9,37 +9,51 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   
   // Tự động chuyển slide sau 5 giây (5000ms)
   useEffect(() => {
     const timer = setInterval(() => {
-      nextSlide();
+      handleSlideChange(currentIndex + 1);
     }, 5000);
     
     return () => clearInterval(timer);
   }, [currentIndex]);
   
+  const handleSlideChange = (newIndex: number) => {
+    setIsTransitioning(true);
+    
+    // Tính toán index mới
+    let nextIndex = newIndex;
+    if (nextIndex < 0) nextIndex = testimonials.length - 1;
+    if (nextIndex >= testimonials.length) nextIndex = 0;
+    
+    setCurrentIndex(nextIndex);
+    
+    // Kết thúc hiệu ứng transition sau 300ms
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
+  };
+  
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
+    handleSlideChange(currentIndex + 1);
   };
   
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
+    handleSlideChange(currentIndex - 1);
   };
   
   // Xử lý sự kiện vuốt trên mobile
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (isTransitioning) return;
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
   };
   
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     const currentX = e.touches[0].clientX;
     const diff = startX - currentX;
     
@@ -61,13 +75,14 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   
   // Xử lý sự kiện chuột
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (isTransitioning) return;
     e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     setStartX(e.clientX);
     setIsDragging(true);
   };
   
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || isTransitioning) return;
     e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     const currentX = e.clientX;
     const diff = startX - currentX;
@@ -120,7 +135,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
     <div className="relative w-full overflow-hidden">
       <div 
         ref={sliderRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 select-none"
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 select-none py-2"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -139,7 +154,9 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
         {visibleTestimonials.map((testimonial) => (
           <div 
             key={testimonial.id} 
-            className="bg-white p-8 rounded-lg shadow-md relative transition-all duration-300"
+            className={`bg-white p-8 rounded-lg shadow-md relative transition-all duration-300 ${
+              isTransitioning ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
+            }`}
           >
             <div className="flex items-start gap-4 h-full">
               <div className="flex-shrink-0">
@@ -159,17 +176,15 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
         ))}
       </div>
       
-      {/* Điều hướng */}
+      {/* Indicator dots */}
       <div className="flex justify-center mt-6 gap-2">
         {testimonials.map((_, index) => (
           <button
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              Math.floor(currentIndex / (window.innerWidth >= 768 ? 2 : 1)) === Math.floor(index / (window.innerWidth >= 768 ? 2 : 1)) 
-                ? 'bg-[#ff5722]' 
-                : 'bg-gray-300'
+            onClick={() => handleSlideChange(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex ? 'bg-[#ff5722] w-6' : 'bg-gray-300'
             }`}
-            onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

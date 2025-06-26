@@ -1,3 +1,7 @@
+import news1 from '../assets/new2.webp';
+
+
+
 export interface News {
   id: number;
   title: string;
@@ -27,7 +31,7 @@ export const newsItems: News[] = [
   {
     id: 4,
     title: 'VẬN CHUYỂN HÀNG HÓA XUYÊN QUỐC GIA: CƠ HỘI VÀ THÁCH THỨC',
-    image: 'https://images.unsplash.com/photo-1577577553598-9b943b9558c3',
+    image: news1,
     date: '15/06/2019',
   },
   {
