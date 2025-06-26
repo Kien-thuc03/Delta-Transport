@@ -165,7 +165,7 @@ const Home: React.FC = () => {
                 <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
                   ĐỌC TIẾP
                 </button>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-16">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-10">
                   <div className="bg-white p-6 rounded-lg text-center">
                     <div className="text-[#ff5722] text-4xl font-bold">84220+</div>
                     <div className="text-gray-700 font-medium">Đơn hàng/năm</div>

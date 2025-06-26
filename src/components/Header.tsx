@@ -1,90 +1,314 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faYoutube, faFacebook } from '@fortawesome/free-brands-svg-icons';
-import { faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faChevronDown, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../assets/logo.png';
 
 const Header: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Đóng mobile menu khi resize về desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Đóng dropdown khi click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownOpen && !(event.target as Element).closest('.dropdown-container')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [dropdownOpen]);
 
   return (
     <header>
+      {/* Top Header */}
       <div className="bg-gray-100 py-1.5 border-b border-gray-200">
-        <div className="flex justify-between items-center container">
-          <p>Chào mừng bạn đến với dịch vụ vận chuyển của chúng tôi</p>
-          <div className="flex gap-4">
-            <a href="#"><FontAwesomeIcon icon={faInstagram} className="text-gray-600 hover:text-[#ff5722] text-lg" /></a>
-            <a href="#"><FontAwesomeIcon icon={faYoutube} className="text-gray-600 hover:text-[#ff5722] text-lg" /></a>
-            <a href="#"><FontAwesomeIcon icon={faFacebook} className="text-gray-600 hover:text-[#ff5722] text-lg" /></a>
-          </div>
-        </div>
-      </div>
-      
-      <div className="bg-[#010e2a] py-5">
-        <div className="flex justify-between items-center container">
-          <div className="logo">
-            <a href="/">
-              <img src={logo} alt="Delta Transport" className="h-12" />
+        <div className="flex justify-between items-center container mx-auto px-4">
+          <p className="text-sm text-gray-700 hidden md:block">Chào mừng bạn đến với dịch vụ vận chuyển của chúng tôi</p>
+          <div className="flex gap-3">
+            <a 
+              href="#" 
+              aria-label="Instagram"
+              title="Theo dõi chúng tôi trên Instagram"
+            >
+              <FontAwesomeIcon icon={faInstagram} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
+            </a>
+            <a 
+              href="#" 
+              aria-label="YouTube"
+              title="Kênh YouTube của chúng tôi"
+            >
+              <FontAwesomeIcon icon={faYoutube} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
+            </a>
+            <a 
+              href="#" 
+              aria-label="Facebook"
+              title="Trang Facebook của chúng tôi"
+            >
+              <FontAwesomeIcon icon={faFacebook} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
             </a>
           </div>
-          
-          <div className="search-bar bg-white rounded-md p-2 flex items-center w-96 md:w-[500px]">
-            <input type="text" placeholder="Bạn muốn tìm thông tin nào..." className="w-full focus:outline-none" />
-            <button aria-label="Tìm kiếm" className="ml-2 text-gray-500"><FontAwesomeIcon icon={faSearch} /></button>
-          </div>
-          
-          <div className="flex items-center justify-between gap-6">
-            <div className="text-right">
-              <p className="text-sm font-bold text-[#ff5722] text-center">Tư vấn dịch vụ</p>
-              <p className="text-white font-bold text-lg text-center">1900 6750</p>
+        </div>
+      </div>
+      
+      {/* Main Header */}
+      <div className="bg-[#010e2a] py-3 lg:py-5">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <div className="logo flex-shrink-0">
+              <a href="/">
+                <img src={logo} alt="Delta Transport" className="h-8 sm:h-10 lg:h-12" />
+              </a>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-bold text-[#ff5722] text-center">Tư vấn vận chuyển</p>
-              <p className="text-white font-bold text-lg text-center">1900 6750</p>
+            
+            {/* Desktop Search Bar */}
+            <div className="hidden lg:flex search-bar bg-white rounded-md p-2 items-center w-96 xl:w-[500px] mx-4">
+              <input 
+                type="text" 
+                placeholder="Bạn muốn tìm thông tin nào..." 
+                className="w-full focus:outline-none text-sm"
+              />
+              <button 
+                aria-label="Tìm kiếm" 
+                className="ml-2 text-gray-500 hover:text-[#ff5722] transition-colors"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
+            </div>
+            
+            {/* Contact Info - Hidden on mobile */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6 flex-shrink-0">
+              <div className="text-center">
+                <p className="text-xs xl:text-sm font-bold text-[#ff5722]">Tư vấn dịch vụ</p>
+                <p className="text-white font-bold text-sm xl:text-lg whitespace-nowrap">1900 6750</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs xl:text-sm font-bold text-[#ff5722]">Tư vấn vận chuyển</p>
+                <p className="text-white font-bold text-sm xl:text-lg whitespace-nowrap">1900 6750</p>
+              </div>
+            </div>
+
+            {/* Mobile Controls */}
+            <div className="flex items-center gap-3 lg:hidden">
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-[#ff5722] hover:text-white transition-colors p-2"
+                aria-label={mobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
+              >
+                <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} className="text-lg" />
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Search Bar - Luôn hiển thị */}
+          <div className="lg:hidden mt-3">
+            <div className="search-bar bg-white rounded-md p-2 flex items-center">
+              <input 
+                type="text" 
+                placeholder="Bạn muốn tìm thông tin nào..." 
+                className="w-full focus:outline-none text-sm"
+              />
+              <button 
+                aria-label="Tìm kiếm" 
+                className="ml-2 text-gray-500 hover:text-[#ff5722] transition-colors"
+              >
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
             </div>
           </div>
         </div>
       </div>
       
+      {/* Navigation */}
       <nav className="bg-[#ff5722] relative">
+        {/* Desktop Navigation */}
         <div className="container mx-auto px-4">
-          <ul className="flex">
-            <li><a href="/" className="block text-white py-4 px-5 font-medium hover:bg-white/10">Trang chủ</a></li>
-            <li><a href="/gioi-thieu" className="block text-white py-4 px-5 font-medium hover:bg-white/10">Giới thiệu</a></li>
-            <li className="relative group">
+          <ul className="hidden lg:flex">
+            <li>
+              <a href="/" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+                Trang chủ
+              </a>
+            </li>
+            <li>
+              <a href="/gioi-thieu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+                Giới thiệu
+              </a>
+            </li>
+            <li className="relative dropdown-container">
               <a 
                 href="#" 
-                className="block text-white py-4 px-5 font-medium hover:bg-white/10 flex items-center"
+                className="text-white py-4 px-5 font-medium hover:bg-white/10 flex items-center transition-colors"
                 onClick={(e) => {
                   e.preventDefault();
                   setDropdownOpen(!dropdownOpen);
                 }}
               >
                 Thị trường
-                <FontAwesomeIcon icon={faChevronDown} className="ml-1.5 text-xs" />
+                <FontAwesomeIcon 
+                  icon={faChevronDown} 
+                  className={`ml-1.5 text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
+                />
               </a>
-              <div className={`absolute left-0 bg-white shadow-lg min-w-[200px] z-10 ${dropdownOpen ? 'block' : 'hidden'} group-hover:block`}>
+              <div className={`absolute left-0 bg-white shadow-lg min-w-[200px] z-50 transition-all duration-200 ${
+                dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+              }`}>
                 <ul>
                   <li>
-                    <a href="/tin-tuc" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 border-b border-gray-100">
+                    <a href="/tin-tuc" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 border-b border-gray-100 transition-colors">
                       <span className="mr-1.5 text-[#ff5722]">›</span>Tin tức
                     </a>
                   </li>
                   <li>
-                    <a href="/ky-nang-dat-hang" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5">
+                    <a href="/ky-nang-dat-hang" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
                       <span className="mr-1.5 text-[#ff5722]">›</span>Kỹ năng đặt hàng
                     </a>
                   </li>
                 </ul>
               </div>
             </li>
-            <li><a href="/dich-vu" className="block text-white py-4 px-5 font-medium hover:bg-white/10">Dịch vụ</a></li>
-            <li><a href="/lien-he" className="block text-white py-4 px-5 font-medium hover:bg-white/10">Liên hệ</a></li>
-            <li><a href="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10">Hỏi đáp</a></li>
+            <li>
+              <a href="/dich-vu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+                Dịch vụ
+              </a>
+            </li>
+            <li>
+              <a href="/lien-he" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+                Liên hệ
+              </a>
+            </li>
+            <li>
+              <a href="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+                Hỏi đáp
+              </a>
+            </li>
           </ul>
         </div>
+
+        {/* Mobile Navigation */}
+        <div className={`lg:hidden absolute top-full left-0 right-0 bg-[#ff5722] shadow-lg z-40 transition-all duration-300 transform ${
+          mobileMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'
+        }`}>
+          <div className="container mx-auto px-4">
+            <ul className="py-2">
+              <li>
+                <a 
+                  href="/" 
+                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Trang chủ
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/gioi-thieu" 
+                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Giới thiệu
+                </a>
+              </li>
+              <li>
+                <div>
+                  <button
+                    className="w-full text-left text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10 flex items-center justify-between"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  >
+                    Thị trường
+                    <FontAwesomeIcon 
+                      icon={faChevronDown} 
+                      className={`text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
+                    />
+                  </button>
+                  <div className={`bg-white/10 transition-all duration-200 ${
+                    dropdownOpen ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                  }`}>
+                    <a 
+                      href="/tin-tuc" 
+                      className="block text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      › Tin tức
+                    </a>
+                    <a 
+                      href="/ky-nang-dat-hang" 
+                      className="block text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      › Kỹ năng đặt hàng
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a 
+                  href="/dich-vu" 
+                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Dịch vụ
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/lien-he" 
+                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Liên hệ
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/hoi-dap" 
+                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Hỏi đáp
+                </a>
+              </li>
+            </ul>
+            
+            {/* Mobile Contact Info */}
+            <div className="px-4 py-4 border-t border-white/20">
+              <div className="flex justify-around text-center">
+                <div>
+                  <p className="text-xs font-bold text-white/80">Tư vấn dịch vụ</p>
+                  <a href="tel:19006750" className="text-white font-bold text-sm">1900 6750</a>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white/80">Tư vấn vận chuyển</p>
+                  <a href="tel:19006750" className="text-white font-bold text-sm">1900 6750</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
     </header>
   );
 };
