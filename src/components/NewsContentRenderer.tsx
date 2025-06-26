@@ -8,7 +8,7 @@ interface NewsContentRendererProps {
 const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) => {
   const renderBlock = (block: ContentBlock) => {
     switch (block.type) {
-      case 'heading':
+      case 'heading': {
         const level = block.metadata?.level || 2;
         const headingClasses = `font-bold text-gray-800 mb-4 ${
           level === 1 ? 'text-3xl' :
@@ -16,7 +16,7 @@ const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) =>
           level === 3 ? 'text-xl' :
           'text-lg'
         }`;
-        
+              
         if (level === 1) {
           return <h1 key={block.id} className={headingClasses}>{block.content}</h1>;
         } else if (level === 2) {
@@ -30,7 +30,7 @@ const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) =>
         } else {
           return <h6 key={block.id} className={headingClasses}>{block.content}</h6>;
         }
-
+      }
       case 'text':
         return (
           <p 
@@ -64,7 +64,7 @@ const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) =>
           </div>
         );
 
-      case 'list':
+      case 'list': {
         const ListTag = block.metadata?.listType === 'ordered' ? 'ol' : 'ul';
         return (
           <ListTag 
@@ -80,6 +80,7 @@ const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) =>
             ))}
           </ListTag>
         );
+      }
 
       case 'quote':
         return (

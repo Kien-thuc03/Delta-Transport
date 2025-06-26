@@ -151,46 +151,103 @@ export const newsArticles: NewsArticle[] = [
   },
   {
     id: 2,
-    title: 'Đặt hàng Quảng Châu về kinh doanh có lợi ích gì?',
+    title: 'Đặt hàng quảng châu về kinh doanh có lợi ích gì?',
     image: 'https://bizweb.dktcdn.net/100/356/587/articles/adfd.jpg?v=1558853162507',
     date: '26/05/2019',
     author: 'Admin',
-    excerpt: 'Việc đặt hàng Quảng Châu về kinh doanh mang lại nhiều lợi ích to lớn cho các doanh nghiệp.',
+    excerpt: 'Dịch vụ kinh doanh hàng hóa thời trang đang là một xu hướng khá hot hiện nay đem lại rất nhiều lợi nhuận cho chủ buôn.',
     slug: 'dat-hang-quang-chau-ve-kinh-doanh-co-loi-ich-gi',
     commentCount: 0,
     content: [
       {
-        id: 'heading-1',
-        type: 'heading',
-        content: 'Lợi ích của việc đặt hàng Quảng Châu',
-        metadata: { level: 2 }
-      },
-      {
-        id: 'intro-text',
+        id: 'intro',
         type: 'text',
-        content: 'Trong thời đại kinh tế toàn cầu hóa, việc tìm kiếm nguồn hàng chất lượng với giá cả cạnh tranh là mối quan tâm hàng đầu của các doanh nghiệp. Quảng Châu - trung tâm thương mại lớn của Trung Quốc, đã trở thành điểm đến lý tưởng cho việc nhập khẩu hàng hóa.',
+        content: 'Dịch vụ kinh doanh hàng hóa thời trang đang là một xu hướng khá hot hiện nay đem lại rất nhiều lợi nhuận cho chủ buôn. Hầu hết việc nhập hàng hóa thời trang chủ yếu là từ quảng châu. Dathang quangchau đã là xu hướng từ lâu của hầu hết các chủ buôn không chỉ của Việt Nam mà còn của hầu hết các nước trên thế giới. Vậy việc đặt hàng quảng châu có lợi ích gì?',
         metadata: { style: 'normal' }
       },
       {
-        id: 'benefits-list',
-        type: 'list',
-        content: 'Các lợi ích chính khi đặt hàng Quảng Châu',
-        metadata: {
-          listType: 'unordered',
-          items: [
-            'Giá cả cạnh tranh so với thị trường trong nước, tiết kiệm chi phí đáng kể',
-            'Đa dạng mẫu mã và chất lượng sản phẩm phong phú',
-            'Nguồn hàng ổn định, đáp ứng nhu cầu số lượng lớn',
-            'Dịch vụ hỗ trợ chuyên nghiệp từ đặt hàng đến vận chuyển',
-            'Cơ hội tiếp cận công nghệ và xu hướng mới nhất'
-          ]
-        }
+        id: 'benefits-title',
+        type: 'text',
+        content: 'Những lợi ích khi <strong>đặt hàng quảng châu</strong>',
+        metadata: { style: 'normal' }
       },
       {
-        id: 'conclusion',
+        id: 'variety-heading',
         type: 'text',
-        content: 'Đặt hàng Quảng Châu không chỉ là lựa chọn thông minh cho các doanh nghiệp muốn tối ưu hóa chi phí mà còn là cơ hội để nâng cao chất lượng sản phẩm và mở rộng thị trường.',
-        metadata: { style: 'italic' }
+        content: 'Hàng hóa đa dạng về mẫu mã nên người tiêu dùng dễ chọn lựa',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'variety-detail',
+        type: 'text',
+        content: 'Hàng hóa tại quảng châu cũng khá đa dạng về mẫu mã chính vì thế mà mọi khách hàng hoàn toàn có thể lựa chọn hàng hóa phù hợp với nhu cầu buôn bán của mình.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'variety-examples',
+        type: 'text',
+        content: 'Khi nhập hàng Quảng Châu người mua rất dễ dàng có thể lựa chọn đồ phù hợp cho mình. Hàng hóa có đủ các kiểu như áo phông, váy, áp sơ mi,… Do hàng quảng châu rất bắt kịp xu hướng thời trang do đó mà các chủ buôn hoàn toàn có thể lựa chọn thoải mái các mặt hàng của mình.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'quality-info',
+        type: 'text',
+        content: 'Không chỉ đa dạng về mấu mã mà hàng quảng châu còn đảm bảo về chất lượng do sản xuất từ những công ty may mặc lớn và uy tín nên chất lượng khá đảm bảo. Hơn nữa hàng Quảng Châu còn khá linh động về thời tiết và về mùa. Nên khách hàng có thể tha hồ lựa chọn mua về để kinh doanh.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'price-heading',
+        type: 'text',
+        content: 'Giá nhập rẻ',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'price-detail',
+        type: 'text',
+        content: 'Trung quốc là nơi nổi tiếng với các thương hiệu trên thế giới do đó mà trung quốc rất biết tận dụng những lợi thế của quốc gia để thu lợi nhuận.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'price-stability',
+        type: 'text',
+        content: 'Hàng quảng châu cũng không có sự giao động mạnh khi có sự biến đổi của thế giới vì thế đây chính là một trong những lợi thế cho các nhà kinh doanh quảng châu.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'shipping-info',
+        type: 'text',
+        content: 'không chỉ có giá nhập rẻ mà cách vận chuyển hàng hòa từ quảng châu về Việt Nam cũng khá thuận lợi, bằng nhiều con đường khác nhau, giá vận chuyển cũng không quá cao vì thế mà việc nhập hàng quảng châu về Việt Nam hết sức thuận lợi.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'ordering-methods-heading',
+        type: 'text',
+        content: 'Nhiều cách thức đặt hàng khác nhau',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'ordering-advantage',
+        type: 'text',
+        content: 'Một ưu điểm nữa khiến cho mặt hàng quảng châu thu hút khách hàng mua đó là có nhiều cách thức đặt hàng khác nhau. Do đó bạn có thể dễ dàng mua bán hàng hóa bên quảng châu.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'past-vs-present',
+        type: 'text',
+        content: 'So với những năm trước việc đặt hàng trung quốc chủ yếu các lái buôn phải trực tiếp đánh hàng tại quảng châu điều này gây rất tốn kém cho việc đi lại và chi phí ăn ở.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'modern-ordering',
+        type: 'text',
+        content: 'Ngày nay với sự phát triển của công nghệ internet bạn chỉ cần ngồi ở nhà cũng dễ dàng có thể đặt hàng quảng châu rất tiện lợi cho các chỉ buôn.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'intermediary-services',
+        type: 'text',
+        content: 'Hơn nữa để vận chuyển hàng hóa từ quảng châu về việt nam bạn có thể lưa chọn những đơn vị trung gian, hàng hóa về tận tay mà bạn không cần phải vất vả đi đến nơi để vận chuyển hàng hóa về.',
+        metadata: { style: 'normal' }
       }
     ],
     tags: ['kinh doanh', 'quảng châu', 'import', 'thương mại'],
@@ -202,45 +259,42 @@ export const newsArticles: NewsArticle[] = [
     image: 'https://bizweb.dktcdn.net/100/356/587/articles/14980721-1143826228988065-3528006525010847038-n.png?v=1558852740177',
     date: '26/05/2019',
     author: 'Admin',
-    excerpt: 'Hướng dẫn chi tiết cách thuê xe tải chở hàng của nhà xe Á Châu một cách nhanh chóng và hiệu quả.',
+    excerpt: 'Ngày nay nhu cầu vận chuyển hàng hoá đi Bắc Nam của các doanh nghiệp sản xuất trong nước ngày càng nhiều.',
     slug: 'can-thue-xe-tai-cho-hang-cua-nha-xe-a-chau-phai-lam-the-nao',
     commentCount: 0,
     content: [
       {
         id: 'intro',
         type: 'text',
-        content: 'Nhà xe Á Châu là một trong những đơn vị vận chuyển uy tín hàng đầu tại Việt Nam. Với đội xe đa dạng và dịch vụ chuyên nghiệp, việc thuê xe tải của Á Châu sẽ đảm bảo hàng hóa của bạn được vận chuyển an toàn và đúng hẹn.',
+        content: 'Ngày nay nhu cầu vận chuyển hàng hoá đi Bắc Nam của các doanh nghiệp sản xuất trong nước ngày càng nhiều. Để đáp ứng cho nhu cầu này rất nhiều các công ty vận tải được thành lập từ quy mô nhỏ, vừa đến lớn. Trong đó nhà xe Á Châu được rất nhiều Doanh nghiệp biết tới và có mong muốn thuê xe tải chở hàng. Mọi nhu cầu vận chuyển hàng đi Bắc Nam đều được nhà xe Á Châu nhận chở đúng hẹn đúng lịch trình.',
         metadata: { style: 'normal' }
       },
       {
-        id: 'steps-heading',
-        type: 'heading',
-        content: 'Các bước thuê xe tải Á Châu',
-        metadata: { level: 2 }
-      },
-      {
-        id: 'steps-list',
-        type: 'list',
-        content: 'Quy trình thuê xe đơn giản',
-        metadata: {
-          listType: 'ordered',
-          items: [
-            'Liên hệ hotline hoặc truy cập website chính thức của Á Châu',
-            'Cung cấp thông tin về hàng hóa và lộ trình vận chuyển',
-            'Nhận báo giá và lựa chọn loại xe phù hợp',
-            'Ký hợp đồng và thanh toán theo thỏa thuận',
-            'Theo dõi hành trình vận chuyển qua hệ thống GPS'
-          ]
-        }
-      },
-      {
-        id: 'note',
+        id: 'advantages-title',
         type: 'text',
-        content: 'Lưu ý: Nên đặt xe trước ít nhất 24h để đảm bảo có xe phù hợp với nhu cầu vận chuyển của bạn.',
-        metadata: { style: 'italic' }
+        content: 'Những ưu thế vượt trội của nhà xe Á Châu chuyên vận chuyển hàng hoá Bắc Nam',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'reputation',
+        type: 'text',
+        content: 'Nằm trong top 10 công ty dịch vụ vận chuyển hàng hoá Bắc Nam uy tín chuyên nghiệp, nhà xe Á Châu đã nhận được rất nhiều quan tâm và những phản hồi tích cực của quý khách hàng đã sử dụng dịch vụ vận chuyển của chúng tôi. Từ đó chúng tôi càng có thêm động lực để tiếp tục phát triển mà mở rộng dịch vụ vận chuyển của mình hơn nữa.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'capacity',
+        type: 'text',
+        content: 'Với lượng hàng hoá mỗi ngày nhiều, nên hàng ngày đều xếp xe xếp hàng vận chuyển đi Bắc Nam. Năng suất vận chuyển lớn đáp ứng được nhu cầu vận chuyển cao của các Doanh nghiệp sản xuất. Điều kiện kho bãi rộng rãi để trữ hàng xuất kho và nhập kho thuận lợi, đảm bảo hàng hoá không bị thất lạc hay hư hỏng do thời tiết.',
+        metadata: { style: 'normal' }
+      },
+      {
+        id: 'fleet-info',
+        type: 'text',
+        content: 'Đầu tư dàn xe tải đủ tải trọng từ 1,25 tấn cho tới xe cont đầu kéo 30 tấn, chúng tôi có những phương thức chuyên biệt phù hợp với kinh phí của từng đơn hàng mà các Doanh nghiệp muốn vận chuyển. Bên cạnh đó với những đơn hàng trên 3 tấn và trên 14 khối nhà xe Á Châu sẽ hỗ trợ giao hàng tận nơi miễn phí cho quý khách hàng.',
+        metadata: { style: 'normal' }
       }
     ],
-    tags: ['vận chuyển', 'xe tải', 'á châu', 'logistics'],
+    tags: ['vận chuyển', 'xe tải', 'á châu', 'logistics', 'bắc nam'],
     category: 'Vận chuyển'
   }
 ]; 
