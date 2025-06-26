@@ -111,9 +111,9 @@ const Home: React.FC = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/2">
+            <div className="md:w-5/12">
               <div className="overflow-hidden rounded-lg relative">
-                <img src={banner1} alt="Nhân viên vận chuyển" className="w-[85%] h-auto" />
+                <img src={banner1} alt="Nhân viên vận chuyển" className="w-full h-auto" />
                 <a 
                   href="javascript:;" 
                   className="video_play play-now" 
@@ -133,7 +133,7 @@ const Home: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="md:w-1/2 flex flex-col gap-6">
+            <div className="md:w-7/12 flex flex-col gap-6">
               <h2 className="text-1.5xl md:text-2xl font-bold text-gray-800">CHÚNG TÔI Ở ĐÂY ĐỂ HOÀN THÀNH SỨ MỆNH VẬN CHUYỂN</h2>
               <p className="text-gray-600">Được thành lập từ năm 2010 chúng tôi đã có trên 9 năm kinh nghiệm về vận chuyển hàng hóa, đáp ứng yêu cầu của hàng nghìn khách hàng.</p>
               

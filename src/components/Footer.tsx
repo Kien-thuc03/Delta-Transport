@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faMapMarkerAlt, faEnvelope, faPhone, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faEnvelope, faPhone, faArrowUp, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import supportIcon from '../assets/icon-telemarketer.webp';
 import contactIcon from '../assets/icon_contact.png';
 import mailIcon from '../assets/icon_mail.webp';
 
 const Footer: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <footer>
       <div className="bg-gray-200 py-8">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 md:gap-8">
           {/* Tổng đài hỗ trợ */}
-          <div className="bg-white p-6 rounded flex items-center gap-4">
-            <div className="w-16">
+          <div className="bg-white p-6 rounded flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <div className="w-16 mb-3 md:mb-0">
               <img src={contactIcon} alt="Contact Icon" className="w-full" />
             </div>
             <div>
@@ -24,23 +30,23 @@ const Footer: React.FC = () => {
           </div>
           
           {/* Nhận tin ưu đãi */}
-          <div className="bg-white p-6 rounded flex items-center gap-4">
-            <div className="flex items-center gap-4">
-              <div className="w-16">
+          <div className="bg-white p-6 rounded">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <div className="w-16 mb-3 md:mb-0">
                 <img src={mailIcon} alt="Mail Icon" className="w-full" />
               </div>
-            </div>
-            <div className="flex flex-col gap-4 w-full">
-              <h3 className="text-xl font-medium text-gray-900">Nhận tin ưu đãi mới nhất !</h3>
-              <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder="Nhập email" 
-                  className="flex-1 border border-gray-300 px-4 py-3 focus:outline-none"
-                />
-                <button className="bg-[#ff5722] text-white px-5 py-3 font-medium">
-                  ĐĂNG KÝ
-                </button>
+              <div className="flex flex-col gap-4 w-full text-center md:text-left">
+                <h3 className="text-xl font-medium text-gray-900">Nhận tin ưu đãi mới nhất !</h3>
+                <div className="flex">
+                  <input 
+                    type="email" 
+                    placeholder="Nhập email" 
+                    className="flex-1 border border-gray-300 px-4 py-3 focus:outline-none"
+                  />
+                  <button className="bg-[#ff5722] text-white px-5 py-3 font-medium">
+                    ĐĂNG KÝ
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -66,9 +72,20 @@ const Footer: React.FC = () => {
               </p>
             </div>
           </div>
-          <div>
-            <h3 className="text-base font-semibold text-gray-800 mb-5">GIỚI THIỆU</h3>
-            <ul className="space-y-2.5">
+          
+          {/* GIỚI THIỆU - Accordion cho mobile */}
+          <div className="border-b md:border-b-0 pb-3 md:pb-0">
+            <div 
+              className="flex justify-between items-center md:block cursor-pointer md:cursor-auto" 
+              onClick={toggleMenu}
+            >
+              <h3 className="text-base font-semibold text-gray-800 mb-0 md:mb-5">GIỚI THIỆU</h3>
+              <FontAwesomeIcon 
+                icon={isMenuOpen ? faMinus : faPlus} 
+                className="text-gray-400 block md:!hidden" 
+              />
+            </div>
+            <ul className={`space-y-2.5 mt-3 md:mt-0 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
               <li><a href="/" className="text-gray-600 hover:text-[#ff5722]">Trang chủ</a></li>
               <li><a href="/gioi-thieu" className="text-gray-600 hover:text-[#ff5722]">Giới thiệu</a></li>
               <li><a href="/thi-truong" className="text-gray-600 hover:text-[#ff5722]">Thị trường</a></li>

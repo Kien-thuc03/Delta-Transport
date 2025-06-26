@@ -158,18 +158,18 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
               isTransitioning ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
             }`}
           >
-            <div className="flex items-start gap-4 h-full">
-              <div className="flex-shrink-0">
+            <div className="md:flex md:items-start md:gap-4 h-full">
+              <div className="md:flex-shrink-0 flex justify-center mb-4 md:mb-0">
                 <img 
                   src={testimonial.avatar} 
                   alt={testimonial.name} 
-                  className="w-auto h-full rounded-full object-cover border-2 border-[#ff5722]"
-                  draggable="false" // Ngăn chặn việc kéo thả ảnh
+                  className="w-16 h-16 rounded-full object-cover border-2 border-[#ff5722]"
+                  draggable="false"
                 />
               </div>
-              <div className='h-full flex flex-col justify-between'>
-                <p className="text-gray-600">{testimonial.content}</p>
-                <h4 className="font-medium text-[#ff5722]">{testimonial.name}</h4>
+              <div className='h-full flex flex-col md:justify-between'>
+                <p className="text-gray-600 text-center md:text-left mb-4 md:mb-0">{testimonial.content}</p>
+                <h4 className="font-medium text-[#ff5722] text-center md:text-left">{testimonial.name}</h4>
               </div>
             </div>
           </div>
