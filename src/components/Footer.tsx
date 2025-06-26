@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer>
-      <div className="bg-white py-12">
+      <div className="bg-white py-12 border-t border-gray-200">
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div>
             <h3 className="text-base font-semibold text-gray-800 mb-5">TỔNG CÔNG TY CỔ PHẦN DELTA TRANSPORT</h3>
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
             </div>
             
             <div>
-              <h3 className="text-base font-semibold text-gray-800 mb-5">KẾT NỐI</h3>
+              <h3 className="text-base font-semibold text-gray-800 my-5">KẾT NỐI</h3>
               <div className="flex gap-4">
                 <a href="#" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faFacebook} />
