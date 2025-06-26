@@ -160,7 +160,7 @@ const NewsDetail: React.FC = () => {
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6">
-                <div className="border-b border-gray-200 pb-4 mb-6">
+                <div className="border-b border-[#ff5722] pb-4 mb-6">
                   <h2 className="text-xl font-bold text-gray-800">
                     <a href="/tin-tuc" className="hover:text-[#ff5722] transition-colors">
                       Tin đọc nhiều

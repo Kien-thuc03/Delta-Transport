@@ -2,8 +2,9 @@ import news1 from '../assets/new1.webp';
 import news2 from '../assets/new2.webp';
 import news3 from '../assets/new3.webp';
 import news4 from '../assets/new4.webp';
-import news5 from '../assets/new5.webp';
-import news6 from '../assets/new6.webp';
+// Sử dụng lại các ảnh có sẵn cho bài 5 và 6
+import news5 from '../assets/new1.webp';
+import news6 from '../assets/new2.webp';
 
 export interface ContentBlock {
   id: string;
@@ -130,7 +131,7 @@ export const newsArticles: NewsArticle[] = [
       {
         id: 'image-1',
         type: 'image',
-        content: 'https://bizweb.dktcdn.net/thumb/large/100/356/587/files/dong-phuc-cong-so-somi-dep-nhat1.png?v=1558853221528',
+        content: news1,
         metadata: {
           alt: 'Mẫu thời trang nữ từ Quảng Châu',
           caption: 'một số mẫu từ nguồn lấy hàng quảng châu cho các bạn lựa chọn',
@@ -165,7 +166,7 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 2,
     title: 'Đặt hàng quảng châu về kinh doanh có lợi ích gì?',
-    image: 'https://bizweb.dktcdn.net/100/356/587/articles/adfd.jpg?v=1558853162507',
+    image: news2,
     date: '26/05/2019',
     author: 'Admin',
     excerpt: 'Dịch vụ kinh doanh hàng hóa thời trang đang là một xu hướng khá hot hiện nay đem lại rất nhiều lợi nhuận cho chủ buôn.',
@@ -269,7 +270,7 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 3,
     title: 'Cần thuê xe tải chở hàng của nhà xe Á Châu phải làm thế nào?',
-    image: 'https://bizweb.dktcdn.net/100/356/587/articles/14980721-1143826228988065-3528006525010847038-n.png?v=1558852740177',
+    image: news3,
     date: '26/05/2019',
     author: 'Admin',
     excerpt: 'Ngày nay nhu cầu vận chuyển hàng hoá đi Bắc Nam của các doanh nghiệp sản xuất trong nước ngày càng nhiều.',
@@ -313,7 +314,7 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 4,
     title: 'Nghề xách tay hàng hiệu - Có mánh nhanh giàu',
-    image: 'https://bizweb.dktcdn.net/100/356/587/articles/tim-hieu-ve-hinh-thuc-bao-hiem-hang-hoa-van-chuyen-noi-dia-anh1.jpg?v=1558852581893',
+    image: news4,
     date: '26/05/2019',
     author: 'Admin',
     excerpt: 'Dịch vụ vận chuyển hàng hóa từ nước ngoài về Việt Nam đang được coi là nghề đem lại thu nhập hấp dẫn.',
@@ -459,7 +460,7 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 5,
     title: 'Không tin trạm cân, tài xế xe tải nằm chờ suốt đêm',
-    image: 'https://bizweb.dktcdn.net/100/356/587/articles/doi-xe-van-chuyen-3.jpg?v=1558852494927',
+    image: news5,
     date: '26/05/2019',
     author: 'Admin',
     excerpt: 'Câu chuyện về những tài xế xe tải và những khó khăn trong công việc vận chuyển hàng hóa với vấn đề trạm cân tải trọng.',
