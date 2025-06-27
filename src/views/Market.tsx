@@ -85,7 +85,7 @@ const Market: React.FC = () => {
                 <div className="flex-1 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent"></div>
               </div>
               
-              {newsItems.slice(1, 6).map((item, index) => (
+              {newsItems.slice(1, 3).map((item) => (
                 <div key={item.id} className="group">
                   <Link to={`/tin-tuc/${item.slug}`} className="block">
                     <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#ff5722]/30 hover:-translate-y-1">
@@ -93,11 +93,9 @@ const Market: React.FC = () => {
                         <img 
                           src={item.image} 
                           alt={item.title} 
-                          className="w-24 h-20 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300" 
+                          className="w-32 h-28 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300" 
                         />
-                        <div className="absolute -top-2 -left-2 w-6 h-6 bg-[#ff5722] text-white text-xs font-bold rounded-full flex items-center justify-center">
-                          {index + 2}
-                        </div>
+                        
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="font-bold text-gray-800 group-hover:text-[#ff5722] transition-colors mb-2 text-sm leading-tight line-clamp-2">

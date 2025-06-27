@@ -504,7 +504,7 @@ export const newsArticles: NewsArticle[] = [
   {
     id: 6,
     title: 'Trung Quốc chạy đua đưa hàng đến Mỹ trước giờ G',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96',
+    image: news6,
     date: '26/05/2019',
     author: 'Admin',
     excerpt: 'Những con tàu chở hàng từ Trung Quốc đến Mỹ đều kín đặc trước thời hạn áp thuế mới.',
