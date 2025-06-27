@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/chatButton.css';
+import '../../styles/chatButton.css';
 
 const ChatButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);

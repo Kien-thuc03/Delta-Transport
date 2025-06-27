@@ -389,18 +389,6 @@ const Market: React.FC = () => {
               </svg>
             </Link>
           </div>
-          
-
-          {/* Back to top button */}
-          <button 
-            onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
-            className="fixed bottom-8 right-8 bg-[#ff5722] text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-[#e64a19] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:ring-opacity-50"
-            aria-label="Cuộn lên đầu trang"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </button>
         </div>
       </div>
     </Layout>

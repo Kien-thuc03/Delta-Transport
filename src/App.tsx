@@ -5,7 +5,8 @@ import About from './views/About'
 import News from './views/News'
 import NewsDetail from './views/NewsDetail'
 import Market from './views/Market'
-import ChatButton from './components/ChatButton'
+import ChatButton from './components/button/ChatButton'
+import BackToTopButton from './components/button/BackOnTop'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/thi-truong" element={<Market />} />
         </Routes>
         <ChatButton />
+        <BackToTopButton />
       </div>
     </Router>
   )

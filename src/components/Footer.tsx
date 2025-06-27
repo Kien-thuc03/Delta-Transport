@@ -91,9 +91,11 @@ const Footer: React.FC = () => {
       <div className="bg-[#010e2a] py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <p className="text-white m-0">&copy; Bản quyền thuộc về <span className="text-[#ff5722]">Delta Web</span> | Cung cấp bởi <span className="text-[#ff5722]">Sapo</span></p>
-          <a href="#top" className="flex items-center gap-1.5 text-[#ff5722]">
-            Lên đầu trang <FontAwesomeIcon icon={faArrowUp} className="text-sm" />
-          </a>
+          <div className='hidden md:block'>
+            <a href="#top" className="flex items-center gap-1.5 text-[#ff5722]">
+              Lên đầu trang <FontAwesomeIcon icon={faArrowUp} className="text-sm" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
