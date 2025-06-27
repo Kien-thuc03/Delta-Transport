@@ -75,7 +75,7 @@ const Header: React.FC = () => {
   }, [dropdownOpen, hoverTimeout, mobileMenuOpen]);
 
   return (
-    <header>
+    <header className="sticky top-0 z-50">
       {/* Top Header */}
       <div className="bg-gray-100 py-1.5 border-b border-gray-200">
         <div className="flex justify-between items-center container mx-auto px-4">
