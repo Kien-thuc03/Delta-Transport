@@ -168,7 +168,10 @@ const Home: React.FC = () => {
               </div>
               
               <div className="mt-4">
-                <button onClick={() => navigate('/gioi-thieu')} className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
+                <button onClick={() => {
+                  navigate('/gioi-thieu');
+                  window.scrollTo(0, 0);
+                }} className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
                   ĐỌC TIẾP
                 </button>
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mt-10">
