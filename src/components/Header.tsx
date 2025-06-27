@@ -292,41 +292,59 @@ const Header: React.FC = () => {
               </li>
               <li>
                 <div>
-                  <button
-                    type="button"
-                    className="w-full text-left text-white py-3 px-4 font-medium hover:bg-white/10 active:bg-white/20 transition-colors border-b border-white/10 flex items-center justify-between touch-manipulation"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setDropdownOpen(!dropdownOpen);
-                    }}
-                  >
-                    Thị trường
-                    <FontAwesomeIcon 
-                      icon={faChevronDown} 
-                      className={`text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
-                    />
-                  </button>
+                  <div className="flex items-center justify-between border-b border-white/10">
+                    <Link
+                      to="/thi-truong" 
+                      className="text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
+                      onClick={closeMobileMenu}
+                    >
+                      Thị trường
+                    </Link>
+                    <button
+                      type="button"
+                      className="text-white py-3 px-4 hover:bg-white/10 active:bg-white/20 transition-colors"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDropdownOpen(!dropdownOpen);
+                      }}
+                      aria-label="Toggle dropdown"
+                    >
+                      <FontAwesomeIcon 
+                        icon={faChevronDown} 
+                        className={`text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
+                      />
+                    </button>
+                  </div>
                   <div className={`bg-white/10 transition-all duration-200 ${
                     dropdownOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                   }`}>
                     {/* Tin tức với sub-menu */}
                     <div>
-                      <button
-                        type="button"
-                        className="w-full text-left text-white py-2 px-8 hover:bg-white/10 active:bg-white/20 transition-colors text-sm flex items-center justify-between touch-manipulation"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setNewsDropdownOpen(!newsDropdownOpen);
-                        }}
-                      >
-                        Tin tức
-                        <FontAwesomeIcon 
-                          icon={faChevronDown} 
-                          className={`text-xs transition-transform ${newsDropdownOpen ? 'rotate-180' : ''}`} 
-                        />
-                      </button>
+                      <div className="flex items-center justify-between">
+                        <Link
+                          to="/tin-tuc"
+                          className="text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
+                          onClick={closeMobileMenu}
+                        >
+                          Tin tức
+                        </Link>
+                        <button
+                          type="button"
+                          className="text-white py-2 px-4 hover:bg-white/10 active:bg-white/20 transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setNewsDropdownOpen(!newsDropdownOpen);
+                          }}
+                          aria-label="Toggle news dropdown"
+                        >
+                          <FontAwesomeIcon 
+                            icon={faChevronDown} 
+                            className={`text-xs transition-transform ${newsDropdownOpen ? 'rotate-180' : ''}`} 
+                          />
+                        </button>
+                      </div>
                       <div className={`bg-white/20 transition-all duration-200 ${
                         newsDropdownOpen ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}>
