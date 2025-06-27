@@ -202,3 +202,122 @@ body.modal-open {
 .pulse-glow {
   animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Title section animations */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.title-slide-in {
+  animation: slideInFromLeft 0.8s ease-out forwards;
+}
+
+.link-slide-in {
+  animation: slideInFromRight 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+
+/* Arrow triangle CSS shape for titles */
+.arrow-right {
+  position: relative;
+}
+
+.arrow-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  transition: all 0.3s ease;
+}
+
+
+/* Hover effects for view more links */
+.view-more-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.view-more-link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -100%;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition: left 0.3s ease;
+  transform: translateY(-50%);
+}
+
+.view-more-link:hover::before {
+  left: 0;
+}
+
+
+/* Enhanced card animations */
+@keyframes cardPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.card-pulse:hover {
+  animation: cardPulse 0.6s ease-in-out;
+}
+
+
+/* Floating animation for icons */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+/* Shimmer effect for loading */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}

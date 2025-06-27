@@ -61,7 +61,7 @@ const Market: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -89,16 +89,33 @@ const Market: React.FC = () => {
         <div className="container mx-auto px-4 py-6 lg:py-10">
           {/* TIN MỚI NHẤT */}
           <div className="relative mb-8">
-            <h2 className="bg-gradient-to-r from-[#ff5722] to-[#e64a19] text-white font-bold text-xl py-4 px-8 inline-block relative z-10 uppercase tracking-wide shadow-lg rounded-tl-lg rounded-tr-lg">
-              <span className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faNewspaper} className="animate-pulse" />
-                TIN MỚI NHẤT
-              </span>
-            </h2>
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#ff5722] to-[#e64a19] -z-0 transform -translate-y-1/2 opacity-30"></div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div className="relative title-slide-in">
+                <h2 className="bg-[#ff5722] text-white font-bold text-base sm:text-lg py-2 sm:py-3 px-4 sm:px-6 inline-block relative z-10 uppercase tracking-wide shadow-md clip-title">
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faNewspaper} className="float-animation text-sm" />
+                    <span className="text-sm sm:text-base">TIN MỚI NHẤT</span>
+                  </span>
+                </h2>
+              </div>
+
+              <div className="hidden sm:block link-slide-in">
+                <Link 
+                  to="/tin-tuc" 
+                  className="group view-more-link inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105"
+                  aria-label="Xem tất cả tin tức"
+                >
+                  <span className="group-hover:underline">Xem tất cả</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent -z-0 opacity-70"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-4">
             {/* Bài viết chính lớn */}
             <div className="lg:col-span-2">
               {loading ? (
@@ -195,39 +212,50 @@ const Market: React.FC = () => {
                 ))
               )}
               
-              {/* View all link */}
-              <div className="pt-6 border-t border-gray-200">
-                <Link 
-                  to="/tin-tuc" 
-                  className="inline-flex items-center gap-3 text-[#ff5722] hover:text-[#e64a19] font-bold text-sm transition-all duration-300 hover:gap-4 bg-gradient-to-r from-[#ff5722]/5 to-[#e64a19]/5 px-6 py-3 rounded-full hover:shadow-lg"
-                  aria-label="Xem tất cả tin tức"
-                >
-                  <span>XEM TẤT CẢ TIN TỨC</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-              </div>
+              
             </div>
+          </div>
+
+          {/* Nút xem thêm cho mobile */}
+          <div className="flex justify-center mb-6 sm:hidden">
+            <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105">
+              <span>Xem tất cả</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
 
           {/* HƯỚNG DẪN ĐẶT HÀNG */}
           <div className="relative mb-8">
-            <h2 className="bg-gradient-to-r from-[#ff5722] to-[#e64a19] text-white font-bold text-xl py-4 px-8 inline-block relative z-10 uppercase tracking-wide shadow-lg rounded-tl-lg rounded-tr-lg">
-              <span className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faShoppingBag} className="animate-bounce" />
-                HƯỚNG DẪN ĐẶT HÀNG
-              </span>
-            </h2>
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#ff5722] to-[#e64a19] -z-0 transform -translate-y-1/2 opacity-30"></div>
-            <div className="absolute top-1/2 right-4 md:right-8 -translate-y-1/2">
-              <Link to="/tin-tuc" className="text-[#ff5722] hover:text-[#e64a19] hover:underline text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#2188f3] focus:ring-opacity-50 rounded px-2 py-1 mr-6" aria-label="Xem tất cả hướng dẫn">
-                Xem tất cả &gt;
-              </Link>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div className="relative title-slide-in">
+                <h2 className="bg-[#ff5722] text-white font-bold text-base sm:text-lg py-2 sm:py-3 px-4 sm:px-6 inline-block relative z-10 uppercase tracking-wide shadow-md clip-title">
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faShoppingBag} className="float-animation text-sm" />
+                    <span className="text-sm sm:text-base">HƯỚNG DẪN ĐẶT HÀNG</span>
+                  </span>
+                </h2>
+              </div>
+              <div className="hidden sm:block">
+                <div className="flex justify-end link-slide-in">
+                  <Link 
+                    to="/tin-tuc" 
+                    className="group view-more-link inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105"
+                    aria-label="Xem tất cả hướng dẫn đặt hàng"
+                  >
+                    <span className="group-hover:underline">Xem tất cả</span>
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             </div>
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent -z-0 opacity-70"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
             {loading ? (
               <>
                 <NewsItemSkeleton />
@@ -270,23 +298,46 @@ const Market: React.FC = () => {
             )}
           </div>
 
-          {/* TIN TỨC THỊ TRƯỜNG */}
-          <div className="relative mb-8">
-            <h2 className="bg-gradient-to-r from-[#ff5722] to-[#e64a19] text-white font-bold text-xl py-4 px-8 inline-block relative z-10 uppercase tracking-wide shadow-lg rounded-tl-lg rounded-tr-lg">
-              <span className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faChartLine} className="animate-pulse" />
-                TIN TỨC THỊ TRƯỜNG
-              </span>
-            </h2>
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#ff5722] to-[#e64a19] -z-0 transform -translate-y-1/2 opacity-30"></div>
-            <div className="absolute top-1/2 right-4 md:right-8 -translate-y-1/2">
-              <Link to="/tin-tuc" className="text-[#ff5722] hover:text-[#e64a19] hover:underline text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:ring-opacity-50 rounded px-2 py-1 mr-6" aria-label="Xem tất cả tin tức thị trường">
-                Xem tất cả &gt;
-              </Link>
-            </div>
+          {/* Nút xem thêm cho mobile */}
+          <div className="flex justify-center mb-6 sm:hidden">
+            <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105">
+              <span>Xem tất cả</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {/* TIN TỨC THỊ TRƯỜNG */}
+          <div className="relative mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div className="relative title-slide-in">
+                <h2 className="bg-[#ff5722] text-white font-bold text-base sm:text-lg py-2 sm:py-3 px-4 sm:px-6 inline-block relative z-10 uppercase tracking-wide shadow-md clip-title">
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faChartLine} className="float-animation text-sm" />
+                    <span className="text-sm sm:text-base">TIN TỨC THỊ TRƯỜNG</span>
+                  </span>
+                </h2>
+              </div>
+              <div className="hidden sm:block">
+                <div className="flex justify-end link-slide-in">
+                  <Link 
+                    to="/tin-tuc" 
+                    className="group view-more-link inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105"
+                    aria-label="Xem tất cả tin tức thị trường"
+                  >
+                    <span className="group-hover:underline">Xem tất cả</span>
+                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent -z-0 opacity-70"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
             {loading ? (
               <>
                 <NewsItemSkeleton />
@@ -328,6 +379,17 @@ const Market: React.FC = () => {
               ))
             )}
           </div>
+          
+          {/* Nút xem thêm cho mobile */}
+          <div className="flex justify-center mb-6 sm:hidden">
+            <Link to="/tin-tuc" className="inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105">
+              <span>Xem tất cả</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          
 
           {/* Back to top button */}
           <button 
