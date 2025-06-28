@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { News } from '../models/NewsTypes';
+import type { News } from '../../models/NewsTypes';
 
 interface NewsSliderProps {
   newsItems: News[];

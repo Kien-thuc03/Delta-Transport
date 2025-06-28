@@ -7,6 +7,8 @@ import NewsDetail from './views/NewsDetail'
 import Market from './views/Market'
 import Service from './views/Service'
 import ContactPage from './views/ContactPage'
+import Faq from './views/Faq'
+import Recruitment from './views/Recruitment'
 import ChatButton from './components/button/ChatButton'
 import BackToTopButton from './components/button/BackOnTop'
 
@@ -22,6 +24,8 @@ function App() {
           <Route path="/thi-truong" element={<Market />} />
           <Route path="/dich-vu" element={<Service />} />
           <Route path="/lien-he" element={<ContactPage />} />
+          <Route path="/hoi-dap" element={<Faq />} />
+          <Route path="/tin-tuyen-dung" element={<Recruitment />} />
         </Routes>
         <ChatButton />
         <BackToTopButton />

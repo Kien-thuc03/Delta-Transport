@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { Testimonial } from '../models/TestimonialTypes';
+import type { Testimonial } from '../../models/TestimonialTypes';
 
 interface TestimonialSliderProps {
   testimonials: Testimonial[];

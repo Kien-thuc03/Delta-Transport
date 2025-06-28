@@ -233,9 +233,9 @@ const Header: React.FC = () => {
                     >
                       <ul>
                         <li>
-                          <a href="/tin-tuyen-dung" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
+                          <Link to="/tin-tuyen-dung" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
                             Tin tuyển dụng
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>
@@ -259,9 +259,9 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <a href="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link to="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
                 Hỏi đáp
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -348,13 +348,13 @@ const Header: React.FC = () => {
                       <div className={`bg-white/20 transition-all duration-200 ${
                         newsDropdownOpen ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}>
-                        <a 
-                          href="/tin-tuyen-dung" 
+                        <Link 
+                          to="/tin-tuyen-dung" 
                           className="block text-white py-2 px-12 hover:bg-white/10 transition-colors text-xs"
                           onClick={closeMobileMenu}
                         >
                           Tin tuyển dụng
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     
@@ -388,13 +388,13 @@ const Header: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <a 
-                  href="/hoi-dap" 
+                <Link 
+                  to="/hoi-dap" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Hỏi đáp
-                </a>
+                </Link>
               </li>
             </ul>
             
