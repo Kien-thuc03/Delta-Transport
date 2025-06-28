@@ -254,9 +254,9 @@ const Header: React.FC = () => {
               </Link>
             </li>
             <li>
-              <a href="/lien-he" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link to="/lien-he" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
                 Liên hệ
-              </a>
+              </Link>
             </li>
             <li>
               <a href="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
@@ -379,13 +379,13 @@ const Header: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <a 
-                  href="/lien-he" 
+                <Link 
+                  to="/lien-he" 
                   className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
                   onClick={closeMobileMenu}
                 >
                   Liên hệ
-                </a>
+                </Link>
               </li>
               <li>
                 <a 

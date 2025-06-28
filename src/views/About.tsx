@@ -16,7 +16,10 @@ const About: React.FC = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Giới thiệu</h1>
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Giới thiệu</h1>
+            <div className="w-24 h-1 bg-[#ff5722]"></div>
+          </div>
           
           <div className="prose max-w-none">
             <p className="text-gray-800 leading-relaxed mb-5">

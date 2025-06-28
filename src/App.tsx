@@ -6,6 +6,7 @@ import News from './views/News'
 import NewsDetail from './views/NewsDetail'
 import Market from './views/Market'
 import Service from './views/Service'
+import ContactPage from './views/ContactPage'
 import ChatButton from './components/button/ChatButton'
 import BackToTopButton from './components/button/BackOnTop'
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/tin-tuc/:slug" element={<NewsDetail />} />
           <Route path="/thi-truong" element={<Market />} />
           <Route path="/dich-vu" element={<Service />} />
+          <Route path="/lien-he" element={<ContactPage />} />
         </Routes>
         <ChatButton />
         <BackToTopButton />
