@@ -18,7 +18,7 @@ const Service: React.FC = () => {
       <Breadcrumb 
         items={[
           { label: 'Trang chủ', href: '/' },
-          { label: 'Dịch vụ', href: '/dich-vu' },
+          { label: 'Dịch vụ', active: true },
         ]}
       />
       

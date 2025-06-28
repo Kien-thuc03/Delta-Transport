@@ -17,7 +17,7 @@ return (
     <Breadcrumb 
         items={[
         { label: 'Trang chủ', href: '/' },
-        { label: 'Liên hệ', href: '/lien-he' },
+        { label: 'Liên hệ', active: true },
         ]}
     />
     
@@ -31,7 +31,7 @@ return (
             <div className="flex flex-col md:flex-row gap-8">
             {/* Form liên hệ */}
             <div className="w-full md:w-1/2">
-                <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm h-full">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Liên hệ với chúng tôi</h2>
                 <p className="text-gray-600 mb-8">
                     Để liên hệ và nhận các thông tin khuyến mại sớm nhất, xin vui lòng điền đầy đủ thông tin của bạn vào form dưới đây. 
@@ -94,20 +94,18 @@ return (
             
             {/* Google Map */}
             <div className="w-full md:w-1/2">
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="bg-white rounded-lg shadow-sm h-full flex flex-col">
                 <div className="border-b border-gray-200 bg-gray-100 py-2 px-4">
                   <h3 className="text-gray-700 font-medium">Bản đồ</h3>
                 </div>
-                <div className="p-2">
-                  <div className="relative w-full" style={{ paddingBottom: '75%', height: 0 }}>
-                    <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.904611732553!2d105.81388241542348!3d21.03650239288885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1946cc7e23%3A0x87ab3917166a0cd5!2zUGjhuqduIG3hu4FtIHF14bqjbiBsw70gYsOhbiBow6BuZyAtIFNhcG8gUE9T!5e0!3m2!1svi!2s!4v1555900531747!5m2!1svi!2s" 
-                      className="absolute top-0 left-0 w-full h-full border-0"
-                      loading="lazy"
-                      title="Google Maps"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
+                <div className="p-2 flex-grow">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.904611732553!2d105.81388241542348!3d21.03650239288885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1946cc7e23%3A0x87ab3917166a0cd5!2zUGjhuqduIG3hu4FtIHF14bqjbiBsw70gYsOhbiBow6BuZyAtIFNhcG8gUE9T!5e0!3m2!1svi!2s!4v1555900531747!5m2!1svi!2s" 
+                    className="w-full h-full min-h-[400px] border-0"
+                    loading="lazy"
+                    title="Google Maps"
+                    allowFullScreen
+                  ></iframe>
                 </div>
               </div>
             </div>
