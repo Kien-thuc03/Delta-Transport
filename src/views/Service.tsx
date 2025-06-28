@@ -5,9 +5,10 @@ import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
 
 const Service: React.FC = () => {
+  
   // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (

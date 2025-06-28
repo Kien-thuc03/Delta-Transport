@@ -10,6 +10,11 @@ const News: React.FC = () => {
     { label: 'Tin tức', active: true }
   ];
 
+  // Đảm bảo trang luôn cuộn lên đầu khi load
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <Layout>
       <Breadcrumb items={breadcrumbItems} />

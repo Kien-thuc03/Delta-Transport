@@ -70,6 +70,11 @@ const Market: React.FC = () => {
     setToast(prev => ({...prev, show: false}));
   };
 
+  // Đảm bảo trang luôn cuộn lên đầu khi load
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <Layout>
       <div className="bg-gray-50">

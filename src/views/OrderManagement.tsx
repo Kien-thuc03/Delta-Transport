@@ -9,7 +9,7 @@ import { faCheck, faExclamationTriangle, faInfoCircle, faShoppingCart, faExchang
 const OrderingSkills: React.FC = () => {
   // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (

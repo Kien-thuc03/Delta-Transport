@@ -8,6 +8,11 @@ const About: React.FC = () => {
     { label: 'Giới thiệu', active: true }
   ];
 
+   // Đảm bảo trang luôn cuộn lên đầu khi load
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <Layout>
       <div className="bg-white">

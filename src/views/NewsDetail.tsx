@@ -11,6 +11,11 @@ const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = newsArticles.find(a => a.slug === slug);
 
+  // Đảm bảo trang luôn cuộn lên đầu khi load
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   if (!article) {
     return (
       <Layout>

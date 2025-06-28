@@ -21,6 +21,12 @@ import bgBannerForm from '../assets/banner2.png';
 const Home: React.FC = () => {
   const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
   const navigate = useNavigate();
+
+  // Đảm bảo trang luôn cuộn lên đầu khi load
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+  
   return (
     <main className="flex-1">
       <Header />
