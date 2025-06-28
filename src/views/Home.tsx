@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-  
+
   return (
     <main className="flex-1">
       <Header />
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
               <div className="mt-4">
                 <button onClick={() => {
                   navigate('/gioi-thieu');
-                  window.scrollTo(0, 0);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }} className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-3 px-8 rounded transition-colors">
                   ĐỌC TIẾP
                 </button>
