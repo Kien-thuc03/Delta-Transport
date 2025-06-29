@@ -125,9 +125,9 @@ const Header: React.FC = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="logo flex-shrink-0">
-              <a href="/">
+              <Link to="/">
                 <img src={logo} alt="Delta Transport" className="h-8 sm:h-10 lg:h-12" />
-              </a>
+              </Link>
             </div>
             
             {/* Desktop Search Bar */}
@@ -221,8 +221,8 @@ const Header: React.FC = () => {
               onMouseEnter={handleDropdownEnter}
               onMouseLeave={handleDropdownLeave}
             >
-              <a 
-                href="/thi-truong" 
+              <Link 
+                to="/thi-truong" 
                 className={`py-4 px-5 font-medium flex items-center transition-colors hover:bg-white/10 text-white ${location.pathname.startsWith('/thi-truong') || location.pathname.startsWith('/tin-tuc') || location.pathname.startsWith('/tin-tuyen-dung') || location.pathname.startsWith('/ky-nang-dat-hang') ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
               >
                 Thị trường
@@ -230,7 +230,7 @@ const Header: React.FC = () => {
                   icon={faChevronDown} 
                   className={`ml-1.5 text-xs transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
                 />
-              </a>
+              </Link>
               <div 
                 className={`absolute left-0 bg-white shadow-lg min-w-[200px] z-50 transition-all duration-200 ${
                   dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
@@ -242,13 +242,13 @@ const Header: React.FC = () => {
                     onMouseEnter={() => setNewsDropdownOpen(true)}
                     onMouseLeave={() => setNewsDropdownOpen(false)}
                   >
-                    <a 
-                      href="/tin-tuc" 
+                    <Link 
+                      to="/tin-tuc" 
                       className="flex items-center justify-between text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 border-b border-gray-100 transition-colors"
                     >
                       <span className="flex items-center">Tin tức</span>
                       <FontAwesomeIcon icon={faChevronDown} className="text-xs rotate-[-90deg]" />
-                    </a>
+                    </Link>
                     
                     {/* Sub-dropdown cho Tin tức */}
                     <div 
@@ -266,9 +266,9 @@ const Header: React.FC = () => {
                     </div>
                   </li>
                   <li>
-                    <a href="/ky-nang-dat-hang" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
+                    <Link to="/ky-nang-dat-hang" className="flex items-center text-gray-700 hover:text-[#ff5722] hover:bg-gray-50 py-3 px-5 transition-colors">
                       Kỹ năng đặt hàng
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -393,13 +393,13 @@ const Header: React.FC = () => {
                     </div>
                     
                     {/* Kỹ năng đặt hàng - không có sub-menu */}
-                    <a 
-                      href="/ky-nang-dat-hang" 
+                    <Link 
+                      to="/ky-nang-dat-hang" 
                       className="block text-white py-2 px-8 hover:bg-white/10 transition-colors text-sm"
                       onClick={closeMobileMenu}
                     >
                       Kỹ năng đặt hàng
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </li>
