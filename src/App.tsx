@@ -10,6 +10,7 @@ import ContactPage from './views/ContactPage'
 import Faq from './views/Faq'
 import Recruitment from './views/Recruitment'
 import OrderManagement from './views/OrderManagement'
+import SearchResults from './views/SearchResults'
 import ChatButton from './components/button/ChatButton'
 import BackToTopButton from './components/button/BackOnTop'
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/hoi-dap" element={<Faq />} />
           <Route path="/tin-tuyen-dung" element={<Recruitment />} />
           <Route path="/ky-nang-dat-hang" element={<OrderManagement />} />
+          <Route path="/tim-kiem" element={<SearchResults />} />
         </Routes>
         <ChatButton />
         <BackToTopButton />

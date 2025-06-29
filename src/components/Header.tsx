@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faYoutube, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faSearch, faChevronDown, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,9 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newsDropdownOpen, setNewsDropdownOpen] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Helper function để handle hover với delay
   const handleDropdownLeave = () => {
@@ -35,6 +37,16 @@ const Header: React.FC = () => {
     setMobileMenuOpen(false);
     setDropdownOpen(false);
     setNewsDropdownOpen(false);
+  };
+
+  // Xử lý tìm kiếm
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/tim-kiem?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+      closeMobileMenu();
+    }
   };
 
   // Đóng mobile menu khi resize về desktop
@@ -119,19 +131,22 @@ const Header: React.FC = () => {
             </div>
             
             {/* Desktop Search Bar */}
-            <div className="hidden lg:flex search-bar bg-white rounded-md p-2 items-center w-96 xl:w-[500px] mx-4">
+            <form onSubmit={handleSearch} className="hidden lg:flex search-bar bg-white rounded-md p-2 items-center w-96 xl:w-[500px] mx-4">
               <input 
                 type="text" 
                 placeholder="Bạn muốn tìm thông tin nào..." 
                 className="w-full focus:outline-none text-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button 
+                type="submit"
                 aria-label="Tìm kiếm" 
                 className="ml-2 text-gray-500 hover:text-[#ff5722] transition-colors"
               >
                 <FontAwesomeIcon icon={faSearch} />
               </button>
-            </div>
+            </form>
             
             {/* Contact Info - Hidden on mobile */}
             <div className="hidden lg:flex items-center gap-4 xl:gap-6 flex-shrink-0">
@@ -159,21 +174,24 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Search Bar - Luôn hiển thị */}
-          <div className="lg:hidden mt-3">
+          <form onSubmit={handleSearch} className="lg:hidden mt-3">
             <div className="search-bar bg-white rounded-md p-2 flex items-center">
               <input 
                 type="text" 
                 placeholder="Bạn muốn tìm thông tin nào..." 
                 className="w-full focus:outline-none text-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button 
+                type="submit"
                 aria-label="Tìm kiếm" 
                 className="ml-2 text-gray-500 hover:text-[#ff5722] transition-colors"
               >
                 <FontAwesomeIcon icon={faSearch} />
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       

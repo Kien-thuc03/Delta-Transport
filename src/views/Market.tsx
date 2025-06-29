@@ -4,7 +4,8 @@ import Breadcrumb from '../components/Breadcrumb';
 import { Link } from 'react-router-dom';
 import { newsItems } from '../models/NewsTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNewspaper, faShoppingBag, faChartLine, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faNewspaper, faShoppingBag, faChartLine, faTruck, faTag } from '@fortawesome/free-solid-svg-icons';
+import { useSearchController } from '../controllers/SearchController';
 
 // Skeleton loading component for news items
 const NewsItemSkeleton: React.FC = () => (
@@ -51,6 +52,10 @@ const Market: React.FC = () => {
     message: '',
     type: 'info'
   });
+  
+  // Lấy danh sách tag phổ biến từ SearchController
+  const { getPopularTags } = useSearchController('');
+  const popularTags = getPopularTags();
 
   const breadcrumbItems = [
     { label: 'Trang chủ', href: '/' },
@@ -92,6 +97,10 @@ const Market: React.FC = () => {
 
         {/* Main Content */}
         <div className="container mx-auto px-4 py-6 lg:py-10">
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Thị trường</h1>
+            <div className="w-24 h-1 bg-[#ff5722]"></div>
+          </div>
           {/* TIN MỚI NHẤT */}
           <div className="relative mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -490,10 +499,15 @@ const Market: React.FC = () => {
                 <div className="flex-1 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent"></div>
               </div>
               <div className="flex flex-wrap gap-3">
-                {['đặt hàng', 'mua hàng', 'quảng châu', 'châu âu', 'trong nước', 'quốc tế'].map((tag, i) => (
-                  <span key={i} className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-medium cursor-pointer hover:bg-[#ff5722] hover:text-white transition-all shadow-sm hover:shadow-md">
+                {popularTags.map((tag, i) => (
+                  <Link 
+                    key={i} 
+                    to={`/tim-kiem?q=${encodeURIComponent(tag)}`}
+                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-medium cursor-pointer hover:bg-[#ff5722] hover:text-white transition-all shadow-sm hover:shadow-md flex items-center gap-1.5"
+                  >
+                    <FontAwesomeIcon icon={faTag} className="text-xs" />
                     {tag}
-                  </span>
+                  </Link>
                 ))}
               </div>
             </div>
