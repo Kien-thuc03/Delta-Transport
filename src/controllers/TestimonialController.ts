@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Testimonial, testimonials } from '../models/TestimonialTypes';
+import { testimonials, type Testimonial } from '../models/TestimonialTypes';
 
 export const useTestimonialController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
