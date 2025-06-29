@@ -33,7 +33,7 @@ const Contact: React.FC = () => {
                   placeholder="Nhập email"
                   className="flex-1 border border-gray-300 px-4 py-3 focus:outline-none"
                 />
-                <button className="bg-[#ff5722] text-white px-5 py-3 font-medium">
+                <button className="bg-[#ff5722] text-white px-5 py-3 font-medium hover:bg-[#ff5722]/80 transition-colors duration-300">
                   ĐĂNG KÝ
                 </button>
               </div>

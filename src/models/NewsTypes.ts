@@ -3,8 +3,8 @@ import news2 from '../assets/new2.webp';
 import news3 from '../assets/new3.webp';
 import news4 from '../assets/new4.webp';
 // Sử dụng lại các ảnh có sẵn cho bài 5 và 6
-import news5 from '../assets/new1.webp';
-import news6 from '../assets/new2.webp';
+import news5 from '../assets/new5.webp';
+import news6 from '../assets/new6.webp';
 
 export interface ContentBlock {
   id: string;

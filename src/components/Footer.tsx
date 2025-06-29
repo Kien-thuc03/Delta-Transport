@@ -73,13 +73,13 @@ const Footer: React.FC = () => {
             <div>
               <h3 className="text-base font-semibold text-gray-800 my-5">KẾT NỐI</h3>
               <div className="flex gap-4">
-                <a href="#" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                <a href="https://www.facebook.com/" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faFacebook} />
                 </a>
-                <a href="#" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                <a href="https://www.youtube.com/" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faYoutube} />
                 </a>
-                <a href="#" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                <a href="https://www.instagram.com/" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faInstagram} />
                 </a>
               </div>

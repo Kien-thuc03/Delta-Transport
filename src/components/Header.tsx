@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faYoutube, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faSearch, faChevronDown, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newsDropdownOpen, setNewsDropdownOpen] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
+  const location = useLocation();
 
   // Helper function để handle hover với delay
   const handleDropdownLeave = () => {
@@ -82,21 +83,21 @@ const Header: React.FC = () => {
           <p className="text-sm text-gray-700 hidden md:block">Chào mừng bạn đến với dịch vụ vận chuyển của chúng tôi</p>
           <div className="flex gap-3">
             <a 
-              href="#" 
+              href="https://www.instagram.com/" 
               aria-label="Instagram"
               title="Theo dõi chúng tôi trên Instagram"
             >
               <FontAwesomeIcon icon={faInstagram} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
             </a>
             <a 
-              href="#" 
+              href="https://www.youtube.com/" 
               aria-label="YouTube"
               title="Kênh YouTube của chúng tôi"
             >
               <FontAwesomeIcon icon={faYoutube} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
             </a>
             <a 
-              href="#" 
+              href="https://www.facebook.com/" 
               aria-label="Facebook"
               title="Trang Facebook của chúng tôi"
             >
@@ -182,12 +183,18 @@ const Header: React.FC = () => {
         <div className="container mx-auto px-4">
           <ul className="hidden lg:flex">
             <li>
-              <Link to="/" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link
+                to="/"
+                className={`block py-4 px-5 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
+              >
                 Trang chủ
               </Link>
             </li>
             <li>
-              <Link to="/gioi-thieu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link
+                to="/gioi-thieu"
+                className={`block py-4 px-5 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/gioi-thieu' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
+              >
                 Giới thiệu
               </Link>
             </li>
@@ -198,7 +205,7 @@ const Header: React.FC = () => {
             >
               <a 
                 href="/thi-truong" 
-                className="text-white py-4 px-5 font-medium hover:bg-white/10 flex items-center transition-colors"
+                className={`py-4 px-5 font-medium flex items-center transition-colors hover:bg-white/10 text-white ${location.pathname.startsWith('/thi-truong') || location.pathname.startsWith('/tin-tuc') || location.pathname.startsWith('/tin-tuyen-dung') || location.pathname.startsWith('/ky-nang-dat-hang') ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
               >
                 Thị trường
                 <FontAwesomeIcon 
@@ -249,17 +256,26 @@ const Header: React.FC = () => {
               </div>
             </li>
             <li>
-              <Link to="/dich-vu" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link
+                to="/dich-vu"
+                className={`block py-4 px-5 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/dich-vu' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
+              >
                 Dịch vụ
               </Link>
             </li>
             <li>
-              <Link to="/lien-he" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link
+                to="/lien-he"
+                className={`block py-4 px-5 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/lien-he' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
+              >
                 Liên hệ
               </Link>
             </li>
             <li>
-              <Link to="/hoi-dap" className="block text-white py-4 px-5 font-medium hover:bg-white/10 transition-colors">
+              <Link
+                to="/hoi-dap"
+                className={`block py-4 px-5 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/hoi-dap' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
+              >
                 Hỏi đáp
               </Link>
             </li>
@@ -273,18 +289,18 @@ const Header: React.FC = () => {
           <div className="container mx-auto px-4">
             <ul className="py-2">
               <li>
-                <Link 
-                  to="/" 
-                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                <Link
+                  to="/"
+                  className={`block py-3 px-4 font-medium transition-colors border-b border-white/10 hover:bg-white/10 text-white ${location.pathname === '/' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                   onClick={closeMobileMenu}
                 >
                   Trang chủ
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/gioi-thieu" 
-                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                <Link
+                  to="/gioi-thieu"
+                  className={`block py-3 px-4 font-medium transition-colors border-b border-white/10 hover:bg-white/10 text-white ${location.pathname === '/gioi-thieu' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                   onClick={closeMobileMenu}
                 >
                   Giới thiệu
@@ -294,8 +310,8 @@ const Header: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between border-b border-white/10">
                     <Link
-                      to="/thi-truong" 
-                      className="text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
+                      to="/thi-truong"
+                      className={`py-3 px-4 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname.startsWith('/thi-truong') || location.pathname.startsWith('/tin-tuc') || location.pathname.startsWith('/tin-tuyen-dung') || location.pathname.startsWith('/ky-nang-dat-hang') ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                       onClick={closeMobileMenu}
                     >
                       Thị trường
@@ -370,27 +386,27 @@ const Header: React.FC = () => {
                 </div>
               </li>
               <li>
-                <Link 
-                  to="/dich-vu" 
-                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                <Link
+                  to="/dich-vu"
+                  className={`block py-3 px-4 font-medium transition-colors border-b border-white/10 hover:bg-white/10 text-white ${location.pathname === '/dich-vu' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                   onClick={closeMobileMenu}
                 >
                   Dịch vụ
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/lien-he" 
-                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors border-b border-white/10"
+                <Link
+                  to="/lien-he"
+                  className={`block py-3 px-4 font-medium transition-colors border-b border-white/10 hover:bg-white/10 text-white ${location.pathname === '/lien-he' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                   onClick={closeMobileMenu}
                 >
                   Liên hệ
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/hoi-dap" 
-                  className="block text-white py-3 px-4 font-medium hover:bg-white/10 transition-colors"
+                <Link
+                  to="/hoi-dap"
+                  className={`block py-3 px-4 font-medium transition-colors hover:bg-white/10 text-white ${location.pathname === '/hoi-dap' ? 'bg-white/20 text-[#010e2a] font-bold' : ''}`}
                   onClick={closeMobileMenu}
                 >
                   Hỏi đáp
