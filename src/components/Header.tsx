@@ -94,27 +94,27 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center container mx-auto px-4">
           <p className="text-sm text-gray-700 hidden md:block">Chào mừng bạn đến với dịch vụ vận chuyển của chúng tôi</p>
           <div className="flex gap-3">
-            <a 
-              href="https://www.instagram.com/" 
+            <Link 
+              to="https://www.instagram.com/" 
               aria-label="Instagram"
               title="Theo dõi chúng tôi trên Instagram"
             >
               <FontAwesomeIcon icon={faInstagram} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
-            </a>
-            <a 
-              href="https://www.youtube.com/" 
+            </Link>
+            <Link 
+              to="https://www.youtube.com/" 
               aria-label="YouTube"
               title="Kênh YouTube của chúng tôi"
             >
               <FontAwesomeIcon icon={faYoutube} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
-            </a>
-            <a 
-              href="https://www.facebook.com/" 
+            </Link>
+            <Link 
+              to="https://www.facebook.com/" 
               aria-label="Facebook"
               title="Trang Facebook của chúng tôi"
             >
               <FontAwesomeIcon icon={faFacebook} className="text-gray-600 hover:text-[#ff5722] text-lg transition-colors" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -437,11 +437,11 @@ const Header: React.FC = () => {
               <div className="flex justify-around text-center">
                 <div>
                   <p className="text-xs font-bold text-white/80">Tư vấn dịch vụ</p>
-                  <a href="tel:19006750" className="text-white font-bold text-sm">1900 6750</a>
+                  <Link to="tel:19006750" className="text-white font-bold text-sm">1900 6750</Link>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-white/80">Tư vấn vận chuyển</p>
-                  <a href="tel:19006750" className="text-white font-bold text-sm">1900 6750</a>
+                  <Link to="tel:19006750" className="text-white font-bold text-sm">1900 6750</Link>
                 </div>
               </div>
             </div>

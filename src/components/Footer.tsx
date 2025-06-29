@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt, faEnvelope, faPhone, faArrowUp, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -47,12 +48,12 @@ const Footer: React.FC = () => {
               />
             </div>
             <ul className={`space-y-2.5 mt-3 md:mt-0 ${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-              <li><a href="/" className="text-gray-600 hover:text-[#ff5722]">Trang chủ</a></li>
-              <li><a href="/gioi-thieu" className="text-gray-600 hover:text-[#ff5722]">Giới thiệu</a></li>
-              <li><a href="/thi-truong" className="text-gray-600 hover:text-[#ff5722]">Thị trường</a></li>
-              <li><a href="/dich-vu" className="text-gray-600 hover:text-[#ff5722]">Dịch vụ</a></li>
-              <li><a href="/lien-he" className="text-gray-600 hover:text-[#ff5722]">Liên hệ</a></li>
-              <li><a href="/hoi-dap" className="text-gray-600 hover:text-[#ff5722]">Hỏi đáp</a></li>
+              <li><Link to="/" className="text-gray-600 hover:text-[#ff5722]">Trang chủ</Link></li>
+              <li><Link to="/gioi-thieu" className="text-gray-600 hover:text-[#ff5722]">Giới thiệu</Link></li>
+              <li><Link to="/thi-truong" className="text-gray-600 hover:text-[#ff5722]">Thị trường</Link></li>
+              <li><Link to="/dich-vu" className="text-gray-600 hover:text-[#ff5722]">Dịch vụ</Link></li>
+              <li><Link to="/lien-he" className="text-gray-600 hover:text-[#ff5722]">Liên hệ</Link></li>
+              <li><Link to="/hoi-dap" className="text-gray-600 hover:text-[#ff5722]">Hỏi đáp</Link></li>
             </ul>
           </div>
           
@@ -73,15 +74,15 @@ const Footer: React.FC = () => {
             <div>
               <h3 className="text-base font-semibold text-gray-800 my-5">KẾT NỐI</h3>
               <div className="flex gap-4">
-                <a href="https://www.facebook.com/" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                <Link to="https://www.facebook.com/" aria-label="Facebook" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faFacebook} />
-                </a>
-                <a href="https://www.youtube.com/" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                </Link>
+                <Link to="https://www.youtube.com/" aria-label="Youtube" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faYoutube} />
-                </a>
-                <a href="https://www.instagram.com/" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
+                </Link>
+                <Link to="https://www.instagram.com/" aria-label="Instagram" className="flex items-center justify-center w-10 h-10 bg-[#ff5722] rounded-full text-white hover:bg-[#e64a19]">
                   <FontAwesomeIcon icon={faInstagram} />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -92,9 +93,9 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <p className="text-white m-0">&copy; Bản quyền thuộc về <span className="text-[#ff5722]">Delta Web</span> | Cung cấp bởi <span className="text-[#ff5722]">Sapo</span></p>
           <div className='hidden md:block'>
-            <a href="#top" className="flex items-center gap-1.5 text-[#ff5722]">
+            <Link to="#top" className="flex items-center gap-1.5 text-[#ff5722]">
               Lên đầu trang <FontAwesomeIcon icon={faArrowUp} className="text-sm" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

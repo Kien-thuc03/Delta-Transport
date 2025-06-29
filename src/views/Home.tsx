@@ -8,7 +8,7 @@ import NewsSlider from '../components/slider/NewsSlider';
 import { useVideoModal } from '../controllers/VideoController';
 import { testimonials } from '../models/TestimonialTypes';
 import { newsItems } from '../models/NewsTypes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
 import iconTruck from '../assets/icon_wl_1.webp';
@@ -121,8 +121,8 @@ const Home: React.FC = () => {
             <div className="md:w-5/12">
               <div className="overflow-hidden rounded-lg relative">
                 <img src={banner1} alt="Nhân viên vận chuyển" className="w-full h-auto" />
-                <a 
-                  href="javascript:;" 
+                <Link 
+                  to="javascript:;" 
                   className="video_play play-now" 
                   onClick={(e) => { 
                     e.preventDefault(); 
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
                     </svg>
                   </i>
                   <span className="ripple"></span>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="md:w-7/12 flex flex-col gap-6">

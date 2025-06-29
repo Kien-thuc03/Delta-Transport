@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Breadcrumb from '../components/Breadcrumb';
 import NewsContentRenderer from '../components/NewsContentRenderer';
@@ -167,9 +167,9 @@ const NewsDetail: React.FC = () => {
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <div className="border-b border-[#ff5722] pb-4 mb-6">
                   <h2 className="text-xl font-bold text-gray-800">
-                    <a href="/tin-tuc" className="hover:text-[#ff5722] transition-colors">
+                    <Link to="/tin-tuc" className="hover:text-[#ff5722] transition-colors">
                       Tin đọc nhiều
-                    </a>
+                    </Link>
                   </h2>
                 </div>
                 
@@ -183,9 +183,9 @@ const NewsDetail: React.FC = () => {
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-medium text-gray-800 line-clamp-3 hover:text-[#ff5722] transition-colors">
-                          <a href={`/tin-tuc/${item.slug}`}>
+                          <Link to={`/tin-tuc/${item.slug}`}>
                             {item.title}
-                          </a>
+                          </Link>
                         </h3>
                       </div>
                     </div>
