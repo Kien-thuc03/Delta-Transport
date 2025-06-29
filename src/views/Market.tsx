@@ -396,36 +396,36 @@ const Market: React.FC = () => {
           </div>
 
           {/* ĐẶT HÀNG HIỆU QUẢ + TÌM KIẾM NHIỀU */}
-          <div className="bg-white rounded-xl shadow-2xl p-6 mt-8 flex flex-col lg:flex-row gap-8">
+          <div className="relative mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div className="relative title-slide-in">
+                <h2 className="bg-[#ff5722] text-white font-bold text-base sm:text-lg py-2 sm:py-3 px-4 sm:px-6 inline-block relative z-10 uppercase tracking-wide shadow-md clip-title">
+                  <span className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faNewspaper} className="float-animation text-sm" />
+                    <span className="text-sm sm:text-base">ĐẶT HÀNG HIỆU QUẢ</span>
+                  </span>
+                </h2>
+              </div>
+              <div className="hidden sm:block link-slide-in">
+                <Link 
+                  to="/dat-hang-hieu-qua" 
+                  className="group view-more-link inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105"
+                  aria-label="Xem tất cả đặt hàng hiệu quả"
+                >
+                  <span className="group-hover:underline">Xem tất cả</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent -z-0 opacity-70"></div>
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-8 mb-8">
             {/* Left: Grid of 6 cards */}
             <div className="flex-1">
-              <div className="relative mb-8">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                  <div className="relative title-slide-in">
-                    <h2 className="bg-[#ff5722] text-white font-bold text-base sm:text-lg py-2 sm:py-3 px-4 sm:px-6 inline-block relative z-10 uppercase tracking-wide shadow-md clip-title">
-                      <span className="flex items-center gap-2">
-                        <FontAwesomeIcon icon={faNewspaper} className="float-animation text-sm" />
-                        <span className="text-sm sm:text-base">ĐẶT HÀNG HIỆU QUẢ</span>
-                      </span>
-                    </h2>
-                  </div>
-                  <div className="hidden sm:block link-slide-in">
-                    <Link 
-                      to="/dat-hang-hieu-qua" 
-                      className="group view-more-link inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105"
-                      aria-label="Xem tất cả đặt hàng hiệu quả"
-                    >
-                      <span className="group-hover:underline">Xem tất cả</span>
-                      <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-                <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5722] to-transparent -z-0 opacity-70"></div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {loading ? (
                   <>
                     <NewsItemSkeleton />
@@ -471,7 +471,7 @@ const Market: React.FC = () => {
               </div>
 
               {/* Nút xem thêm cho mobile */}
-              <div className="flex justify-center mb-6 sm:hidden">
+              <div className="flex justify-center mt-6 mb-6 sm:hidden">
                 <Link to="/dat-hang-hieu-qua" className="inline-flex items-center gap-2 text-[#ff5722] hover:text-[#e64a19] font-medium text-sm transition-all duration-300 transform hover:scale-105">
                   <span>Xem tất cả</span>
                   <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -482,7 +482,7 @@ const Market: React.FC = () => {
             </div>
 
             {/* Right: Tìm kiếm nhiều */}
-            <div className="w-full lg:w-1/3 xl:w-1/4 flex-shrink-0">
+            <div className="w-full lg:w-1/4 flex-shrink-0">
               <div className="flex items-center gap-3 mb-6">
                 <h3 className="text-xl font-bold text-gray-800">
                   Tìm kiếm nhiều
