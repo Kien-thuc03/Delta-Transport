@@ -202,7 +202,7 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
             </div>
             <div className="p-5">
               <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
-                <Link to={`/tin-tuc/${news.id}`}>{news.title}</Link>
+                <Link to={`/tin-tuc/${news.slug}`}>{news.title}</Link>
               </h3>
             </div>
           </div>

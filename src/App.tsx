@@ -16,7 +16,7 @@ import BackToTopButton from './components/button/BackOnTop'
 
 function App() {
   return (
-    <Router basename="/Delta-Transport">
+    <Router>
       <div className="flex flex-col min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
