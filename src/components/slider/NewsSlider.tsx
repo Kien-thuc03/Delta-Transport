@@ -188,23 +188,25 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
               isTransitioning ? 'opacity-0 transform translate-x-4' : 'opacity-100 transform translate-x-0'
             }`}
           >
-            <div className="relative">
-              <img 
-                src={news.image}
-                alt={news.title}
-                className="w-full h-60 object-cover"
-                draggable="false"
-              />
-              <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
-                <span className="text-3xl font-bold text-center p-2">{news.date.split('/')[0]}</span>
-                <span className="text-sm bg-[#010e2a] w-full text-center p-2">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
+            <Link to={`/tin-tuc/${news.slug}`} className='block'>
+              <div className="relative">
+                <img 
+                  src={news.image}
+                  alt={news.title}
+                  className="w-full h-60 object-cover"
+                  draggable="false"
+                />
+                <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
+                  <span className="text-3xl font-bold text-center p-2">{news.date.split('/')[0]}</span>
+                  <span className="text-sm bg-[#010e2a] w-full text-center p-2">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
+                </div>
               </div>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
-                <Link to={`/tin-tuc/${news.slug}`}>{news.title}</Link>
-              </h3>
-            </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
+                  {news.title}
+                </h3>
+              </div>
+            </Link>
           </div>
         ))}
       </div>

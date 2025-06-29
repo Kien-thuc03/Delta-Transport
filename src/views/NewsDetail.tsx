@@ -175,20 +175,20 @@ const NewsDetail: React.FC = () => {
                 
                 <div className="space-y-4">
                   {popularArticles.map(item => (
-                    <div key={item.id} className="flex gap-3">
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-20 h-16 object-cover rounded flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-gray-800 line-clamp-3 hover:text-[#ff5722] transition-colors">
-                          <Link to={`/tin-tuc/${item.slug}`}>
+                    <Link to={`/tin-tuc/${item.slug}`} className='block'>
+                      <div key={item.id} className="flex gap-3">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-20 h-16 object-cover rounded flex-shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-sm font-medium text-gray-800 line-clamp-3 hover:text-[#ff5722] transition-colors">
                             {item.title}
-                          </Link>
-                        </h3>
+                          </h3>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

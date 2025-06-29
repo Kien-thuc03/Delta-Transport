@@ -93,9 +93,9 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <p className="text-white m-0">&copy; Bản quyền thuộc về <span className="text-[#ff5722]">Delta Web</span> | Cung cấp bởi <span className="text-[#ff5722]">Sapo</span></p>
           <div className='hidden md:block'>
-            <Link to="#top" className="flex items-center gap-1.5 text-[#ff5722]">
+            <a href="#top" style={{ scrollBehavior: 'smooth' }} className="flex items-center gap-1.5 text-[#ff5722]">
               Lên đầu trang <FontAwesomeIcon icon={faArrowUp} className="text-sm" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>
