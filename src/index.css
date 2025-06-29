@@ -2,6 +2,24 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @import "tailwindcss";
+
+/* Global smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fallback for older browsers */
+* {
+    scroll-behavior: smooth;
+}
+
+/* Ensure smooth scrolling works on mobile */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
