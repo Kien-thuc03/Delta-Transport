@@ -290,7 +290,7 @@ body.modal-open {
 }
 
 .view-more-link:hover::before {
-  left: 0;
+  left: 80%;
 }
 
 
