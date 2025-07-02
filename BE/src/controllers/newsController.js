@@ -17,7 +17,6 @@ exports.getNews = asyncHandler(async(req, res) => {
     if (req.query.tag) {
         filter.tags = { $in: [req.query.tag] };
     }
-
     const news = await News.find(filter)
         .sort({ date: -1 })
         .skip(skip)

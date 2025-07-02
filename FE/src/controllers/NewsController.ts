@@ -1,11 +1,28 @@
 import { useState, useEffect } from 'react';
 import type { News } from '../models/NewsTypes';
-import { newsItems } from '../models/NewsTypes';
+// import { newsItems } from '../models/NewsTypes';
+import { getNews } from '../api/newsAPI';
 
 export const useNewsController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
-  
+  const [newsItems, setNewsItems] = useState<News[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const news = await getNews();
+      const dateFormatted = news.data.map((item: News) => ({
+        ...item,
+        date: new Date(item.date).toLocaleDateString('vi-VN', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+      }));
+      setNewsItems(dateFormatted);
+    };
+    fetchNews();
+  }, []);
   // Xác định số lượng tin tức hiển thị dựa trên kích thước màn hình
   const itemsPerPage = windowWidth >= 1200 ? 3 : windowWidth >= 768 ? 2 : 1;
   

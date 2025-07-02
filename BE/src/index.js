@@ -1,8 +1,8 @@
 const app = require('./app');
-const connectDB = require('./config/database');
-require('dotenv').config();
+const config = require('./config/database');
+const mongoose = require('mongoose');
 
-const PORT = process.env.PORT || 5000;
+const PORT = config.port;
 
 // Xử lý lỗi không được bắt
 process.on('uncaughtException', err => {
@@ -12,7 +12,7 @@ process.on('uncaughtException', err => {
 });
 
 // Kết nối database
-connectDB();
+mongoose.connect(config.mongoose.url, config.mongoose.options);
 
 // Khởi động server
 const server = app.listen(PORT, () => {

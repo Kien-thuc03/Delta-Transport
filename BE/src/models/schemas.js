@@ -1,0 +1,217 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ContentBlock:
+ *       type: object
+ *       properties:
+ *         type:
+ *           type: string
+ *           enum: [text, image, heading, list, quote, divider]
+ *           description: Loại nội dung
+ *         content:
+ *           type: string
+ *           description: Nội dung khối
+ *         metadata:
+ *           type: object
+ *           properties:
+ *             level:
+ *               type: integer
+ *               description: Cấp độ heading (1-6)
+ *             alt:
+ *               type: string
+ *               description: Alt text cho hình ảnh
+ *             caption:
+ *               type: string
+ *               description: Chú thích cho hình ảnh
+ *             style:
+ *               type: string
+ *               enum: [italic, bold, normal]
+ *               description: Kiểu text
+ *             listType:
+ *               type: string
+ *               enum: [ordered, unordered]
+ *               description: Kiểu danh sách
+ *             items:
+ *               type: array
+ *               items:
+ *                 type: string
+ *               description: Các mục trong danh sách
+ *             align:
+ *               type: string
+ *               enum: [left, center, right]
+ *               description: Căn lề
+ *
+ *     Comment:
+ *       type: object
+ *       properties:
+ *         author:
+ *           type: string
+ *           description: Tên người bình luận
+ *         avatar:
+ *           type: string
+ *           description: Đường dẫn avatar
+ *         content:
+ *           type: string
+ *           description: Nội dung bình luận
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           description: Thời gian bình luận
+ *
+ *     News:
+ *       type: object
+ *       required:
+ *         - title
+ *         - slug
+ *         - image
+ *         - excerpt
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Tiêu đề tin tức
+ *         slug:
+ *           type: string
+ *           description: Đường dẫn tin tức
+ *         image:
+ *           type: string
+ *           description: Hình ảnh đại diện
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           description: Ngày đăng
+ *         author:
+ *           type: string
+ *           description: Tác giả
+ *         excerpt:
+ *           type: string
+ *           description: Tóm tắt nội dung
+ *         content:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ContentBlock'
+ *           description: Nội dung chi tiết
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Các thẻ
+ *         category:
+ *           type: string
+ *           description: Danh mục
+ *         comments:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Comment'
+ *           description: Danh sách bình luận
+ *         commentCount:
+ *           type: integer
+ *           description: Số lượng bình luận
+ *
+ *     Testimonial:
+ *       type: object
+ *       required:
+ *         - name
+ *         - content
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Tên khách hàng
+ *         avatar:
+ *           type: string
+ *           description: Đường dẫn avatar
+ *         content:
+ *           type: string
+ *           description: Nội dung đánh giá
+ *         rating:
+ *           type: number
+ *           minimum: 1
+ *           maximum: 5
+ *           description: Đánh giá (1-5 sao)
+ *         isActive:
+ *           type: boolean
+ *           description: Trạng thái hiển thị
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Thời gian tạo
+ *
+ *     Recruitment:
+ *       type: object
+ *       required:
+ *         - title
+ *         - location
+ *         - type
+ *         - deadline
+ *         - description
+ *         - requirements
+ *         - benefits
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Tiêu đề công việc
+ *         location:
+ *           type: string
+ *           description: Địa điểm làm việc
+ *         type:
+ *           type: string
+ *           enum: [Toàn thời gian, Bán thời gian, Thời vụ, Thực tập]
+ *           description: Loại hình công việc
+ *         deadline:
+ *           type: string
+ *           format: date-time
+ *           description: Hạn nộp hồ sơ
+ *         description:
+ *           type: string
+ *           description: Mô tả công việc
+ *         requirements:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Yêu cầu công việc
+ *         benefits:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Quyền lợi
+ *         isActive:
+ *           type: boolean
+ *           description: Trạng thái hiển thị
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Thời gian tạo
+ * 
+ *     Video:
+ *       type: object
+ *       required:
+ *         - title
+ *         - url
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Tiêu đề video
+ *         url:
+ *           type: string
+ *           description: URL Youtube video
+ *           pattern: ^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]{11}$
+ *         description:
+ *           type: string
+ *           description: Mô tả video
+ *         thumbnail:
+ *           type: string
+ *           description: Đường dẫn thumbnail
+ *         isActive:
+ *           type: boolean
+ *           description: Trạng thái hiển thị
+ *         featured:
+ *           type: boolean
+ *           description: Là video nổi bật
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Thời gian tạo
+ */
+
+// File này chỉ chứa Swagger schemas
+module.exports = {};

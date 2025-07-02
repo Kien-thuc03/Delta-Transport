@@ -2,9 +2,11 @@ import React from 'react';
 import Layout from '../components/Layout';
 import Breadcrumb from '../components/Breadcrumb';
 import { Link } from 'react-router-dom';
-import { newsItems } from '../models/NewsTypes';
+import { useNewsController } from '../controllers/NewsController';
 
 const News: React.FC = () => {
+  const { newsItems } = useNewsController();
+  console.log(newsItems);
   const breadcrumbItems = [
     { label: 'Trang chủ', href: '/' },
     { label: 'Tin tức', active: true }

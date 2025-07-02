@@ -1,14 +1,16 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const path = require('path');
 
-const connectDB = async() => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/delta-transport');
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-    } catch (error) {
-        console.error(`Error: ${error.message}`);
-        process.exit(1);
-    }
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+
+module.exports = {
+    env: process.env.NODE_ENV || 'development',
+    port: process.env.PORT || 3000,
+    mongoose: {
+        url: process.env.MONGODB_URL,
+        options: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+    },
 };
-
-module.exports = connectDB;
