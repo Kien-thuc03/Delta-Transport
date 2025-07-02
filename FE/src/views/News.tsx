@@ -6,7 +6,6 @@ import { useNewsController } from '../controllers/NewsController';
 
 const News: React.FC = () => {
   const { newsItems } = useNewsController();
-  console.log(newsItems);
   const breadcrumbItems = [
     { label: 'Trang chủ', href: '/' },
     { label: 'Tin tức', active: true }

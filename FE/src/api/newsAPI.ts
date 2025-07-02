@@ -16,4 +16,15 @@ export const getNews = async () => {
   }
 };
 
+export const getNewsBySlug = async (slug: string) => {
+  try {
+    const response = await newsAPI.get(`/api/news/detail/${slug}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching news by slug:', error);
+    throw error;
+  }
+};
+
+
 export default newsAPI;

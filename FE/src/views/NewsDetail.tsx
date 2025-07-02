@@ -1,26 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Breadcrumb from '../components/Breadcrumb';
 import NewsContentRenderer from '../components/NewsContentRenderer';
-import { newsArticles, newsItems } from '../models/NewsTypes';
+import { useNewsController } from '../controllers/NewsController';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCalendar, faComment } from '@fortawesome/free-solid-svg-icons';
+import type { NewsArticle, News } from '../models/NewsTypes';
 
 const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const article = newsArticles.find(a => a.slug === slug);
+  const { getNewsDetail, newsItems } = useNewsController();
+  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const popularArticlesRef = useRef<News[]>([]);
 
-  // Đảm bảo trang luôn cuộn lên đầu khi load
-  React.useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  // Cuộn lên đầu trang khi mới vào, nhưng chỉ 1 lần
+  useEffect(() => {
+    if (!hasScrolled) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setHasScrolled(true);
+    }
+  }, [hasScrolled]);
 
-  if (!article) {
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!slug) return;
+      
+      try {
+        const response = await getNewsDetail(slug);
+        if (response.error) {
+          setError(response.error);
+        } else {
+          setArticle(response.data);
+          // Lấy tin tức liên quan từ newsItems
+          if (newsItems && newsItems.length > 0) {
+            // Lọc ra các tin tức khác với tin tức hiện tại
+            popularArticlesRef.current = newsItems
+              .filter(item => item.slug !== slug)
+              .slice(0, 5);
+          }
+        }
+      } catch (err: unknown) {
+        console.error('Error fetching article:', err);
+        setError('Đã xảy ra lỗi khi tải bài viết');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, [slug, getNewsDetail, newsItems]);
+
+  if (loading) {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-2xl font-bold text-gray-800">Bài viết không tồn tại</h1>
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/4 mb-6"></div>
+            <div className="h-64 bg-gray-200 rounded mb-6"></div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error || !article) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-2xl font-bold text-gray-800">
+            {error || 'Bài viết không tồn tại'}
+          </h1>
         </div>
       </Layout>
     );
@@ -32,8 +86,8 @@ const NewsDetail: React.FC = () => {
     { label: article.title, active: true }
   ];
 
-  // Get related articles (popular articles for sidebar)
-  const popularArticles = newsItems.filter(item => item.id !== article.id).slice(0, 5);
+  // Lấy tin tức liên quan
+  const popularArticles = popularArticlesRef.current;
 
   return (
     <Layout>
@@ -174,22 +228,26 @@ const NewsDetail: React.FC = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  {popularArticles.map(item => (
-                    <Link to={`/tin-tuc/${item.slug}`} className='block'>
-                      <div key={item.id} className="flex gap-3">
-                        <img 
-                          src={item.image} 
-                          alt={item.title}
-                          className="w-20 h-16 object-cover rounded flex-shrink-0"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-medium text-gray-800 line-clamp-3 hover:text-[#ff5722] transition-colors">
-                            {item.title}
-                          </h3>
+                  {popularArticles.length > 0 ? (
+                    popularArticles.map(item => (
+                      <Link key={item.id} to={`/tin-tuc/${item.slug}`} className='block'>
+                        <div className="flex gap-3">
+                          <img 
+                            src={item.image} 
+                            alt={item.title}
+                            className="w-20 h-16 object-cover rounded flex-shrink-0"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm font-medium text-gray-800 line-clamp-3 hover:text-[#ff5722] transition-colors">
+                              {item.title}
+                            </h3>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">Không có tin tức liên quan</p>
+                  )}
                 </div>
               </div>
             </div>

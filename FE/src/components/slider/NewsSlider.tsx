@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import type { News } from '../../models/NewsTypes';
+import { useNewsController } from '../../controllers/NewsController';
 
-interface NewsSliderProps {
-  newsItems: News[];
-}
-
-const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
+const NewsSlider: React.FC = () => {
+  const { newsItems } = useNewsController();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -112,6 +109,11 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
 
   // Hiển thị các tin tức dựa trên kích thước màn hình
   const getVisibleNews = () => {
+    // Kiểm tra nếu newsItems rỗng hoặc undefined thì trả về mảng rỗng
+    if (!newsItems || newsItems.length === 0) {
+      return [];
+    }
+    
     const result = [];
     for (let i = 0; i < itemsPerView; i++) {
       const index = (currentIndex + i) % newsItems.length;
@@ -181,52 +183,56 @@ const NewsSlider: React.FC<NewsSliderProps> = ({ newsItems }) => {
           msUserSelect: 'none'
         }}
       >
-        {getVisibleNews().map((news) => (
-          <div 
-            key={news.id} 
-            className={`bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${
-              isTransitioning ? 'opacity-0 transform translate-x-4' : 'opacity-100 transform translate-x-0'
-            }`}
-          >
-            <Link to={`/tin-tuc/${news.slug}`} className='block'>
-              <div className="relative">
-                <img 
-                  src={news.image}
-                  alt={news.title}
-                  className="w-full h-60 object-cover"
-                  draggable="false"
-                />
-                <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
-                  <span className="text-3xl font-bold text-center p-2">{news.date.split('/')[0]}</span>
-                  <span className="text-sm bg-[#010e2a] w-full text-center p-2">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
+        {getVisibleNews().map((news, index) => (
+          news && news.slug ? (
+            <div 
+              key={news.id || index} 
+              className={`bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${
+                isTransitioning ? 'opacity-0 transform translate-x-4' : 'opacity-100 transform translate-x-0'
+              }`}
+            >
+              <Link to={`/tin-tuc/${news.slug}`} className='block'>
+                <div className="relative">
+                  <img 
+                    src={news.image}
+                    alt={news.title}
+                    className="w-full h-60 object-cover"
+                    draggable="false"
+                  />
+                  <div className="absolute w-[20%] top-0 left-0 bg-[#ff5722] text-white flex flex-col items-center justify-center">
+                    <span className="text-3xl font-bold text-center p-2">{news.date.split('/')[0]}</span>
+                    <span className="text-sm bg-[#010e2a] w-full text-center p-2">{news.date.split('/')[1] + '/' + news.date.split('/')[2]}</span>
+                  </div>
                 </div>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
-                  {news.title}
-                </h3>
-              </div>
-            </Link>
-          </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-bold mb-3 text-gray-800 hover:text-[#ff5722] transition-colors line-clamp-2">
+                    {news.title}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          ) : <div key={`empty-${index}`} className="hidden" />
         ))}
       </div>
       
       {/* Nút điều hướng và indicators */}
-      <div className="flex justify-center mt-8">
-        {/* Indicator dots */}
-        <div className="flex items-center gap-2">
-          {newsItems.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handleSlideChange(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-[#ff5722] w-6' : 'bg-gray-300'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+      {newsItems && newsItems.length > 0 && (
+        <div className="flex justify-center mt-8">
+          {/* Indicator dots */}
+          <div className="flex items-center gap-2">
+            {newsItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleSlideChange(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? 'bg-[#ff5722] w-6' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

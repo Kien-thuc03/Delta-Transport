@@ -7,7 +7,6 @@ import TestimonialSlider from '../components/slider/TestimonialSlider';
 import NewsSlider from '../components/slider/NewsSlider';
 import { useVideoModal } from '../controllers/VideoController';
 import { testimonials } from '../models/TestimonialTypes';
-import { newsItems } from '../models/NewsTypes';
 import { useNavigate, Link } from 'react-router-dom';
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
@@ -21,7 +20,6 @@ import bgBannerForm from '../assets/banner2.png';
 const Home: React.FC = () => {
   const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
   const navigate = useNavigate();
-
   // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -299,7 +297,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* News Slider */}
-          <NewsSlider newsItems={newsItems} />
+          <NewsSlider />
         </div>
       </section>
 
