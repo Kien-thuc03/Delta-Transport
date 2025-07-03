@@ -7,6 +7,8 @@ const router = express.Router();
  * @swagger
  * /api/news:
  *   get:
+ *     tags:
+ *       - News
  *     summary: Lấy danh sách tin tức
  *     description: Trả về danh sách tin tức có phân trang
  *     responses:
@@ -30,6 +32,8 @@ const router = express.Router();
  *                   items:
  *                     $ref: '#/components/schemas/News'
  *   post:
+ *     tags:
+ *       - News
  *     summary: Tạo tin tức mới
  *     description: Tạo một bài viết tin tức mới
  *     requestBody:
@@ -50,6 +54,8 @@ router.route('/')
  * @swagger
  * /api/news/categories:
  *   get:
+ *     tags:
+ *       - News
  *     summary: Lấy tất cả danh mục tin tức
  *     description: Trả về danh sách các danh mục tin tức
  *     responses:
@@ -63,6 +69,8 @@ router.route('/categories')
  * @swagger
  * /api/news/tags:
  *   get:
+ *     tags:
+ *       - News
  *     summary: Lấy tất cả tags tin tức
  *     description: Trả về danh sách các tags của tin tức
  *     responses:
@@ -76,6 +84,8 @@ router.route('/tags')
  * @swagger
  * /api/news/migrate-comments:
  *   put:
+ *     tags:
+ *       - News
  *     summary: Di chuyển dữ liệu bình luận cũ
  *     description: Chuyển đổi trường avatar thành email cho các bình luận cũ
  *     responses:
@@ -89,6 +99,8 @@ router.route('/migrate-comments')
  * @swagger
  * /api/news/sync-comment-count:
  *   put:
+ *     tags:
+ *       - News
  *     summary: Đồng bộ số lượng bình luận
  *     description: Đồng bộ lại số lượng bình luận (commentCount) cho tất cả bài viết
  *     responses:
@@ -102,6 +114,8 @@ router.route('/sync-comment-count')
  * @swagger
  * /api/news/detail/{slug}:
  *   get:
+ *     tags:
+ *       - News
  *     summary: Lấy chi tiết tin tức theo slug
  *     description: Trả về thông tin chi tiết của một tin tức dựa trên slug
  *     parameters:
@@ -124,6 +138,8 @@ router.route('/detail/:slug')
  * @swagger
  * /api/news/{slug}/comments:
  *   post:
+ *     tags:
+ *       - News
  *     summary: Thêm bình luận vào tin tức
  *     description: Thêm một bình luận mới vào tin tức
  *     parameters:
@@ -164,6 +180,8 @@ router.route('/:slug/comments')
  * @swagger
  * /api/news/{id}:
  *   put:
+ *     tags:
+ *       - News
  *     summary: Cập nhật tin tức
  *     description: Cập nhật thông tin của một tin tức
  *     parameters:
@@ -185,6 +203,8 @@ router.route('/:slug/comments')
  *       404:
  *         description: Không tìm thấy tin tức
  *   delete:
+ *     tags:
+ *       - News
  *     summary: Xóa tin tức
  *     description: Xóa một tin tức
  *     parameters:

@@ -7,6 +7,8 @@ const router = express.Router();
  * @swagger
  * /api/testimonials:
  *   get:
+ *     tags:
+ *       - Testimonials
  *     summary: Lấy danh sách đánh giá khách hàng
  *     description: Trả về danh sách đánh giá khách hàng có phân trang
  *     parameters:
@@ -41,6 +43,8 @@ const router = express.Router();
  *                   items:
  *                     $ref: '#/components/schemas/Testimonial'
  *   post:
+ *     tags:
+ *       - Testimonials
  *     summary: Tạo đánh giá mới
  *     description: Tạo một đánh giá khách hàng mới
  *     requestBody:
@@ -61,6 +65,8 @@ router.route('/')
  * @swagger
  * /api/testimonials/{id}:
  *   get:
+ *     tags:
+ *       - Testimonials
  *     summary: Lấy chi tiết đánh giá
  *     description: Trả về thông tin chi tiết của một đánh giá dựa trên ID
  *     parameters:
@@ -76,6 +82,8 @@ router.route('/')
  *       404:
  *         description: Không tìm thấy đánh giá
  *   put:
+ *     tags:
+ *       - Testimonials
  *     summary: Cập nhật đánh giá
  *     description: Cập nhật thông tin của một đánh giá
  *     parameters:
@@ -97,6 +105,8 @@ router.route('/')
  *       404:
  *         description: Không tìm thấy đánh giá
  *   delete:
+ *     tags:
+ *       - Testimonials
  *     summary: Xóa đánh giá
  *     description: Xóa một đánh giá
  *     parameters:

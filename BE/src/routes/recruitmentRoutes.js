@@ -7,6 +7,8 @@ const router = express.Router();
  * @swagger
  * /api/recruitment:
  *   get:
+ *     tags:
+ *       - Recruitment
  *     summary: Lấy danh sách tin tuyển dụng
  *     description: Trả về danh sách tin tuyển dụng
  *     responses:
@@ -30,6 +32,8 @@ const router = express.Router();
  *                   items:
  *                     $ref: '#/components/schemas/Recruitment'
  *   post:
+ *     tags:
+ *       - Recruitment
  *     summary: Tạo tin tuyển dụng mới
  *     description: Tạo một tin tuyển dụng mới
  *     requestBody:
@@ -50,6 +54,8 @@ router.route('/')
  * @swagger
  * /api/recruitment/locations:
  *   get:
+ *     tags:
+ *       - Recruitment
  *     summary: Lấy danh sách địa điểm làm việc
  *     description: Trả về danh sách các địa điểm làm việc
  *     responses:
@@ -76,6 +82,8 @@ router.route('/locations')
  * @swagger
  * /api/recruitment/{id}:
  *   get:
+ *     tags:
+ *       - Recruitment
  *     summary: Lấy chi tiết tin tuyển dụng
  *     description: Trả về thông tin chi tiết của một tin tuyển dụng dựa trên ID
  *     parameters:
@@ -91,6 +99,8 @@ router.route('/locations')
  *       404:
  *         description: Không tìm thấy tin tuyển dụng
  *   put:
+ *     tags:
+ *       - Recruitment
  *     summary: Cập nhật tin tuyển dụng
  *     description: Cập nhật thông tin của một tin tuyển dụng
  *     parameters:
@@ -112,6 +122,8 @@ router.route('/locations')
  *       404:
  *         description: Không tìm thấy tin tuyển dụng
  *   delete:
+ *     tags:
+ *       - Recruitment
  *     summary: Xóa tin tuyển dụng
  *     description: Xóa một tin tuyển dụng
  *     parameters:

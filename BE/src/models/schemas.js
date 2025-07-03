@@ -2,8 +2,10 @@
  * @swagger
  * components:
  *   schemas:
+ *     # Common schemas
  *     ContentBlock:
  *       type: object
+ *       description: Khối nội dung đa dạng cho bài viết
  *       properties:
  *         type:
  *           type: string
@@ -44,6 +46,7 @@
  *
  *     Comment:
  *       type: object
+ *       description: Bình luận của người dùng
  *       properties:
  *         author:
  *           type: string
@@ -59,8 +62,10 @@
  *           format: date-time
  *           description: Thời gian bình luận
  *
+ *     # News schemas
  *     News:
  *       type: object
+ *       description: Bài viết tin tức
  *       required:
  *         - title
  *         - slug
@@ -108,8 +113,10 @@
  *           type: integer
  *           description: Số lượng bình luận
  *
+ *     # Testimonial schemas
  *     Testimonial:
  *       type: object
+ *       description: Đánh giá từ khách hàng
  *       required:
  *         - name
  *         - content
@@ -136,8 +143,10 @@
  *           format: date-time
  *           description: Thời gian tạo
  *
+ *     # Recruitment schemas
  *     Recruitment:
  *       type: object
+ *       description: Thông tin tuyển dụng
  *       required:
  *         - title
  *         - location
@@ -177,36 +186,6 @@
  *         isActive:
  *           type: boolean
  *           description: Trạng thái hiển thị
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Thời gian tạo
- * 
- *     Video:
- *       type: object
- *       required:
- *         - title
- *         - url
- *       properties:
- *         title:
- *           type: string
- *           description: Tiêu đề video
- *         url:
- *           type: string
- *           description: URL Youtube video
- *           pattern: ^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]{11}$
- *         description:
- *           type: string
- *           description: Mô tả video
- *         thumbnail:
- *           type: string
- *           description: Đường dẫn thumbnail
- *         isActive:
- *           type: boolean
- *           description: Trạng thái hiển thị
- *         featured:
- *           type: boolean
- *           description: Là video nổi bật
  *         createdAt:
  *           type: string
  *           format: date-time

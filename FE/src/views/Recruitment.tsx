@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -6,15 +6,31 @@ import Breadcrumb from '../components/Breadcrumb';
 import { useRecruitmentController } from '../controllers/RecruitmentController';
 
 const Recruitment: React.FC = () => {
-  const { getVisibleRecruitments, isLoading, error } = useRecruitmentController();
+  const { recruitments, isLoading, error } = useRecruitmentController();
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 2;
   
   // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [currentPage]);
 
-  // Lấy danh sách việc làm hiện tại
-  const jobListings = getVisibleRecruitments();
+  // Tính toán số trang
+  const totalPages = Math.ceil((recruitments?.length || 0) / jobsPerPage);
+  
+  // Lấy danh sách việc làm cho trang hiện tại
+  const getCurrentJobs = () => {
+    const startIndex = (currentPage - 1) * jobsPerPage;
+    const endIndex = startIndex + jobsPerPage;
+    return recruitments?.slice(startIndex, endIndex) || [];
+  };
+  
+  const jobListings = getCurrentJobs();
+  
+  // Xử lý chuyển trang
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <main className="flex-1">
@@ -115,6 +131,37 @@ const Recruitment: React.FC = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+              
+              {/* Phân trang */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center space-x-2 mt-8">
+                  <button 
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-3 py-1 rounded-md ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                  >
+                    Trước
+                  </button>
+                  
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`px-3 py-1 rounded-md ${currentPage === index + 1 ? 'bg-[#ff5722] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                  
+                  <button 
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-3 py-1 rounded-md ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                  >
+                    Tiếp
+                  </button>
                 </div>
               )}
               

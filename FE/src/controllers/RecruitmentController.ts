@@ -4,18 +4,11 @@ import { getRecruitments, getRecruitmentById, getLocations } from '../api/recrui
 import { formatDate } from '../utils/dateUtils';
 
 export const useRecruitmentController = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [recruitments, setRecruitments] = useState<Job[]>([]);
   const [locations, setLocations] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasInitialFetch = useRef(false);
-
-  // Số lượng tin tuyển dụng cố định trên mỗi trang
-  const itemsPerPage = 6;
-  
-  // Tính toán tổng số trang
-  const totalPages = Math.ceil(recruitments.length / itemsPerPage);
 
   useEffect(() => {
     if (hasInitialFetch.current) return;
@@ -88,34 +81,6 @@ export const useRecruitmentController = () => {
     }
   };
   
-  // Chuyển đến trang tiếp theo
-  const nextPage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + itemsPerPage) % recruitments.length);
-  };
-  
-  // Chuyển đến trang trước đó
-  const prevPage = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 
-        ? recruitments.length - (recruitments.length % itemsPerPage || itemsPerPage) 
-        : prevIndex - itemsPerPage
-    );
-  };
-  
-  // Chuyển đến trang cụ thể
-  const goToPage = (pageIndex: number) => {
-    const newIndex = pageIndex * itemsPerPage;
-    if (newIndex < recruitments.length) {
-      setCurrentIndex(newIndex);
-    }
-  };
-  
-  // Lấy tin tuyển dụng hiện tại cần hiển thị
-  const getVisibleRecruitments = (): Job[] => {
-    const endIndex = Math.min(currentIndex + itemsPerPage, recruitments.length);
-    return recruitments.slice(currentIndex, endIndex);
-  };
-  
   // Lọc tin tuyển dụng theo địa điểm
   const filterByLocation = (location: string) => {
     if (!location || location === 'Tất cả') {
@@ -128,15 +93,8 @@ export const useRecruitmentController = () => {
   return {
     recruitments,
     locations,
-    currentIndex,
-    itemsPerPage,
-    totalPages,
     isLoading,
     error,
-    nextPage,
-    prevPage,
-    goToPage,
-    getVisibleRecruitments,
     getRecruitmentDetail,
     filterByLocation
   };

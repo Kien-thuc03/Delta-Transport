@@ -7,6 +7,8 @@ const router = express.Router();
  * @swagger
  * /api/search:
  *   get:
+ *     tags:
+ *       - Search
  *     summary: Tìm kiếm tin tức
  *     description: Tìm kiếm tin tức theo từ khóa
  *     parameters:
@@ -39,6 +41,8 @@ router.route('/')
  * @swagger
  * /api/search/popular-tags:
  *   get:
+ *     tags:
+ *       - Search
  *     summary: Lấy các tags phổ biến
  *     description: Trả về danh sách các tags phổ biến
  *     responses:
