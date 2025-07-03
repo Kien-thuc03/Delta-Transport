@@ -1,14 +1,10 @@
 const { News } = require('../models');
 const { asyncHandler, ApiError } = require('../utils');
 
-// @desc    Lấy tất cả tin tức (có phân trang)
+// @desc    Lấy tất cả tin tức
 // @route   GET /api/news
 // @access  Public
 exports.getNews = asyncHandler(async(req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
-    const skip = (page - 1) * limit;
-
     // Lọc theo category và tags nếu có
     const filter = {};
     if (req.query.category) {
@@ -19,17 +15,10 @@ exports.getNews = asyncHandler(async(req, res) => {
     }
     const news = await News.find(filter)
         .sort({ date: -1 })
-        .skip(skip)
-        .limit(limit)
         .select('title image date excerpt slug');
-
-    const total = await News.countDocuments(filter);
 
     res.status(200).json({
         success: true,
-        count: news.length,
-        totalPages: Math.ceil(total / limit),
-        currentPage: page,
         data: news
     });
 });

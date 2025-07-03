@@ -10,16 +10,15 @@ const TestimonialSchema = new mongoose.Schema({
         type: String,
         default: 'https://randomuser.me/api/portraits/lego/1.jpg'
     },
+    email: {
+        type: String,
+        required: [true, 'Email không được bỏ trống'],
+        trim: true
+    },
     content: {
         type: String,
         required: [true, 'Nội dung đánh giá không được bỏ trống'],
         trim: true
-    },
-    rating: {
-        type: Number,
-        min: 1,
-        max: 5,
-        default: 5
     },
     isActive: {
         type: Boolean,

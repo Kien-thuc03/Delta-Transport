@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import type { News, NewsArticle } from '../models/NewsTypes';
-// import { newsItems } from '../models/NewsTypes';
 import { getNews, getNewsBySlug, addComment } from '../api/newsAPI';
 import { formatDate } from '../utils/dateUtils';
 import type { Comment } from '../models/NewsTypes';
 export const useNewsController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
   const [newsItems, setNewsItems] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,14 +35,18 @@ export const useNewsController = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const news = await getNews();
+        const response = await getNews();
         // định dạng cho cả date của comment
-        const dateFormatted = news.data.map((item: News) => ({
-          ...item,
-          date: formatDate(item.date)
-        }));
-        setNewsItems(dateFormatted);
-        hasInitialFetch.current = true;
+        if (response.data && Array.isArray(response.data)) {
+          const dateFormatted = response.data.map((item: News) => ({
+            ...item,
+            date: formatDate(item.date)
+          }));
+          setNewsItems(dateFormatted);
+          hasInitialFetch.current = true;
+        } else {
+          throw new Error('Dữ liệu không đúng định dạng');
+        }
       } catch (err) {
         console.error('Error fetching news list:', err);
         setError('Không thể tải danh sách tin tức');
@@ -55,24 +57,11 @@ export const useNewsController = () => {
     fetchNews();
   }, []);
   // Xác định số lượng tin tức hiển thị dựa trên kích thước màn hình
-  const itemsPerPage = windowWidth >= 1200 ? 3 : windowWidth >= 768 ? 2 : 1;
+  const itemsPerPage = 6;
   
   // Tính toán tổng số trang
   const totalPages = Math.ceil(newsItems.length / itemsPerPage);
   
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    // Thêm event listener khi component được mount
-    window.addEventListener('resize', handleResize);
-    
-    // Cleanup khi component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
   
   // Chuyển đến trang tiếp theo
   const nextPage = () => {
