@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { News } from '../models/NewsTypes';
 // import { newsItems } from '../models/NewsTypes';
 import { getNews, getNewsBySlug } from '../api/newsAPI';
+import { formatDate } from '../utils/dateUtils';
 
 export const useNewsController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,13 +17,10 @@ export const useNewsController = () => {
       setError(null);
       try {
         const news = await getNews();
+        // định dạng cho cả date của comment
         const dateFormatted = news.data.map((item: News) => ({
           ...item,
-          date: new Date(item.date).toLocaleDateString('vi-VN', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-          })
+          date: formatDate(item.date)
         }));
         setNewsItems(dateFormatted);
       } catch (err) {
@@ -87,15 +85,16 @@ export const useNewsController = () => {
     setError(null);
     try {
       const response = await getNewsBySlug(slug);
-      // Định dạng ngày tháng của bài viết chi tiết
-      if (response.data && response.data.date) {
+      // Định dạng ngày tháng của bài viết chi tiết và comment
+      if (response.data) {
         const formattedData = {
           ...response.data,
-          date: new Date(response.data.date).toLocaleDateString('vi-VN', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-          })
+          date: response.data.date ? formatDate(response.data.date) : '',
+          // Định dạng ngày cho các comment
+          comments: response.data.comments ? response.data.comments.map((comment: News) => ({
+            ...comment,
+            date: comment.date ? formatDate(comment.date) : ''
+          })) : []
         };
         return {
           data: formattedData,

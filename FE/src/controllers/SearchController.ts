@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { newsItems } from '../models/NewsTypes';
 import type { News } from '../models/NewsTypes';
+import { useNewsController } from './NewsController';
 
 // Danh sách các tag tìm kiếm phổ biến
 const popularTags = ['đặt hàng', 'mua hàng', 'quảng châu', 'châu âu', 'trong nước', 'quốc tế'];
@@ -9,7 +9,7 @@ export const useSearchController = (query: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [results, setResults] = useState<News[]>([]);
   const [relatedTags, setRelatedTags] = useState<string[]>([]);
-
+  const { newsItems } = useNewsController();
   useEffect(() => {
     // Đảm bảo trang luôn cuộn lên đầu khi load
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -29,7 +29,7 @@ export const useSearchController = (query: string) => {
   const performSearch = () => {
     if (query.trim()) {
       // Lọc tin tức dựa trên từ khóa tìm kiếm
-      const filteredResults = newsItems.filter(item => 
+      const filteredResults = newsItems.filter((item: News) => 
         item.title.toLowerCase().includes(query.toLowerCase()) || 
         (item.excerpt || '').toLowerCase().includes(query.toLowerCase())
       );
