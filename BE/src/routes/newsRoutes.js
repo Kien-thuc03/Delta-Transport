@@ -80,35 +80,6 @@ router.route('/categories')
 router.route('/tags')
     .get(newsController.getTags);
 
-/**
- * @swagger
- * /api/news/migrate-comments:
- *   put:
- *     tags:
- *       - News
- *     summary: Di chuyển dữ liệu bình luận cũ
- *     description: Chuyển đổi trường avatar thành email cho các bình luận cũ
- *     responses:
- *       200:
- *         description: Thành công
- */
-router.route('/migrate-comments')
-    .put(newsController.migrateComments);
-
-/**
- * @swagger
- * /api/news/sync-comment-count:
- *   put:
- *     tags:
- *       - News
- *     summary: Đồng bộ số lượng bình luận
- *     description: Đồng bộ lại số lượng bình luận (commentCount) cho tất cả bài viết
- *     responses:
- *       200:
- *         description: Thành công
- */
-router.route('/sync-comment-count')
-    .put(newsController.syncCommentCount);
 
 /**
  * @swagger

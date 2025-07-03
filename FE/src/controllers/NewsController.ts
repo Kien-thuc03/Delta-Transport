@@ -181,8 +181,12 @@ export const useNewsController = () => {
       const response = await addComment(slug, formData);
       
       if (response && response.success) {
-        // Cập nhật cache với comment mới
-        const newComment = response.data;
+        // Định dạng ngày cho comment mới trước khi thêm vào danh sách
+        const newComment = {
+          ...response.data,
+          date: response.data.date ? formatDate(response.data.date) : formatDate(new Date())
+        };
+        
         const updatedComments = article.comments ? [...article.comments, newComment] : [newComment];
         
         const updatedArticle = {

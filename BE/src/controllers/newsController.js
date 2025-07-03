@@ -116,40 +116,6 @@ exports.getTags = asyncHandler(async(req, res) => {
     });
 });
 
-// @desc    Di chuyển dữ liệu bình luận cũ (avatar -> email)
-// @route   PUT /api/news/migrate-comments
-// @access  Public
-exports.migrateComments = asyncHandler(async(req, res) => {
-    // Tìm tất cả tin tức có bình luận
-    const allNews = await News.find({ 'comments.0': { $exists: true } });
-    let updatedCount = 0;
-
-    for (const news of allNews) {
-        let needsUpdate = false;
-
-        // Kiểm tra và cập nhật từng bình luận
-        if (news.comments && news.comments.length > 0) {
-            news.comments.forEach(comment => {
-                if (!comment.email && comment.avatar) {
-                    // Chuyển đổi avatar thành email nếu có thể
-                    comment.email = `${comment.author.replace(/\s+/g, '').toLowerCase()}@example.com`;
-                    needsUpdate = true;
-                }
-            });
-        }
-
-        // Lưu lại nếu có thay đổi
-        if (needsUpdate) {
-            await News.updateOne({ _id: news._id }, { $set: { comments: news.comments } }, { runValidators: false });
-            updatedCount++;
-        }
-    }
-
-    res.status(200).json({
-        success: true,
-        message: `Đã cập nhật ${updatedCount} tin tức có bình luận cũ`,
-    });
-});
 
 // @desc    Thêm comment vào tin tức
 // @route   POST /api/news/:slug/comments
@@ -202,29 +168,4 @@ exports.addComment = asyncHandler(async(req, res) => {
     } catch (error) {
         throw new ApiError(400, error.message);
     }
-});
-
-// @desc    Đồng bộ lại commentCount cho tất cả bài viết
-// @route   PUT /api/news/sync-comment-count
-// @access  Public
-exports.syncCommentCount = asyncHandler(async(req, res) => {
-    const allNews = await News.find({});
-    let updatedCount = 0;
-
-    for (const news of allNews) {
-        if (news.comments) {
-            const correctCount = news.comments.length;
-
-            // Chỉ cập nhật nếu commentCount không chính xác
-            if (news.commentCount !== correctCount) {
-                await News.updateOne({ _id: news._id }, { $set: { commentCount: correctCount } });
-                updatedCount++;
-            }
-        }
-    }
-
-    res.status(200).json({
-        success: true,
-        message: `Đã đồng bộ commentCount cho ${updatedCount} tin tức`,
-    });
 });
