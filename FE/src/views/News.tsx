@@ -28,8 +28,8 @@ const News: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {newsItems.map(item => (
-              <div key={item.id} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
+            {newsItems.map((item, index) => (
+              <div key={item.id || `news-${index}`} className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
                 <img 
                   src={item.image} 
                   alt={item.title}

@@ -26,9 +26,12 @@ const CommentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Vui lòng nhập đúng định dạng email']
+    },
     avatar: {
         type: String,
-        default: 'https://www.gravatar.com/avatar/default?s=55&d=identicon'
     },
     content: {
         type: String,

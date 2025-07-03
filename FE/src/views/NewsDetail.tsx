@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCalendar, faComment } from '@fortawesome/free-solid-svg-icons';
 import type { NewsArticle, News } from '../models/NewsTypes';
 
+import defaultAvatar from '../assets/default-avatar-icon-of-social-media-user-vector.jpg';
+
 const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { getNewsDetail, newsItems } = useNewsController();
@@ -35,13 +37,6 @@ const NewsDetail: React.FC = () => {
           setError(response.error);
         } else {
           setArticle(response.data);
-          // Lấy tin tức liên quan từ newsItems
-          if (newsItems && newsItems.length > 0) {
-            // Lọc ra các tin tức khác với tin tức hiện tại
-            popularArticlesRef.current = newsItems
-              .filter(item => item.slug !== slug)
-              .slice(0, 5);
-          }
         }
       } catch (err: unknown) {
         console.error('Error fetching article:', err);
@@ -52,7 +47,17 @@ const NewsDetail: React.FC = () => {
     };
     
     fetchData();
-  }, [slug, getNewsDetail, newsItems]);
+  }, [slug, getNewsDetail]);
+
+  // Xử lý danh sách tin tức liên quan riêng biệt
+  useEffect(() => {
+    if (slug && newsItems && newsItems.length > 0 && article) {
+      // Lọc ra các tin tức khác với tin tức hiện tại
+      popularArticlesRef.current = newsItems
+        .filter(item => item.slug !== slug)
+        .slice(0, 5);
+    }
+  }, [slug, newsItems, article]);
 
   if (loading) {
     return (
@@ -166,7 +171,7 @@ const NewsDetail: React.FC = () => {
                     {article.comments.map((comment, index) => (
                       <div key={comment.id || `comment-${index}`} className="flex gap-4 mb-6">
                         <img 
-                          src={ comment.avatar || 'https://via.placeholder.com/150'} 
+                          src={ comment.avatar || defaultAvatar} 
                           alt={comment.author}
                           className="w-12 h-12 rounded-full"
                         />

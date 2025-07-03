@@ -74,6 +74,19 @@ router.route('/tags')
 
 /**
  * @swagger
+ * /api/news/migrate-comments:
+ *   put:
+ *     summary: Di chuyển dữ liệu bình luận cũ
+ *     description: Chuyển đổi trường avatar thành email cho các bình luận cũ
+ *     responses:
+ *       200:
+ *         description: Thành công
+ */
+router.route('/migrate-comments')
+    .put(newsController.migrateComments);
+
+/**
+ * @swagger
  * /api/news/detail/{slug}:
  *   get:
  *     summary: Lấy chi tiết tin tức theo slug
@@ -96,17 +109,17 @@ router.route('/detail/:slug')
 
 /**
  * @swagger
- * /api/news/{id}/comments:
+ * /api/news/{slug}/comments:
  *   post:
  *     summary: Thêm bình luận vào tin tức
  *     description: Thêm một bình luận mới vào tin tức
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: slug
  *         required: true
  *         schema:
  *           type: string
- *         description: ID của tin tức
+ *         description: Slug của tin tức
  *     requestBody:
  *       required: true
  *       content:
@@ -116,17 +129,22 @@ router.route('/detail/:slug')
  *             properties:
  *               author:
  *                 type: string
- *               avatar:
+ *               email:
  *                 type: string
+ *                 format: email
  *               content:
  *                 type: string
+ *             required:
+ *               - author
+ *               - email
+ *               - content
  *     responses:
  *       201:
  *         description: Thêm bình luận thành công
  *       404:
  *         description: Không tìm thấy tin tức
  */
-router.route('/:id/comments')
+router.route('/:slug/comments')
     .post(newsController.addComment);
 
 /**

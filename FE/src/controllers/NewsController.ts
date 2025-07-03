@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { News, NewsArticle } from '../models/NewsTypes';
 // import { newsItems } from '../models/NewsTypes';
 import { getNews, getNewsBySlug } from '../api/newsAPI';
@@ -10,8 +10,20 @@ export const useNewsController = () => {
   const [newsItems, setNewsItems] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const hasInitialFetch = useRef(false);
+  
+  // Cache cho kết quả API
+  interface NewsDetailResponse {
+    data: NewsArticle | null;
+    loading: boolean;
+    error: string | null;
+  }
+  
+  const newsDetailCache = useRef<Record<string, NewsDetailResponse>>({});
 
   useEffect(() => {
+    if (hasInitialFetch.current) return;
+    
     const fetchNews = async () => {
       setIsLoading(true);
       setError(null);
@@ -23,6 +35,7 @@ export const useNewsController = () => {
           date: formatDate(item.date)
         }));
         setNewsItems(dateFormatted);
+        hasInitialFetch.current = true;
       } catch (err) {
         console.error('Error fetching news list:', err);
         setError('Không thể tải danh sách tin tức');
@@ -81,6 +94,11 @@ export const useNewsController = () => {
   };
   // lấy chi tiết tin tức theo slug
   const getNewsDetail = async (slug: string) => {
+    // Kiểm tra cache
+    if (newsDetailCache.current[slug]) {
+      return newsDetailCache.current[slug];
+    }
+    
     setIsLoading(true);
     setError(null);
     try {
@@ -96,17 +114,27 @@ export const useNewsController = () => {
             date: comment.date ? formatDate(comment.date) : ''
           })) : []
         };
-        return {
+        
+        const result = {
           data: formattedData,
           loading: false,
           error: null
         };
+        
+        // Lưu vào cache
+        newsDetailCache.current[slug] = result;
+        return result;
       }
-      return {
+      
+      const result = {
         data: response.data,
         loading: false,
         error: null
       };
+      
+      // Lưu vào cache
+      newsDetailCache.current[slug] = result;
+      return result;
     } catch (error) {
       console.error("Error fetching news by slug:", error);
       return {

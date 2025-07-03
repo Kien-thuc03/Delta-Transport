@@ -26,5 +26,16 @@ export const getNewsBySlug = async (slug: string) => {
   }
 };
 
+export const addComment = async (slug: string, comment: Comment) => {
+  try {
+    const response = await newsAPI.post(`/api/news/${slug}/comments`, comment);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    throw error;
+  }
+};
+
+
 
 export default newsAPI;

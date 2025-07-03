@@ -135,47 +135,53 @@ const Market: React.FC = () => {
               {loading ? (
                 <div className="animate-pulse bg-white rounded-xl shadow-xl h-96"></div>
               ) : (
-                <div className="relative overflow-hidden rounded-xl shadow-2xl group bg-white transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(255,87,34,0.25)]">
-                  <Link to={`/tin-tuc/${newsItems[0].slug}`} className="block">
-                    <div className="relative">
-                      <img 
-                        src={newsItems[0].image} 
-                        alt={newsItems[0].title} 
-                        className="w-full h-96 object-cover transition-all duration-700 group-hover:scale-110" 
-                        loading="lazy"
-                      />
-                      
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      {/* Content overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white transform transition-transform duration-500">
-                        <div className="flex items-center gap-3 text-sm mb-4">
-                          <span className="bg-[#ff5722] px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide">
-                            {newsItems[0].date}
-                          </span>
-                          <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
-                            Tin nổi bật
-                          </span>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight text-shadow-lg group-hover:text-[#ff9800] transition-colors duration-300">
-                          {newsItems[0].title}
-                        </h3>
-                        <p className="text-gray-200 text-base line-clamp-3 mb-4 leading-relaxed">
-                          {newsItems[0].excerpt}
-                        </p>
-                        <div className="flex items-center gap-3 transform translate-y-0 group-hover:translate-y-0 transition-all duration-300">
-                          <span className="text-[#ff5722] group-hover:text-white transition-colors text-sm font-bold uppercase tracking-wide">
-                            ĐỌC TIẾP
-                          </span>
-                          <svg className="w-5 h-5 text-[#ff5722] group-hover:text-white group-hover:translate-x-2 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                newsItems && newsItems.length > 0 ? (
+                  <div className="relative overflow-hidden rounded-xl shadow-2xl group bg-white transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(255,87,34,0.25)]">
+                    <Link to={`/tin-tuc/${newsItems[0].slug}`} className="block">
+                      <div className="relative">
+                        <img 
+                          src={newsItems[0].image} 
+                          alt={newsItems[0].title} 
+                          className="w-full h-96 object-cover transition-all duration-700 group-hover:scale-110" 
+                          loading="lazy"
+                        />
+                        
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        {/* Content overlay */}
+                        <div className="absolute bottom-0 left-0 right-0 p-8 text-white transform transition-transform duration-500">
+                          <div className="flex items-center gap-3 text-sm mb-4">
+                            <span className="bg-[#ff5722] px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide">
+                              {newsItems[0].date}
+                            </span>
+                            <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
+                              Tin nổi bật
+                            </span>
+                          </div>
+                          <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight text-shadow-lg group-hover:text-[#ff9800] transition-colors duration-300">
+                            {newsItems[0].title}
+                          </h3>
+                          <p className="text-gray-200 text-base line-clamp-3 mb-4 leading-relaxed">
+                            {newsItems[0].excerpt}
+                          </p>
+                          <div className="flex items-center gap-3 transform translate-y-0 group-hover:translate-y-0 transition-all duration-300">
+                            <span className="text-[#ff5722] group-hover:text-white transition-colors text-sm font-bold uppercase tracking-wide">
+                              ĐỌC TIẾP
+                            </span>
+                            <svg className="w-5 h-5 text-[#ff5722] group-hover:text-white group-hover:translate-x-2 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-xl p-8 shadow-xl text-center">
+                    <p className="text-gray-500">Không có tin tức nào để hiển thị</p>
+                  </div>
+                )
               )}
             </div>
 
@@ -194,36 +200,42 @@ const Market: React.FC = () => {
                   <NewsItemSkeleton />
                 </>
               ) : (
-                newsItems.slice(1, 3).map((item) => (
-                  <div key={item.id} className="group">
-                    <Link to={`/tin-tuc/${item.slug}`} className="block" aria-label={`Đọc bài ${item.title}`}>
-                      <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#ff5722]/30 hover:-translate-y-1">
-                        <div className="flex-shrink-0 relative overflow-hidden rounded-lg">
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="w-32 h-28 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" 
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-gray-800 group-hover:text-[#ff5722] transition-colors duration-300 mb-2 text-sm leading-tight line-clamp-2">
-                            {item.title}
-                          </h4>
-                          <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <span className="bg-gray-100 px-2 py-1 rounded-full text-xs font-medium">
-                              {item.date}
-                            </span>
+                newsItems && newsItems.length > 1 ? (
+                  newsItems.slice(1, 3).map((item, index) => (
+                    <div key={item.id || index} className="group">
+                      <Link to={`/tin-tuc/${item.slug}`} className="block" aria-label={`Đọc bài ${item.title}`}>
+                        <div className="flex gap-4 p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#ff5722]/30 hover:-translate-y-1">
+                          <div className="flex-shrink-0 relative overflow-hidden rounded-lg">
+                            <img 
+                              src={item.image} 
+                              alt={item.title} 
+                              className="w-32 h-28 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" 
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                           </div>
-                          <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
-                            {item.excerpt}
-                          </p>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-bold text-gray-800 group-hover:text-[#ff5722] transition-colors duration-300 mb-2 text-sm leading-tight line-clamp-2">
+                              {item.title}
+                            </h4>
+                            <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                              <span className="bg-gray-100 px-2 py-1 rounded-full text-xs font-medium">
+                                {item.date}
+                              </span>
+                            </div>
+                            <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed">
+                              {item.excerpt}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <div className="bg-white rounded-xl p-8 shadow-md text-center">
+                    <p className="text-gray-500">Không có tin tức khác để hiển thị</p>
                   </div>
-                ))
+                )
               )}
               
               
@@ -278,37 +290,43 @@ const Market: React.FC = () => {
                 <NewsItemSkeleton />
               </>
             ) : (
-              newsItems.slice(0, 4).map((item, index) => (
-                <div key={`guide-${item.id}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
-                  <div className="relative overflow-hidden">
-                    <Link to={`/tin-tuc/${item.slug}`} aria-label={`Bước ${index + 1}: ${item.title}`}>
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute top-4 left-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold">
-                        <span className="flex items-center gap-1">
-                          <FontAwesomeIcon icon={faTruck} className="text-xs" /> Bước {index + 1}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                    </Link>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
-                      <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
-                        {item.title}
+              newsItems && newsItems.length > 0 ? (
+                newsItems.slice(0, 4).map((item, index) => (
+                  <div key={`guide-${item.id || index}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+                    <div className="relative overflow-hidden">
+                      <Link to={`/tin-tuc/${item.slug}`} aria-label={`Bước ${index + 1}: ${item.title}`}>
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute top-4 left-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold">
+                          <span className="flex items-center gap-1">
+                            <FontAwesomeIcon icon={faTruck} className="text-xs" /> Bước {index + 1}
+                          </span>
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                       </Link>
-                    </h3>
-                    <p className="text-gray-600 text-xs mt-2 line-clamp-2">
-                      {item.excerpt}
-                    </p>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
+                        <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
+                          {item.title}
+                        </Link>
+                      </h3>
+                      <p className="text-gray-600 text-xs mt-2 line-clamp-2">
+                        {item.excerpt}
+                      </p>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="col-span-4 bg-white rounded-xl p-8 shadow-lg text-center">
+                  <p className="text-gray-500">Không có hướng dẫn đặt hàng để hiển thị</p>
                 </div>
-              ))
+              )
             )}
           </div>
 
@@ -360,37 +378,43 @@ const Market: React.FC = () => {
                 <NewsItemSkeleton />
               </>
             ) : (
-              newsItems.slice(2, 6).map((item) => (
-                <div key={`market-${item.id}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
-                  <div className="relative overflow-hidden">
-                    <Link to={`/tin-tuc/${item.slug}`} aria-label={`Đọc tin: ${item.title}`}>
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute top-4 right-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold transform rotate-0 group-hover:rotate-3 transition-transform duration-300">
-                        Hot
-                      </div>
-                      <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                    </Link>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
-                      <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
-                        {item.title}
+              newsItems && newsItems.length > 2 ? (
+                newsItems.slice(2, 6).map((item, index) => (
+                  <div key={`market-${item.id || index}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+                    <div className="relative overflow-hidden">
+                      <Link to={`/tin-tuc/${item.slug}`} aria-label={`Đọc tin: ${item.title}`}>
+                        <img 
+                          src={item.image} 
+                          alt={item.title} 
+                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute top-4 right-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold transform rotate-0 group-hover:rotate-3 transition-transform duration-300">
+                          Hot
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                       </Link>
-                    </h3>
-                    <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                      <span className="bg-gray-100 px-2 py-1 rounded-full">
-                        {item.date}
-                      </span>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
+                        <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
+                          {item.title}
+                        </Link>
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                        <span className="bg-gray-100 px-2 py-1 rounded-full">
+                          {item.date}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="col-span-4 bg-white rounded-xl p-8 shadow-lg text-center">
+                  <p className="text-gray-500">Không có tin tức thị trường để hiển thị</p>
                 </div>
-              ))
+              )
             )}
           </div>
           
@@ -445,37 +469,43 @@ const Market: React.FC = () => {
                     <NewsItemSkeleton />
                   </>
                 ) : (
-                  newsItems.slice(0, 6).map((item) => (
-                    <div key={`dat-hang-${item.id}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
-                      <div className="relative overflow-hidden">
-                        <Link to={`/tin-tuc/${item.slug}`} aria-label={`Đọc tin: ${item.title}`}>
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="absolute top-4 right-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold transform rotate-0 group-hover:rotate-3 transition-transform duration-300">
-                            Hot
-                          </div>
-                          <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                        </Link>
-                      </div>
-                      <div className="p-5">
-                        <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
-                          <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
-                            {item.title}
+                  newsItems && newsItems.length > 0 ? (
+                    newsItems.slice(0, 6).map((item, index) => (
+                      <div key={`dat-hang-${item.id || index}`} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+                        <div className="relative overflow-hidden">
+                          <Link to={`/tin-tuc/${item.slug}`} aria-label={`Đọc tin: ${item.title}`}>
+                            <img 
+                              src={item.image} 
+                              alt={item.title} 
+                              className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" 
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute top-4 right-4 bg-[#ff5722] text-white px-3 py-1 rounded-full text-xs font-bold transform rotate-0 group-hover:rotate-3 transition-transform duration-300">
+                              Hot
+                            </div>
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-[#ff5722] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                           </Link>
-                        </h3>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                          <span className="bg-gray-100 px-2 py-1 rounded-full">
-                            {item.date}
-                          </span>
+                        </div>
+                        <div className="p-5">
+                          <h3 className="font-bold text-sm text-gray-800 group-hover:text-[#ff5722] transition-colors line-clamp-2 leading-tight">
+                            <Link to={`/tin-tuc/${item.slug}`} className="focus:outline-none focus:underline">
+                              {item.title}
+                            </Link>
+                          </h3>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+                            <span className="bg-gray-100 px-2 py-1 rounded-full">
+                              {item.date}
+                            </span>
+                          </div>
                         </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="col-span-3 bg-white rounded-xl p-8 shadow-lg text-center">
+                      <p className="text-gray-500">Không có bài viết đặt hàng hiệu quả để hiển thị</p>
                     </div>
-                  ))
+                  )
                 )}
               </div>
 

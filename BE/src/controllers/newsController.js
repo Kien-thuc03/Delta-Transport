@@ -127,21 +127,87 @@ exports.getTags = asyncHandler(async(req, res) => {
     });
 });
 
+// @desc    Di chuyển dữ liệu bình luận cũ (avatar -> email)
+// @route   PUT /api/news/migrate-comments
+// @access  Public
+exports.migrateComments = asyncHandler(async(req, res) => {
+    // Tìm tất cả tin tức có bình luận
+    const allNews = await News.find({ 'comments.0': { $exists: true } });
+    let updatedCount = 0;
+
+    for (const news of allNews) {
+        let needsUpdate = false;
+
+        // Kiểm tra và cập nhật từng bình luận
+        if (news.comments && news.comments.length > 0) {
+            news.comments.forEach(comment => {
+                if (!comment.email && comment.avatar) {
+                    // Chuyển đổi avatar thành email nếu có thể
+                    comment.email = `${comment.author.replace(/\s+/g, '').toLowerCase()}@example.com`;
+                    needsUpdate = true;
+                }
+            });
+        }
+
+        // Lưu lại nếu có thay đổi
+        if (needsUpdate) {
+            await News.updateOne({ _id: news._id }, { $set: { comments: news.comments } }, { runValidators: false });
+            updatedCount++;
+        }
+    }
+
+    res.status(200).json({
+        success: true,
+        message: `Đã cập nhật ${updatedCount} tin tức có bình luận cũ`,
+    });
+});
+
 // @desc    Thêm comment vào tin tức
-// @route   POST /api/news/:id/comments
+// @route   POST /api/news/:slug/comments
 // @access  Public
 exports.addComment = asyncHandler(async(req, res) => {
-    const news = await News.findById(req.params.id);
+    // Tìm tin tức theo slug
+    const news = await News.findOne({ slug: req.params.slug });
 
     if (!news) {
         throw new ApiError(404, 'Không tìm thấy tin tức');
     }
 
-    news.comments.push(req.body);
-    await news.save();
+    // Đảm bảo request body có trường email
+    if (!req.body.email) {
+        throw new ApiError(400, 'Email không được bỏ trống');
+    }
 
-    res.status(201).json({
-        success: true,
-        data: news.comments[news.comments.length - 1]
-    });
+    // Kiểm tra định dạng email
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(req.body.email)) {
+        throw new ApiError(400, 'Định dạng email không hợp lệ');
+    }
+
+    try {
+        // Thêm comment mới bằng cách cập nhật trực tiếp
+        const newComment = {
+            author: req.body.author,
+            email: req.body.email,
+            content: req.body.content,
+            date: new Date()
+        };
+
+        // Sử dụng findOneAndUpdate để thêm comment mới
+        const updatedNews = await News.findOneAndUpdate({ slug: req.params.slug }, { $push: { comments: newComment } }, { new: true, runValidators: false });
+
+        if (!updatedNews) {
+            throw new ApiError(404, 'Không thể cập nhật tin tức');
+        }
+
+        // Lấy comment mới nhất vừa thêm vào
+        const addedComment = updatedNews.comments[updatedNews.comments.length - 1];
+
+        res.status(201).json({
+            success: true,
+            data: addedComment
+        });
+    } catch (error) {
+        throw new ApiError(400, error.message);
+    }
 });
