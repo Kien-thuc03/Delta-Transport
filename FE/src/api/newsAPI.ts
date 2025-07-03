@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { Comment } from '../models/NewsTypes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -35,7 +36,5 @@ export const addComment = async (slug: string, comment: Comment) => {
     throw error;
   }
 };
-
-
 
 export default newsAPI;

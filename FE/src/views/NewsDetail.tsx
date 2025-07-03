@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import type { FormEvent } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Breadcrumb from '../components/Breadcrumb';
@@ -12,54 +13,65 @@ import defaultAvatar from '../assets/default-avatar-icon-of-social-media-user-ve
 
 const NewsDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { getNewsDetail, newsItems } = useNewsController();
-  const [article, setArticle] = useState<NewsArticle | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const popularArticlesRef = useRef<News[]>([]);
+  const { 
+    getNewsDetail, 
+    getRelatedNews,
+    isLoading, 
+    error,
+    // Comment form
+    formData,
+    formError,
+    isSubmitting,
+    handleInputChange,
+    handleSubmitComment
+  } = useNewsController();
+  
+  const [article, setArticle] = React.useState<NewsArticle | null>(null);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
+  const [popularArticles, setPopularArticles] = React.useState<News[]>([]);
 
   // Cuộn lên đầu trang khi mới vào, nhưng chỉ 1 lần
-  useEffect(() => {
+  React.useEffect(() => {
     if (!hasScrolled) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setHasScrolled(true);
     }
   }, [hasScrolled]);
 
-  useEffect(() => {
+  // Fetch dữ liệu bài viết
+  React.useEffect(() => {
     const fetchData = async () => {
       if (!slug) return;
       
       try {
         const response = await getNewsDetail(slug);
         if (response.error) {
-          setError(response.error);
-        } else {
+          // Lỗi đã được xử lý trong controller
+        } else if (response.data) {
           setArticle(response.data);
+          // Lấy tin tức liên quan
+          const related = getRelatedNews(slug);
+          setPopularArticles(related);
         }
       } catch (err: unknown) {
-        console.error('Error fetching article:', err);
-        setError('Đã xảy ra lỗi khi tải bài viết');
-      } finally {
-        setLoading(false);
+        console.error('Error in component:', err);
       }
     };
     
     fetchData();
-  }, [slug, getNewsDetail]);
+  }, [slug, getNewsDetail, getRelatedNews]);
 
-  // Xử lý danh sách tin tức liên quan riêng biệt
-  useEffect(() => {
-    if (slug && newsItems && newsItems.length > 0 && article) {
-      // Lọc ra các tin tức khác với tin tức hiện tại
-      popularArticlesRef.current = newsItems
-        .filter(item => item.slug !== slug)
-        .slice(0, 5);
+  // Xử lý submit form comment
+  const onSubmitComment = async (e: FormEvent) => {
+    if (!slug || !article) return;
+    
+    const updatedArticle = await handleSubmitComment(slug, article, e);
+    if (updatedArticle) {
+      setArticle(updatedArticle);
     }
-  }, [slug, newsItems, article]);
+  };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-8">
@@ -91,8 +103,61 @@ const NewsDetail: React.FC = () => {
     { label: article.title, active: true }
   ];
 
-  // Lấy tin tức liên quan
-  const popularArticles = popularArticlesRef.current;
+  // Comment Form
+  const renderCommentForm = () => (
+    <div className="px-6 py-6 border-t border-gray-200 bg-gray-50">
+      <h5 className="text-lg font-semibold text-gray-800 mb-4">
+        Viết bình luận của bạn:
+      </h5>
+      
+      {formError && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+          {formError}
+        </div>
+      )}
+      
+      <form className="space-y-4" onSubmit={onSubmitComment}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="author"
+            value={formData.author}
+            onChange={handleInputChange}
+            placeholder="Họ và tên"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
+            required
+          />
+        </div>
+        <textarea
+          name="content"
+          value={formData.content}
+          onChange={handleInputChange}
+          placeholder="Nhập nội dung"
+          rows={6}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
+          required
+        ></textarea>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`${
+            isSubmitting ? 'bg-gray-400' : 'bg-[#ff5722] hover:bg-[#e64a19]'
+          } text-white px-6 py-3 rounded-lg font-medium transition-colors`}
+        >
+          {isSubmitting ? 'Đang gửi...' : 'Gửi bình luận'}
+        </button>
+      </form>
+    </div>
+  );
 
   return (
     <Layout>
@@ -171,7 +236,7 @@ const NewsDetail: React.FC = () => {
                     {article.comments.map((comment, index) => (
                       <div key={comment.id || `comment-${index}`} className="flex gap-4 mb-6">
                         <img 
-                          src={ comment.avatar || defaultAvatar} 
+                          src={comment.avatar || defaultAvatar} 
                           alt={comment.author}
                           className="w-12 h-12 rounded-full"
                         />
@@ -188,40 +253,7 @@ const NewsDetail: React.FC = () => {
                 )}
 
                 {/* Comment Form */}
-                <div className="px-6 py-6 border-t border-gray-200 bg-gray-50">
-                  <h5 className="text-lg font-semibold text-gray-800 mb-4">
-                    Viết bình luận của bạn:
-                  </h5>
-                  
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Họ và tên"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
-                        required
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
-                        required
-                      />
-                    </div>
-                    <textarea
-                      placeholder="Nhập nội dung"
-                      rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff5722] focus:border-transparent"
-                      required
-                    ></textarea>
-                    <button
-                      type="submit"
-                      className="bg-[#ff5722] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#e64a19] transition-colors"
-                    >
-                      Gửi bình luận
-                    </button>
-                  </form>
-                </div>
+                {renderCommentForm()}
               </div>
             </div>
 

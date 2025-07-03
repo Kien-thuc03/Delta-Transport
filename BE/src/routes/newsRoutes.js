@@ -87,6 +87,19 @@ router.route('/migrate-comments')
 
 /**
  * @swagger
+ * /api/news/sync-comment-count:
+ *   put:
+ *     summary: Đồng bộ số lượng bình luận
+ *     description: Đồng bộ lại số lượng bình luận (commentCount) cho tất cả bài viết
+ *     responses:
+ *       200:
+ *         description: Thành công
+ */
+router.route('/sync-comment-count')
+    .put(newsController.syncCommentCount);
+
+/**
+ * @swagger
  * /api/news/detail/{slug}:
  *   get:
  *     summary: Lấy chi tiết tin tức theo slug

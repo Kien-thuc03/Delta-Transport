@@ -193,8 +193,11 @@ exports.addComment = asyncHandler(async(req, res) => {
             date: new Date()
         };
 
-        // Sử dụng findOneAndUpdate để thêm comment mới
-        const updatedNews = await News.findOneAndUpdate({ slug: req.params.slug }, { $push: { comments: newComment } }, { new: true, runValidators: false });
+        // Sử dụng findOneAndUpdate để thêm comment mới và cập nhật commentCount
+        const updatedNews = await News.findOneAndUpdate({ slug: req.params.slug }, {
+            $push: { comments: newComment },
+            $inc: { commentCount: 1 } // Tăng commentCount lên 1
+        }, { new: true, runValidators: false });
 
         if (!updatedNews) {
             throw new ApiError(404, 'Không thể cập nhật tin tức');
@@ -210,4 +213,29 @@ exports.addComment = asyncHandler(async(req, res) => {
     } catch (error) {
         throw new ApiError(400, error.message);
     }
+});
+
+// @desc    Đồng bộ lại commentCount cho tất cả bài viết
+// @route   PUT /api/news/sync-comment-count
+// @access  Public
+exports.syncCommentCount = asyncHandler(async(req, res) => {
+    const allNews = await News.find({});
+    let updatedCount = 0;
+
+    for (const news of allNews) {
+        if (news.comments) {
+            const correctCount = news.comments.length;
+
+            // Chỉ cập nhật nếu commentCount không chính xác
+            if (news.commentCount !== correctCount) {
+                await News.updateOne({ _id: news._id }, { $set: { commentCount: correctCount } });
+                updatedCount++;
+            }
+        }
+    }
+
+    res.status(200).json({
+        success: true,
+        message: `Đã đồng bộ commentCount cho ${updatedCount} tin tức`,
+    });
 });

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import type { News, NewsArticle } from '../models/NewsTypes';
 // import { newsItems } from '../models/NewsTypes';
-import { getNews, getNewsBySlug } from '../api/newsAPI';
+import { getNews, getNewsBySlug, addComment } from '../api/newsAPI';
 import { formatDate } from '../utils/dateUtils';
-
+import type { Comment } from '../models/NewsTypes';
 export const useNewsController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
@@ -11,6 +11,15 @@ export const useNewsController = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasInitialFetch = useRef(false);
+  
+  // Comment form state
+  const [formData, setFormData] = useState<Comment>({
+    author: '',
+    email: '',
+    content: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   
   // Cache cho kết quả API
   interface NewsDetailResponse {
@@ -92,6 +101,7 @@ export const useNewsController = () => {
     const endIndex = Math.min(currentIndex + itemsPerPage, newsItems.length);
     return newsItems.slice(currentIndex, endIndex);
   };
+  
   // lấy chi tiết tin tức theo slug
   const getNewsDetail = async (slug: string) => {
     // Kiểm tra cache
@@ -146,6 +156,88 @@ export const useNewsController = () => {
       setIsLoading(false);
     }
   };
+  
+  // Xử lý thay đổi input form
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev: Comment) => ({ ...prev, [name]: value }));
+  };
+  
+  // Xử lý submit form comment
+  const handleSubmitComment = async (slug: string, article: NewsArticle, e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!slug || !article) return null;
+    
+    // Validate form
+    if (!formData.author.trim()) {
+      setFormError('Vui lòng nhập họ tên');
+      return null;
+    }
+    
+    if (!formData.email.trim()) {
+      setFormError('Vui lòng nhập email');
+      return null;
+    }
+    
+    if (!formData.content.trim()) {
+      setFormError('Vui lòng nhập nội dung bình luận');
+      return null;
+    }
+    
+    setIsSubmitting(true);
+    setFormError(null);
+    
+    try {
+      const response = await addComment(slug, formData);
+      
+      if (response && response.success) {
+        // Cập nhật cache với comment mới
+        const newComment = response.data;
+        const updatedComments = article.comments ? [...article.comments, newComment] : [newComment];
+        
+        const updatedArticle = {
+          ...article,
+          comments: updatedComments,
+          commentCount: (article.commentCount || 0) + 1
+        };
+        
+        // Cập nhật cache
+        if (newsDetailCache.current[slug]) {
+          newsDetailCache.current[slug] = {
+            ...newsDetailCache.current[slug],
+            data: updatedArticle
+          };
+        }
+        
+        // Reset form
+        setFormData({
+          author: '',
+          email: '',
+          content: ''
+        });
+        
+        return updatedArticle;
+      }
+      return null;
+    } catch (err) {
+      console.error('Error submitting comment:', err);
+      setFormError('Đã xảy ra lỗi khi gửi bình luận');
+      return null;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  // Lấy tin tức liên quan từ danh sách tin tức
+  const getRelatedNews = (slug: string, limit = 5): News[] => {
+    if (!newsItems || newsItems.length === 0) return [];
+    
+    return newsItems
+      .filter(item => item.slug !== slug)
+      .slice(0, limit);
+  };
+  
   return {
     newsItems,
     currentIndex,
@@ -157,6 +249,14 @@ export const useNewsController = () => {
     getVisibleNews,
     getNewsDetail,
     isLoading,
-    error
+    error,
+    // Comment form
+    formData,
+    setFormData,
+    isSubmitting,
+    formError,
+    handleInputChange,
+    handleSubmitComment,
+    getRelatedNews
   };
 }; 

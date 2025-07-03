@@ -89,6 +89,27 @@ NewsSchema.pre('save', function(next) {
     next();
 });
 
+// Middleware cho findOneAndUpdate để cập nhật commentCount
+NewsSchema.pre('findOneAndUpdate', function(next) {
+    // Kiểm tra nếu đang thêm comment
+    if (this._update && this._update.$push && this._update.$push.comments) {
+        // Nếu không có $inc commentCount, thêm vào
+        if (!this._update.$inc || !this._update.$inc.commentCount) {
+            if (!this._update.$inc) this._update.$inc = {};
+            this._update.$inc.commentCount = 1;
+        }
+    }
+
+    // Kiểm tra nếu đang xóa comment
+    if (this._update && this._update.$pull && this._update.$pull.comments) {
+        // Nếu không có $inc commentCount, thêm vào
+        if (!this._update.$inc) this._update.$inc = {};
+        this._update.$inc.commentCount = -1;
+    }
+
+    next();
+});
+
 // Tạo slug tự động từ tiêu đề nếu không được cung cấp
 NewsSchema.pre('save', function(next) {
     if (!this.slug) {

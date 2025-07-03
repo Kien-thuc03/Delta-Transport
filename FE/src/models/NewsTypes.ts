@@ -22,10 +22,11 @@ export interface ContentBlock {
 }
 
 export interface Comment {
-  id: string;
+  id?: string;
   author: string;
-  avatar: string;
-  date: string;
+  email: string;
+  avatar?: string;
+  date?: string;
   content: string;
 }
 
