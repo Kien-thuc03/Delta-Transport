@@ -8,28 +8,7 @@ const router = express.Router();
  * /api/recruitment:
  *   get:
  *     summary: Lấy danh sách tin tuyển dụng
- *     description: Trả về danh sách tin tuyển dụng có phân trang
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         description: Số trang
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         description: Số lượng tin tuyển dụng mỗi trang
- *       - in: query
- *         name: location
- *         schema:
- *           type: string
- *         description: Lọc theo địa điểm
- *       - in: query
- *         name: type
- *         schema:
- *           type: string
- *         description: Lọc theo loại hình công việc
+ *     description: Trả về danh sách tin tuyển dụng
  *     responses:
  *       200:
  *         description: Thành công

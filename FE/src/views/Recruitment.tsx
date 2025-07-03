@@ -3,13 +3,18 @@ import Header from '../components/Header';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
-import { jobListings } from '../models/RecruitmentTypes';
+import { useRecruitmentController } from '../controllers/RecruitmentController';
 
 const Recruitment: React.FC = () => {
-   // Đảm bảo trang luôn cuộn lên đầu khi load
+  const { getVisibleRecruitments, isLoading, error } = useRecruitmentController();
+  
+  // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  // Lấy danh sách việc làm hiện tại
+  const jobListings = getVisibleRecruitments();
 
   return (
     <main className="flex-1">
@@ -42,52 +47,76 @@ const Recruitment: React.FC = () => {
               
               <p className="font-bold text-lg text-gray-700 mb-2">Vị trí đang tuyển dụng:</p>
               
+              {/* Hiển thị loading state */}
+              {isLoading && (
+                <div className="py-10 text-center">
+                  <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#ff5722] border-r-transparent"></div>
+                  <p className="mt-4 text-gray-600">Đang tải dữ liệu...</p>
+                </div>
+              )}
+              
+              {/* Hiển thị lỗi nếu có */}
+              {error && (
+                <div className="py-10 text-center">
+                  <p className="text-red-500">{error}</p>
+                </div>
+              )}
+              
+              {/* Hiển thị thông báo khi không có dữ liệu */}
+              {!isLoading && !error && (!jobListings || jobListings.length === 0) && (
+                <div className="py-10 text-center">
+                  <p className="text-gray-600">Hiện không có tin tuyển dụng nào.</p>
+                </div>
+              )}
+              
               {/* Danh sách vị trí tuyển dụng */}
-              <div className="space-y-8 mt-6">
-                {jobListings.map((job) => (
-                  <div key={job.id} className="border-b border-gray-200 pb-6">
-                    <div className="flex flex-wrap justify-between items-start mb-4">
-                      <h3 className="text-[#ff5722] font-bold text-xl">{job.title}</h3>
-                      <div className="mt-2 md:mt-0">
-                        <span className="bg-orange-100 text-[#ff5722] text-xs font-medium px-2.5 py-1 rounded-full mr-2">
-                          {job.location}
-                        </span>
-                        <span className="bg-orange-100 text-[#ff5722] text-xs font-medium px-2.5 py-1 rounded-full">
-                          {job.type}
-                        </span>
+              {!isLoading && !error && jobListings && jobListings.length > 0 && (
+                <div className="space-y-8 mt-6">
+                  {jobListings.map((job) => (
+                    <div key={job.id} className="border-b border-gray-200 pb-6">
+                      <div className="flex flex-wrap justify-between items-start mb-4">
+                        <h3 className="text-[#ff5722] font-bold text-xl">{job.title}</h3>
+                        <div className="mt-2 md:mt-0">
+                          <span className="bg-orange-100 text-[#ff5722] text-xs font-medium px-2.5 py-1 rounded-full mr-2">
+                            {job.location}
+                          </span>
+                          <span className="bg-orange-100 text-[#ff5722] text-xs font-medium px-2.5 py-1 rounded-full">
+                            {job.type}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-sm text-gray-500 mb-3">Hạn nộp hồ sơ: {job.deadline}</div>
+                      
+                      <p className="text-gray-700 mb-4">{job.description}</p>
+                      
+                      <div className="mb-4">
+                        <h4 className="font-medium text-gray-800 mb-2">Yêu cầu:</h4>
+                        <ul className="list-disc pl-5 space-y-1">
+                          {job.requirements && job.requirements.map((req, index) => (
+                            <li key={index} className="text-gray-600">{req}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <h4 className="font-medium text-gray-800 mb-2">Quyền lợi:</h4>
+                        <ul className="list-disc pl-5 space-y-1">
+                          {job.benefits && job.benefits.map((benefit, index) => (
+                            <li key={index} className="text-gray-600">{benefit}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="mt-5">
+                        <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-2 px-5 rounded-md transition-colors text-sm">
+                          Ứng tuyển ngay
+                        </button>
                       </div>
                     </div>
-                    
-                    <div className="text-sm text-gray-500 mb-3">Hạn nộp hồ sơ: {job.deadline}</div>
-                    
-                    <p className="text-gray-700 mb-4">{job.description}</p>
-                    
-                    <div className="mb-4">
-                      <h4 className="font-medium text-gray-800 mb-2">Yêu cầu:</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {job.requirements.map((req, index) => (
-                          <li key={index} className="text-gray-600">{req}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <h4 className="font-medium text-gray-800 mb-2">Quyền lợi:</h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {job.benefits.map((benefit, index) => (
-                          <li key={index} className="text-gray-600">{benefit}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="mt-5">
-                      <button className="bg-[#ff5722] hover:bg-[#e64a19] text-white font-medium py-2 px-5 rounded-md transition-colors text-sm">
-                        Ứng tuyển ngay
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
               
               {/* Thông tin ứng tuyển */}
               <div className="mt-10 bg-gray-50 p-6 rounded-lg">
