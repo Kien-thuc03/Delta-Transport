@@ -131,7 +131,11 @@ const NewsDetail: React.FC = () => {
 
                 {/* Article Content */}
                 <div className="p-6">
-                  <NewsContentRenderer content={article.content} />
+                  {article.content && Array.isArray(article.content) ? (
+                    <NewsContentRenderer content={article.content} />
+                  ) : (
+                    <p className="text-gray-700">Nội dung bài viết không khả dụng.</p>
+                  )}
                 </div>
 
                 {/* Social Share */}
@@ -159,10 +163,10 @@ const NewsDetail: React.FC = () => {
                       {article.commentCount} Bình luận:
                     </h5>
                     
-                    {article.comments.map(comment => (
-                      <div key={comment.id} className="flex gap-4 mb-6">
+                    {article.comments.map((comment, index) => (
+                      <div key={comment.id || `comment-${index}`} className="flex gap-4 mb-6">
                         <img 
-                          src={comment.avatar} 
+                          src={ comment.avatar || 'https://via.placeholder.com/150'} 
                           alt={comment.author}
                           className="w-12 h-12 rounded-full"
                         />
@@ -229,8 +233,8 @@ const NewsDetail: React.FC = () => {
                 
                 <div className="space-y-4">
                   {popularArticles.length > 0 ? (
-                    popularArticles.map(item => (
-                      <Link key={item.id} to={`/tin-tuc/${item.slug}`} className='block'>
+                    popularArticles.map((item, index) => ( 
+                      <Link key={item.id || `popular-${index}`} to={`/tin-tuc/${item.slug}`} className='block'>
                         <div className="flex gap-3">
                           <img 
                             src={item.image} 

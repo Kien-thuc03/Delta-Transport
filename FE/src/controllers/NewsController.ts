@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { News } from '../models/NewsTypes';
+import type { News, NewsArticle } from '../models/NewsTypes';
 // import { newsItems } from '../models/NewsTypes';
 import { getNews, getNewsBySlug } from '../api/newsAPI';
 import { formatDate } from '../utils/dateUtils';
@@ -90,8 +90,8 @@ export const useNewsController = () => {
         const formattedData = {
           ...response.data,
           date: response.data.date ? formatDate(response.data.date) : '',
-          // Định dạng ngày cho các comment
-          comments: response.data.comments ? response.data.comments.map((comment: News) => ({
+          // Định dạng ngày cho các comment và map _id thành id
+          comments: response.data.comments ? response.data.comments.map((comment: NewsArticle) => ({
             ...comment,
             date: comment.date ? formatDate(comment.date) : ''
           })) : []

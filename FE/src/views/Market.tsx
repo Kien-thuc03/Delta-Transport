@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Breadcrumb from '../components/Breadcrumb';
 import { Link } from 'react-router-dom';
-import { newsItems } from '../models/NewsTypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNewspaper, faShoppingBag, faChartLine, faTruck, faTag } from '@fortawesome/free-solid-svg-icons';
 import { useSearchController } from '../controllers/SearchController';
+import { useNewsController } from '../controllers/NewsController';
 
 // Skeleton loading component for news items
 const NewsItemSkeleton: React.FC = () => (
@@ -52,7 +52,7 @@ const Market: React.FC = () => {
     message: '',
     type: 'info'
   });
-  
+  const { newsItems } = useNewsController();
   // Lấy danh sách tag phổ biến từ SearchController
   const { getPopularTags } = useSearchController('');
   const popularTags = getPopularTags();

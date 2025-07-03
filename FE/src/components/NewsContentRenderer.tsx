@@ -6,6 +6,11 @@ interface NewsContentRendererProps {
 }
 
 const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) => {
+  // Safe check for content
+  if (!content || !Array.isArray(content) || content.length === 0) {
+    return <div className="text-gray-500">Không có nội dung để hiển thị.</div>;
+  }
+
   const renderBlock = (block: ContentBlock) => {
     switch (block.type) {
       case 'heading': {
@@ -104,7 +109,11 @@ const NewsContentRenderer: React.FC<NewsContentRendererProps> = ({ content }) =>
 
   return (
     <div className="prose max-w-none">
-      {content.map(renderBlock)}
+      {content.map((block, index) => (
+        <React.Fragment key={block.id || `block-${index}`}>
+          {renderBlock(block)}
+        </React.Fragment>
+      ))}
     </div>
   );
 };
