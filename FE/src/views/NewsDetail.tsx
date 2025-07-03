@@ -27,16 +27,7 @@ const NewsDetail: React.FC = () => {
   } = useNewsController();
   
   const [article, setArticle] = React.useState<NewsArticle | null>(null);
-  const [hasScrolled, setHasScrolled] = React.useState(false);
   const [popularArticles, setPopularArticles] = React.useState<News[]>([]);
-
-  // Cuộn lên đầu trang khi mới vào, nhưng chỉ 1 lần
-  React.useEffect(() => {
-    if (!hasScrolled) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setHasScrolled(true);
-    }
-  }, [hasScrolled]);
 
   // Fetch dữ liệu bài viết
   React.useEffect(() => {
@@ -49,9 +40,11 @@ const NewsDetail: React.FC = () => {
           // Lỗi đã được xử lý trong controller
         } else if (response.data) {
           setArticle(response.data);
-          // Lấy tin tức liên quan
-          const related = getRelatedNews(slug);
-          setPopularArticles(related);
+          // Lấy tin tức liên quan - đảm bảo chỉ gọi khi cần
+          if (popularArticles.length === 0) {
+            const related = getRelatedNews(slug);
+            setPopularArticles(related);
+          }
         }
       } catch (err: unknown) {
         console.error('Error in component:', err);
@@ -59,7 +52,12 @@ const NewsDetail: React.FC = () => {
     };
     
     fetchData();
-  }, [slug, getNewsDetail, getRelatedNews]);
+  }, [slug, getNewsDetail, popularArticles.length]);
+
+  // Xử lý scroll chỉ khi slug thay đổi
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [slug]);
 
   // Xử lý submit form comment
   const onSubmitComment = async (e: FormEvent) => {
