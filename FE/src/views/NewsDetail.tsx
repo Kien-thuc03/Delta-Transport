@@ -52,7 +52,7 @@ const NewsDetail: React.FC = () => {
     };
     
     fetchData();
-  }, [slug, getNewsDetail, popularArticles.length]);
+  }, [slug, getNewsDetail, popularArticles.length, getRelatedNews]);
 
   // Xử lý scroll chỉ khi slug thay đổi
   React.useEffect(() => {

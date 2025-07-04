@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { News } from '../models/NewsTypes';
 import { useNewsController } from './NewsController';
 
@@ -10,23 +10,10 @@ export const useSearchController = (query: string) => {
   const [results, setResults] = useState<News[]>([]);
   const [relatedTags, setRelatedTags] = useState<string[]>([]);
   const { newsItems } = useNewsController();
-  useEffect(() => {
-    // Đảm bảo trang luôn cuộn lên đầu khi load
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Bắt đầu loading
-    setLoading(true);
-    
-    // Simulate API call delay
-    const searchTimeout = setTimeout(() => {
-      performSearch();
-    }, 800);
-    
-    return () => clearTimeout(searchTimeout);
-  }, [query]);
+  
 
   // Thực hiện tìm kiếm
-  const performSearch = () => {
+  const performSearch =  useCallback(() => {
     if (query.trim()) {
       // Lọc tin tức dựa trên từ khóa tìm kiếm
       const filteredResults = newsItems.filter((item: News) => 
@@ -43,7 +30,21 @@ export const useSearchController = (query: string) => {
     }
     
     setLoading(false);
-  };
+  }, [query, newsItems]);
+  useEffect(() => {
+    // Đảm bảo trang luôn cuộn lên đầu khi load
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Bắt đầu loading
+    setLoading(true);
+    
+    // Simulate API call delay
+    const searchTimeout = setTimeout(() => {
+      performSearch();
+    }, 800);
+    
+    return () => clearTimeout(searchTimeout);
+  }, [query, performSearch]);
 
   // Tạo các tag liên quan dựa trên từ khóa tìm kiếm
   const generateRelatedTags = () => {
