@@ -6,7 +6,7 @@ import VideoModal from '../components/modal/VideoModal';
 import TestimonialSlider from '../components/slider/TestimonialSlider';
 import NewsSlider from '../components/slider/NewsSlider';
 import { useVideoModal } from '../controllers/VideoController';
-import { testimonials } from '../models/TestimonialTypes';
+import { useTestimonialController } from '../controllers/TestimonialController';
 import { useNavigate, Link } from 'react-router-dom';
 import heroImg from '../assets/hero-banner.webp';
 import truckImg from '../assets/truck.webp';
@@ -19,6 +19,7 @@ import bgBannerForm from '../assets/banner2.png';
 
 const Home: React.FC = () => {
   const { modalState, openVideoModal, closeVideoModal } = useVideoModal();
+  const { testimonials, isLoading, error } = useTestimonialController();
   const navigate = useNavigate();
   // Đảm bảo trang luôn cuộn lên đầu khi load
   React.useEffect(() => {
@@ -277,7 +278,7 @@ const Home: React.FC = () => {
           </div>
           
           {/* Testimonial Slider */}
-          <TestimonialSlider testimonials={testimonials} />
+          <TestimonialSlider testimonials={testimonials} isLoading={isLoading} error={error} />
         </div>
       </section>
 

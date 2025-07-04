@@ -5,22 +5,15 @@ const { asyncHandler, ApiError } = require('../utils');
 // @route   GET /api/testimonials
 // @access  Public
 exports.getTestimonials = asyncHandler(async(req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
-    const skip = (page - 1) * limit;
 
     const testimonials = await Testimonial.find({ isActive: true })
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit);
+        .sort({ createdAt: -1 });
 
     const total = await Testimonial.countDocuments({ isActive: true });
 
     res.status(200).json({
         success: true,
         count: testimonials.length,
-        totalPages: Math.ceil(total / limit),
-        currentPage: page,
         data: testimonials
     });
 });

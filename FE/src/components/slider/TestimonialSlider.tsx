@@ -1,27 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { Testimonial } from '../../models/TestimonialTypes';
 
 interface TestimonialSliderProps {
   testimonials: Testimonial[];
+  isLoading?: boolean;
+  error?: string | null;
 }
 
-const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) => {
+const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials, isLoading = false, error = null }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   
-  // Tự động chuyển slide sau 5 giây (5000ms)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      handleSlideChange(currentIndex + 1);
-    }, 5000);
+  const handleSlideChange = useCallback((newIndex: number) => {
+    if (testimonials.length === 0) return;
     
-    return () => clearInterval(timer);
-  }, [currentIndex]);
-  
-  const handleSlideChange = (newIndex: number) => {
     setIsTransitioning(true);
     
     // Tính toán index mới
@@ -35,7 +30,18 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
     setTimeout(() => {
       setIsTransitioning(false);
     }, 300);
-  };
+  }, [testimonials.length]);
+  
+  // Tự động chuyển slide sau 5 giây (5000ms)
+  useEffect(() => {
+    if (testimonials.length === 0 || isLoading || error) return;
+    
+    const timer = setInterval(() => {
+      handleSlideChange(currentIndex + 1);
+    }, 5000);
+    
+    return () => clearInterval(timer);
+  }, [currentIndex, testimonials.length, isLoading, error, handleSlideChange]);
   
   const nextSlide = () => {
     handleSlideChange(currentIndex + 1);
@@ -47,7 +53,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   
   // Xử lý sự kiện vuốt trên mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (isTransitioning) return;
+    if (isTransitioning || testimonials.length === 0) return;
     setStartX(e.touches[0].clientX);
     setIsDragging(true);
   };
@@ -75,7 +81,7 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   
   // Xử lý sự kiện chuột
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (isTransitioning) return;
+    if (isTransitioning || testimonials.length === 0) return;
     e.preventDefault(); // Ngăn chặn hành vi chọn mặc định
     setStartX(e.clientX);
     setIsDragging(true);
@@ -109,12 +115,14 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
   };
   
   // Hiển thị 2 testimonial trên màn hình lớn, 1 trên màn hình nhỏ
-  const visibleTestimonials = window.innerWidth >= 768 
-    ? [
-        testimonials[currentIndex],
-        testimonials[(currentIndex + 1) % testimonials.length]
-      ]
-    : [testimonials[currentIndex]];
+  const visibleTestimonials = testimonials.length > 0 
+    ? (window.innerWidth >= 768 
+      ? [
+          testimonials[currentIndex],
+          testimonials[(currentIndex + 1) % testimonials.length]
+        ]
+      : [testimonials[currentIndex]])
+    : [];
 
   // Ngăn chặn việc chọn text khi kéo
   useEffect(() => {
@@ -130,6 +138,47 @@ const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonials }) =
       document.removeEventListener('selectstart', handleSelectStart);
     };
   }, [isDragging]);
+  
+  // Hiển thị trạng thái loading
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-2">
+        {[1, 2].map((item) => (
+          <div key={item} className="bg-white p-8 rounded-lg shadow-md animate-pulse">
+            <div className="md:flex md:items-start md:gap-4">
+              <div className="md:flex-shrink-0 flex justify-center mb-4 md:mb-0">
+                <div className="w-16 h-16 rounded-full bg-gray-200"></div>
+              </div>
+              <div className="w-full">
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-3"></div>
+                <div className="h-4 bg-gray-200 rounded w-full mb-3"></div>
+                <div className="h-4 bg-gray-200 rounded w-5/6 mb-3"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/4 mt-4"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  
+  // Hiển thị thông báo lỗi
+  if (error) {
+    return (
+      <div className="py-10 text-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+  
+  // Hiển thị thông báo khi không có dữ liệu
+  if (testimonials.length === 0) {
+    return (
+      <div className="py-10 text-center">
+        <p className="text-gray-600">Chưa có đánh giá nào.</p>
+      </div>
+    );
+  }
     
   return (
     <div className="relative w-full overflow-hidden">

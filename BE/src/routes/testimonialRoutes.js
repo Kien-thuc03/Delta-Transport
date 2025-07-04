@@ -10,18 +10,7 @@ const router = express.Router();
  *     tags:
  *       - Testimonials
  *     summary: Lấy danh sách đánh giá khách hàng
- *     description: Trả về danh sách đánh giá khách hàng có phân trang
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         description: Số trang
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         description: Số lượng đánh giá mỗi trang
+ *     description: Trả về danh sách đánh giá khách hàng
  *     responses:
  *       200:
  *         description: Thành công
@@ -32,12 +21,6 @@ const router = express.Router();
  *               properties:
  *                 success:
  *                   type: boolean
- *                 count:
- *                   type: integer
- *                 totalPages:
- *                   type: integer
- *                 currentPage:
- *                   type: integer
  *                 data:
  *                   type: array
  *                   items:

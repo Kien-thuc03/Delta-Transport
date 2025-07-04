@@ -124,24 +124,18 @@
  *         name:
  *           type: string
  *           description: Tên khách hàng
+ *         email:
+ *           type: string
+ *           description: Email khách hàng
  *         avatar:
  *           type: string
  *           description: Đường dẫn avatar
  *         content:
  *           type: string
  *           description: Nội dung đánh giá
- *         rating:
- *           type: number
- *           minimum: 1
- *           maximum: 5
- *           description: Đánh giá (1-5 sao)
  *         isActive:
  *           type: boolean
  *           description: Trạng thái hiển thị
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Thời gian tạo
  *
  *     # Recruitment schemas
  *     Recruitment:
