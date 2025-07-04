@@ -80,12 +80,12 @@ const SearchResults: React.FC = () => {
                           </Link>
                         </div>
                         <div className="flex-1">
-                          <span className="text-xs text-gray-500 mb-1 block">{item.date}</span>
                           <h3 className="font-bold text-lg text-gray-800 group-hover:text-[#ff5722] transition-colors mb-2">
                             <Link to={`/tin-tuc/${item.slug}`} className="hover:underline">
                               {item.title}
                             </Link>
                           </h3>
+                          <span className="bg-gray-100 px-2 py-1 rounded-full w-fit text-xs text-gray-500 mb-1 block">{item.date}</span>
                           <p className="text-gray-600 text-sm line-clamp-2 mb-3">
                             {item.excerpt}
                           </p>

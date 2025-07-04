@@ -1,36 +1,65 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { News } from '../models/NewsTypes';
-import { useNewsController } from './NewsController';
-
-// Danh sách các tag tìm kiếm phổ biến
-const popularTags = ['đặt hàng', 'mua hàng', 'quảng châu', 'châu âu', 'trong nước', 'quốc tế'];
+import { searchNews, getPopularTags } from '../api/searchAPI';
+import { formatDate } from '../utils/dateUtils';
 
 export const useSearchController = (query: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [results, setResults] = useState<News[]>([]);
   const [relatedTags, setRelatedTags] = useState<string[]>([]);
-  const { newsItems } = useNewsController();
-  
+  const [popularTagsList, setPopularTagsList] = useState<{name: string, count: number}[]>([]);
+
+  // Lấy tags phổ biến
+  useEffect(() => {
+    const fetchPopularTags = async () => {
+      try {
+        const response = await getPopularTags();
+        if (response.success) {
+          // Sắp xếp theo count giảm dần
+          const sortedTags = [...response.data].sort((a, b) => b.count - a.count);
+          setPopularTagsList(sortedTags);
+        }
+      } catch (error) {
+        console.error('Error fetching popular tags:', error);
+      }
+    };
+
+    fetchPopularTags();
+  }, []);
 
   // Thực hiện tìm kiếm
-  const performSearch =  useCallback(() => {
-    if (query.trim()) {
-      // Lọc tin tức dựa trên từ khóa tìm kiếm
-      const filteredResults = newsItems.filter((item: News) => 
-        item.title.toLowerCase().includes(query.toLowerCase()) || 
-        (item.excerpt || '').toLowerCase().includes(query.toLowerCase())
-      );
-      setResults(filteredResults);
-      
-      // Tạo các tag liên quan
-      generateRelatedTags();
-    } else {
+  const performSearch = useCallback(async () => {
+    if (!query.trim()) {
       setResults([]);
       setRelatedTags([]);
+      setLoading(false);
+      return;
     }
-    
-    setLoading(false);
-  }, [query, newsItems]);
+
+    try {
+      const response = await searchNews(query);
+      if (response.success) {
+        //thực hiện fomat date cho dữ liệu
+        const formattedResults = response.data.map((item: News) => ({
+          ...item,
+          date: formatDate(item.date)
+        }));
+        setResults(formattedResults);
+        
+        // Lấy 5 tag phổ biến nhất dựa trên count
+        if (popularTagsList.length > 0) {
+          const topTags = popularTagsList.slice(0, 5).map(tag => tag.name);
+          setRelatedTags(topTags);
+        }
+      }
+    } catch (error) {
+      console.error('Error searching news:', error);
+      setResults([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [query, popularTagsList]);
+
   useEffect(() => {
     // Đảm bảo trang luôn cuộn lên đầu khi load
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,7 +67,7 @@ export const useSearchController = (query: string) => {
     // Bắt đầu loading
     setLoading(true);
     
-    // Simulate API call delay
+    // Thêm độ trễ nhỏ để tránh gọi API quá nhiều khi người dùng đang gõ
     const searchTimeout = setTimeout(() => {
       performSearch();
     }, 800);
@@ -46,36 +75,15 @@ export const useSearchController = (query: string) => {
     return () => clearTimeout(searchTimeout);
   }, [query, performSearch]);
 
-  // Tạo các tag liên quan dựa trên từ khóa tìm kiếm
-  const generateRelatedTags = () => {
-    // Trong thực tế, đây sẽ là một thuật toán phức tạp hơn để tìm các tag liên quan
-    // Ví dụ: dựa trên từ khóa, lịch sử tìm kiếm, hoặc dữ liệu từ API
-    
-    // Đơn giản hóa: chọn ngẫu nhiên một số tag từ danh sách có sẵn
-    const randomTags = popularTags.filter(() => Math.random() > 0.5);
-    
-    // Đảm bảo luôn có ít nhất 3 tag
-    if (randomTags.length < 3) {
-      const remainingTags = popularTags.filter(tag => !randomTags.includes(tag));
-      const additionalCount = 3 - randomTags.length;
-      
-      for (let i = 0; i < additionalCount && i < remainingTags.length; i++) {
-        randomTags.push(remainingTags[i]);
-      }
-    }
-    
-    setRelatedTags(randomTags);
-  };
-
   // Lấy tất cả các tag phổ biến
-  const getPopularTags = () => {
-    return popularTags;
+  const getPopularTagsList = () => {
+    return popularTagsList;
   };
 
   return {
     loading,
     results,
     relatedTags,
-    getPopularTags,
+    popularTagsList: getPopularTagsList,
   };
 }; 

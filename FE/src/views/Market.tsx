@@ -54,8 +54,8 @@ const Market: React.FC = () => {
   });
   const { newsItems } = useNewsController();
   // Lấy danh sách tag phổ biến từ SearchController
-  const { getPopularTags } = useSearchController('');
-  const popularTags = getPopularTags();
+  const { popularTagsList } = useSearchController('');
+  const popularTags = popularTagsList();
 
   const breadcrumbItems = [
     { label: 'Trang chủ', href: '/' },
@@ -532,11 +532,11 @@ const Market: React.FC = () => {
                 {popularTags.map((tag, i) => (
                   <Link 
                     key={i} 
-                    to={`/tim-kiem?q=${encodeURIComponent(tag)}`}
+                    to={`/tim-kiem?q=${encodeURIComponent(tag.name)}`}
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-medium cursor-pointer hover:bg-[#ff5722] hover:text-white transition-all shadow-sm hover:shadow-md flex items-center gap-1.5"
                   >
                     <FontAwesomeIcon icon={faTag} className="text-xs" />
-                    {tag}
+                    {tag.name}
                   </Link>
                 ))}
               </div>

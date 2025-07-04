@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import type { News, NewsArticle } from '../models/NewsTypes';
-import { getNews, getNewsBySlug, addComment } from '../api/newsAPI';
+import { getNews, getNewsBySlug, addComment,  } from '../api/newsAPI';
 import { formatDate } from '../utils/dateUtils';
 import type { Comment } from '../models/NewsTypes';
 export const useNewsController = () => {
