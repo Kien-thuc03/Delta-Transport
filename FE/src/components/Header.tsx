@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newsDropdownOpen, setNewsDropdownOpen] = useState(false);
-  const [hoverTimeout, setHoverTimeout] = useState<number | null>(null);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
